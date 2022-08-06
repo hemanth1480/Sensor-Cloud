@@ -1,0 +1,32 @@
+<%- include("partials/header.ejs") %>
+
+<style>
+    body{
+        background-color: rgba(230,231,231,255);
+    }
+</style>
+
+<div>
+    <form action="/register" method="post">
+        <div class="l2">
+            <div class="l-div">
+                <input type="text" class="form-control login-form" id="formGroupExampleInput" placeholder="mail">
+                <input type="password" class="form-control login-form" id="formGroupExampleInput" placeholder="password">
+                <input type="password" class="form-control login-form" id="formGroupExampleInput" placeholder="re-enter password">
+                <button type="submit" class="btn">Register</button>
+            </div>
+            <div class="fle-div">
+                <!-- <p>Already had a account</p> -->
+                <a href="/login" style="padding:10px 10px; text-decoration: none;">Already had a account? login </a>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+<%- include("partials/footer.ejs") %>

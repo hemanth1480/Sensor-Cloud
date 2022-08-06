@@ -1,0 +1,27 @@
+{
+  "name": "Sensor-Cloud",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.19"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hemanth1480/Sensor-Cloud.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hemanth1480/Sensor-Cloud/issues"
+  },
+  "homepage": "https://github.com/hemanth1480/Sensor-Cloud#readme"
+}

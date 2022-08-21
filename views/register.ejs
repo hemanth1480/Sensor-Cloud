@@ -1,5 +1,8 @@
 <%- include("partials/header.ejs") %>
 
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js">
+
+</script>
 <style>
     body{
         background-color: rgba(230,231,231,255);
@@ -7,25 +10,44 @@
 </style>
 
 <div>
-    <form action="/register" method="post">
+    <form action="/register" id="fm-1" method="post">
         <div class="l2">
             <div class="l-div">
-                <input type="text" class="form-control login-form" id="formGroupExampleInput" placeholder="mail">
-                <input type="password" class="form-control login-form" id="formGroupExampleInput" placeholder="password">
-                <input type="password" class="form-control login-form" id="formGroupExampleInput" placeholder="re-enter password">
-                <button type="submit" class="btn">Register</button>
+                <input type="text" class="form-control login-form" name="name" id="inp1" autocomplete="off" required id="formGroupExampleInput" placeholder="name">
+                <input type="email" class="form-control login-form" name="regname" autocomplete="off" required id="formGroupExampleInput" placeholder="mail">
+                <input type="password" class="form-control login-form" name="regpass1" required id="ij1" placeholder="password">
+                <input type="password" class="form-control login-form" name="regpass2" required id="ij2" placeholder="re-enter password">
+                <button type="button" id="bt-1" class="btn" onclick="checkpass()">Sign Up</button>
             </div>
             <div class="fle-div">
-                <!-- <p>Already had a account</p> -->
-                <a href="/login" style="padding:10px 10px; text-decoration: none;">Already had a account? login </a>
+                <span style="margin:15px auto;">Already have an account?  <a href="/login" style="padding:10px 10px; text-decoration: none;">login </a></span>
             </div>
         </div>
     </form>
 </div>
 
+<% var status = reg %>
 
-
-
+<script>
+    function checkpass() {
+        if (document.getElementById("inp1").value.length==0 || document.getElementById("formGroupExampleInput").value.length==0 || document.getElementById("ij1").value.length==0 || document.getElementById("ij2").value.length==0) {
+            document.getElementById("bt-1").style.backgroundColor="#be4d25";
+            document.getElementById("bt-1").innerText = "Enter valid details";
+        }
+        else if(document.getElementById("ij1").value != document.getElementById("ij2").value) {
+            document.getElementById("bt-1").style.backgroundColor="#be4d25";
+            document.getElementById("bt-1").innerText = "Passowords doesn't match";
+            document.getElementById("ij1").classList.add("lg");
+            document.getElementById("ij2").classList.add("lg");
+        } else{
+            document.getElementById("fm-1").submit();
+        }
+    }
+    if (<%=status%> == true) {
+        document.getElementById("bt-1").style.backgroundColor="#be4d25";
+        document.getElementById("bt-1").innerText = "You have already logged in";
+    }
+</script>
 
 
 

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Sensor Cloud</title>
+    <link rel="icon" type="image/x-icon" href="/images/cloud.png">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body id="body">
+
+    <style>
+        .container-fluid{
+            width: 65%;
+        }
+        @media (max-width: 950px) {
+            .container-fluid{
+                width: 100%;
+            }
+        }
+        h6{
+            line-height:normal;
+        }
+        table{
+            margin: 10px auto;
+        }
+        tr{
+            margin: 10px;
+        }
+    </style>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <div class="logo-div">
+                <img src="/images/cloud.png" class="logo" alt="">
+                <a class="navbar-brand" href="/">Sensor Cloud</a>
+            </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+               <li class="nav-item dropdown">
+                <a class="nav-link active dropdown-toggle" href="/business-solutions" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Cloud Storage
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <li><a class="dropdown-item" href="/plans-storage">Get Storage</a></li>
+                  <li><a class="dropdown-item" href="/api-key">API Key</a></li>
+                  <!-- <li><a class="dropdown-item" href="construction">Construction</a></li> -->
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active c1" href="/documentation">Docs</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active a1" href="/about">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active c1" href="/contactus">Contact Us</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link active dropdown-toggle" href="/profile" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="/images/profile1.png" style="width: 21px; height:23px" alt="">
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <li><a class="dropdown-item" href="/profile">Profile</a></li>
+
+                  <li><a class="dropdown-item" href="/account-settings">Settings</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"> </script>
+
+<div class="st-div1">
+    <h4 id="blr">Uploaded Data</h4>
+</div>
+
+<% var xdata %>
+<% var ydata  %>
+<% var len = dat.length %>
+
+<% if(len == 1) { %>
+
+    <% var xdata = dat[0].xaxis %>
+    <% var ydata = dat[0].yaxis %>
+    <div class="mjk">
+        <div class="klo">
+            <div class="cdm1">
+                <div>
+                    <canvas id="myChart" class="chart"></canvas>
+                </div>
+                <div>
+                    <a class="nav-link active dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="images/istockphoto-1396048367-612x612.jpg" style="width: 40px; height:40px;" alt="">
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" href="<%=dat[i]._id%>">Details</a></li>
+                      <li><a class="dropdown-item" >Graph type</a></li>
+                      <li><a class="dropdown-item">Rename label</a></li>
+                    </ul>
+                </div>
+
+                <script>
+                    var xValues = [<%= xdata %>];
+                    var yValues = [<%= ydata %>];
+                    new Chart("myChart", {
+                        type: "line",
+                        data: {
+                            labels: xValues,
+                            label:"xval",
+                            datasets: [{
+                                data: yValues,
+                                label:"<%=dat[0].yLabel%>",
+                                borderColor:"black",
+                                fill:false
+                            }]
+                        },
+                        options: {
+                            legend: {display: false},
+                            title: {
+                                display: true,
+                                text: '<%=dat[0].title%>'
+                            },
+                            scales: {
+                                yAxes: [{
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: "<%=dat[0].yLabel%>"
+                                    }
+                                }],
+                                xAxes: [{
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: "<%=dat[0].xLabel%>"
+                                    }
+                                }]
+                            }  
+                        }
+                    });
+                
+                </script>
+            </div>
+        </div>
+    </div>
+<% } else { %>
+    <div class="row chart-ddiv">
+        <% for(var i=0; i < dat.length;i++) { %>
+            <% for(var j=0; j < dat[i].xaxis.length;j++) { %>
+                <% if(dat[i].xaxis[j] == "null") { %>
+                    <% var cnt = j; %>
+                    <% console.log(dat[i].xaxis.slice(j,1)) %>
+                <% } %>
+            <% } %>
+            <% for(var z=0; z < dat[i].yaxis.length;z++) { %>
+                <% if(dat[i].yaxis[6] == null) { %>
+                <% } %>
+            <% } %>
+                <% var xdata = dat[i].xaxis %>
+                <% var ydata = dat[i].yaxis %>
+            <div class="details-div">
+                <div class="data-div">
+                    <table>
+                        <img class="close-img" onclick="closeit(<%=i%>)" src="images/close_FILL0_wght400_GRAD0_opsz48.png" alt="">
+                        <tr>
+                            <th><h6>Id:</h6></th>
+                            <th><p class="para"><%=dat[i]._id%></p></th>
+                        </tr>
+                        <tr>
+                            <th><h6>API Key:</h6></th>
+                            <th><p class="para"><%=dat[i].id%></p></th>
+                        </tr>
+                        <tr>
+                            <th><h6>Title:</h6></th>
+                            <th><p class="para"><%= dat[i].title%></p></th>
+                        </tr>
+                        <tr>
+                            <th><h6>xLabel:</h6></th>
+                            <th><p class="para"><%=dat[i].xLabel%></p></th>
+                        </tr>
+                        <tr>
+                            <th><h6>yLabel:</h6></th>
+                            <th><p class="para"><%=dat[i].yLabel%></p></th>
+                        </tr>
+                    </table>
+                    <!-- <span> 
+                        <img class="close-img" onclick="closeit(<%=i%>)" src="images/close_FILL0_wght400_GRAD0_opsz48.png" alt="">
+                    </span>
+                    <span class="det-g"> <h6 style="margin-right:5px">Id:</h6> <p><%=dat[i]._id%></p></span>
+                    <span class="det-g"> <h6>API Key:</h6> <p><%=dat[i].id%></p></span>
+                    <span class="det-g"> <h6>Title:</h6> <p><%= dat[i].title%></p></span>
+                    <span class="det-g"> <h6>xLabel:</h6> <p><%=dat[i].xLabel%></p></span>
+                    <span class="det-g"> <h6>yLabel:</h6> <p><%=dat[i].yLabel%></p></span> -->
+                </div>
+            </div>
+
+            <div class="updatelabel-div">
+                <div style="display: flex; margin: 15px 0 0 0; align-items: center; justify-content: space-between;">
+                    <p style="margin:0 0 0 30px;">Graph <%=i +1%></p>
+                    <img class="close-img2" onclick="closeit_up(<%=i%>)" src="images/close_FILL0_wght400_GRAD0_opsz48.png" alt="">
+                </div>
+                <div class="rename-div">
+                    <form id="formupdate" action="/labelchange" method="post">
+                        <input type="text" name="id" value="<%=dat[i].id%>" style="display: none;">
+                        <div class="label-btn">
+                            <h6 class="label-head" style="margin: 0 18px">Title</h6>
+                            <input type="text" name="title" class="form-control" autocomplete="off" value="<%=dat[i].title%>" id="formGroupExampleInput" placeholder="Title">
+                        </div>
+                        <div class="label-btn">
+                            <h6 class="label-head">xLabel</h6>
+                            <input type="text" name="xlabel" class="form-control" autocomplete="off" value="<%=dat[i].xLabel%>" id="formGroupExampleInput" placeholder="x-Label">
+                        </div>
+                        <div class="label-btn">
+                            <h6 class="label-head">yLabel</h6>
+                            <input type="text" name="ylabel" class="form-control" autocomplete="off" value="<%=dat[i].yLabel%>" id="formGroupExampleInput" placeholder="y-Label">
+                        </div>
+                        <button type="btnsubmit" onclick="submitform(<%=i%>)" id="your-id" class="btn">Update</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-6 divds">
+                <div class="cdm">
+                    <div class="chart-div">
+                        <canvas id="myChart" class="chart"></canvas>
+                        <button class="btn grp graph-btn" onclick="graphtypes(<%=i%>)">Graph Type </button>
+                        <div class="btns-div typ">
+                            <div class="div-bt">
+                                <button type="button" onclick="grptyp<%=i%>('line',<%=i%>)" class="btn graph-btn">Line Graph</button>
+                                <button type="button" onclick="grptyp<%=i%>('pie',<%=i%>)" class="btn graph-btn">Pie Chart</button>
+                                <button type="button" onclick="grptyp<%=i%>('bar',<%=i%>)" class="btn graph-btn">Bar Graph</button>
+                                <!-- <button type="button" onclick="grptyp<%=i%>('scatter',<%=i%>)" class="btn graph-btn">Scatter Plot</button> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hov-div">
+                        <a class="nav-link active dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="images/istockphoto-1396048367-612x612.jpg" style="width: 40px; height:40px;" alt="">
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <li><a class="dropdown-item det-f" onclick="detail(<%=i%>)">Details</a></li>
+                          <li><a class="dropdown-item" onclick="rename(<%=i%>)">Rename label</a></li>
+                          <li><a class="dropdown-item" onclick="downloadData(<%=i%>)"> <form action="/download-data" method="post" class="downloadData"> 
+                            <input name="usrid" style="display: none;" value="<%=dat[i].id%>" type="text"> Download data</form> </a></li>
+                        </ul>
+                    </div>
+                    
+                    <script>
+                    // var h = document.getElementsByClassName("chart");
+                    var xValues = [<%= xdata %>];
+                    var yValues = [<%= ydata %>];
+
+                    var data = {
+                        labels: xValues,
+                        datasets: [{
+                            data: yValues,
+                            label:"<%=dat[i].yLabel%>",
+                            borderColor:"black",
+                            fill:false
+                        }]
+                    }
+
+                    var options = {
+                            legend: {display: false},
+                            title: {
+                                display: true,
+                                text: '<%=dat[i].title%>'
+                            },
+                            scales: {
+                                yAxes: [{
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: '<%=dat[i].yLabel%>'
+                                    }
+                                }],
+                                xAxes: [{
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: '<%=dat[i].xLabel%>'
+                                    }
+                                }]
+                            }  
+                        }
+
+                    const configdata<%=i%> = {
+                        type: "line",
+                        data,
+                        options
+                    }
+
+                    const configdatap<%=i%> = {
+                        type: "pie",
+                        data: {
+                        labels: xValues,
+                        datasets: [{
+                            data: yValues,
+                            label:"<%=dat[i].yLabel%>",
+                            backgroundColor:["#2596be", "#be4d25","#49be25","#145369","#041014","#bea925","#000000","#134b5f","42032C","E6D2AA","7FB77E","319DA0","C21010","F675A8"],
+                            fill:false
+                        }]
+                    },
+                        options
+                    }
+                    // const configdatas<%=i%> = {
+                    //     type: "scatter",
+                    //     data,
+                    //     options
+                    // }
+                    const configdatab<%=i%> = {
+                        type: "bar",
+                        data: {
+                        labels: xValues,
+                        datasets: [{
+                            data: yValues,
+                            label:"<%=dat[i].yLabel%>",
+                            backgroundColor:["#2596be", "#be4d25","#49be25","#145369","#041014","#bea925","#000000","#134b5f","42032C","E6D2AA","7FB77E","319DA0","C21010","F675A8"],
+                            fill:false
+                        }]
+                    },
+                        options
+                    }
+
+                    // new Chart(h[<%= i %>], {
+                    //     document.getElementsByClassName("chart")[]
+                    //     configdata
+                    // });
+
+                    let myChart<%=i%> = new Chart(
+                        document.getElementsByClassName("chart")[<%=i%>],
+                        configdata<%=i%>
+                    );
+
+                    function grptyp<%=i%>(type) {
+                        myChart<%=i%>.destroy();
+                        if (type === "bar") {
+                            myChart<%=i%> = new Chart(
+                                document.getElementsByClassName("chart")[<%=i%>],
+                                configdatab<%=i%>
+                            );
+                        }
+                        if (type === "line") {
+                            myChart<%=i%> = new Chart(
+                                document.getElementsByClassName("chart")[<%=i%>],
+                                configdata<%=i%>
+                            );
+                        }
+                        if (type === "pie") {
+                            myChart<%=i%> = new Chart(
+                                document.getElementsByClassName("chart")[<%=i%>],
+                                configdatap<%=i%>
+                            );
+                        }
+                        // if (type === "scatter") {
+                        //     myChart<%=i%> = new Chart(
+                        //         document.getElementsByClassName("chart")[<%=i%>],
+                        //         configdatas<%=i%>
+                        //     );
+                        // }
+                    }
+                    </script>
+                </div>
+            </div>
+        <% } %>
+    </div>
+    
+<% } %>
+
+<script>
+    function detail(prop) {        
+        var num = document.getElementsByClassName("updatelabel-div").length;
+        for(var t=0; t<num;t++) {
+            document.getElementsByClassName("updatelabel-div")[t].classList.add("dis");
+        }
+        document.getElementsByClassName("details-div")[prop].classList.remove("dis");
+        document.getElementsByClassName("details-div")[prop].classList.add("vis");
+    }
+    function closeit(io) {
+        document.getElementsByClassName("details-div")[io].classList.remove("vis");
+        document.getElementsByClassName("details-div")[io].classList.add("dis");
+        var op =1;
+        console.log(op)
+    }
+    function rename(ri) {
+        var num = document.getElementsByClassName("details-div").length;
+        for(var t=0; t<num;t++) {
+            document.getElementsByClassName("details-div")[t].classList.add("dis");
+        }
+        document.getElementsByClassName("updatelabel-div")[ri].classList.remove("dis");
+        document.getElementsByClassName("updatelabel-div")[ri].classList.add("vis");
+    }
+    function closeit_up(oo) {
+        document.getElementsByClassName("updatelabel-div")[oo].classList.remove("vis");
+        document.getElementsByClassName("updatelabel-div")[oo].classList.add("dis");
+    }
+    function submitform(ho) {
+        var form = document.getElementById("formupdate")[ho];
+        console.log(form);
+        document.getElementById("your-id").addEventListener("click", function () {
+            form.submit();
+        });
+    }
+    function graphtypes(qw) {
+        document.getElementsByClassName("grp")[qw].classList.add("dis");
+        document.getElementsByClassName("typ")[qw].classList.add("vis");
+    }
+    function downloadData(as) {
+        document.getElementsByClassName("downloadData")[as].submit();
+    }
+</script>
+
+
+
+<%- include("partials/footer.ejs") %>

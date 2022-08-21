@@ -10,13 +10,13 @@
     <form action="/login" method="post">
         <div class="lll">
             <div class="l-div">
-                <input type="text" class="form-control login-form" id="formGroupExampleInput" placeholder="mail">
-                <input type="password" class="form-control login-form" id="formGroupExampleInput" placeholder="password">
+                <input type="text" class="form-control login-form" name="logmail" id="formGroupExampleInput" autocomplete="off" required placeholder="mail">
+                <input type="password" class="form-control login-form" name="logpass" required id="formGroupExampleInput" placeholder="password">
                 <button type="submit" class="btn">Login</button>
             </div>
             <div class="fle-div">
                 <a href="/forgot-password" style="padding:10px 10px;text-decoration: none;">forgot password?</a>
-                <a href="/register" style="padding:10px 10px; text-decoration: none;">register</a>
+                <a href="/register" style="padding:10px 10px; text-decoration: none;">Sign Up</a>
             </div>
         </div>
     </form>

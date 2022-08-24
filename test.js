@@ -28,24 +28,36 @@
 
 // console.log(arr)
 
-const createCsvWriter = require('csv-writer').createObjectCsvWriter;
-const csvWriter = createCsvWriter({
-    path: 'data.csv',
-    header: [
-        {id: 'name', title: 'NAME'},
-        {id: 'lang', title: 'LANGUAGE'}
-    ]
-});
+// const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+// const csvWriter = createCsvWriter({
+//     path: 'data.csv',
+//     header: [
+//         {id: 'name', title: 'NAME'},
+//         {id: 'lang', title: 'LANGUAGE'}
+//     ]
+// });
  
-const records = [
-    {name: 'Bob',  lang: 'French, English'},
-    {name: 'Mary', lang: 'English'}
-];
+// const records = [
+//     {name: 'Bob',  lang: 'French, English'},
+//     {name: 'Mary', lang: 'English'}
+// ];
  
-csvWriter.writeRecords(records)       // returns a promise
-    .then(() => {
-        console.log('...Done');
-    });
+// csvWriter.writeRecords(records)       // returns a promise
+//     .then(() => {
+//         console.log('...Done');
+//     });
   
+var h1 = 10;
+
+let s1 = 0;
+let s2=1,s3;
+
+for(var i=1; i<=h1;i++) {
+    console.log(s1);
+    s3 = s1+s2;
+    s1 =s2;
+    s2 = s3;
+}
+
 
 

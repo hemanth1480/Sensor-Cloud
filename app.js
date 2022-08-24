@@ -294,7 +294,7 @@ app.post("/download-data", (req,res) => {
             if (err) {
                 res.redirect("/stored-data");
             } else if (uno.length != 0) {
-                
+                fs.mkdir("download-data/" + uno[0].title + "/" + uno[0].title + ".csv");
                 var xval = uno[0].xaxis;
                 var yval = uno[0].yaxis;
                 var len = [];

@@ -117,7 +117,6 @@ app.get("/stored-data", (req, res) => {
 app.get("/data/store/api", (req, res) => {
     const UTCTime = new Date();
     const time = UTCTime.toTimeString();
-    console.log(req.query.xval);
     if (req.query.xval == undefined && req.query.yval == undefined) {
         res.send("Upload Error. Please send a min of 1 input");
     }  else {
@@ -155,6 +154,12 @@ app.get("/data/store/api", (req, res) => {
                         if (lol.length === 0) {
                             res.send("You had no valid API Key");
                         } else if(lol[0].apipass == req.query.way){
+                            let ttl
+                            if (req.query.title == undefined) {
+                                ttl = "No_Title";
+                            } else {
+                                ttl = req.query.title;
+                            }
                             const newdata = new Data({
                                 id: req.query.id,
                                 pass: req.query.way,
@@ -162,7 +167,7 @@ app.get("/data/store/api", (req, res) => {
                                 xaxis: [xaxsval],
                                 yaxis: [yaxsval],
                                 timeStamp: [time],
-                                title: req.query.title,
+                                title: ttl,
                                 xLabel: req.query.xLabel,
                                 yLabel: req.query.yLabel
                             });
@@ -218,6 +223,25 @@ app.get("/limit-reached", (req,res) => {
 
 app.get("/error", (req,res) => {
     res.render("error-files/error");
+});
+
+app.get("/logout", (req,res) => {
+    req.session.destroy();
+    res.redirect("/login");
+});
+
+app.get("/your-keys", (req,res) => {
+    if (req.session.userId) {
+        API.find({mail:req.session.userId}, (err,foundKeys) => {
+            if(err) {
+                res.redirect("/login");
+            } else {
+                res.render("yourKeys", {dat:foundKeys});
+            }
+        });
+    } else {
+        res.redirect("/login");
+    }
 });
 
 app.post("/register", (req, res) => {
@@ -294,7 +318,13 @@ app.post("/download-data", (req,res) => {
             if (err) {
                 res.redirect("/stored-data");
             } else if (uno.length != 0) {
-                fs.mkdir("download-data/" + uno[0].title + "/" + uno[0].title + ".csv");
+                if(!fs.existsSync(__dirname + "/download-data/" + uno[0]._id)) {
+                    fs.mkdir(__dirname + "/download-data/" + uno[0]._id, (err) => {
+                        if (err) {
+                            res.redirect("/stored-data");
+                        }
+                    });
+                }
                 var xval = uno[0].xaxis;
                 var yval = uno[0].yaxis;
                 var len = [];
@@ -302,7 +332,7 @@ app.post("/download-data", (req,res) => {
                     len.push(c);
                 }
                 const csvWriter = createCsvWriter({
-                    path: 'data.csv',
+                    path:__dirname + "/download-data/" + uno[0]._id + "/" + uno[0].title + ".csv",
                     header: [
                         {id: 'number', title: 'S.No'},
                         {id: 'xValue', title: 'xValue'},
@@ -316,15 +346,25 @@ app.post("/download-data", (req,res) => {
                 }
                 csvWriter.writeRecords(records) 
                 .then(() => {
-                    console.log('...Done');
-                    res.redirect("/stored-data");
+                    res.download(__dirname + "/download-data/" + uno[0]._id + "/" + uno[0].title + ".csv");
                 });
-            } else {
-                res.redirect("/login");
             }
-        });
+        })
     } else {
         res.redirect("/login");
+    }
+});
+
+app.post("/delete-data", (req,res) => {
+    if (req.session.userId) {
+        API.deleteOne({apikey:req.body.delid}, (err) => {
+            if (err) {
+                console.log(err);
+            } 
+            Data.deleteOne({id:req.body.delid}, () => {
+                res.redirect("your-keys")
+            });
+        });
     }
 });
 

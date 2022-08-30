@@ -25,7 +25,7 @@
             line-height:normal;
         }
         table{
-            margin: 10px auto;
+            margin: 40px auto 0 auto;
         }
         tr{
             margin: 10px;
@@ -76,8 +76,8 @@
           </div>
         </div>
       </nav>
-
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"> </script>
+      
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 <% var xdata %>
 <% var ydata  %>
@@ -153,13 +153,14 @@
         <div class="klo">
             <div class="cdm1">
                 <div class="chart-div">
-                    <canvas id="myChart" class="chart"></canvas>
+                    <div id="myPlot" style="width:100%;max-width:700px"></div>
                     <button class="btn grp graph-btn" onclick="graphtypes(0)">Graph Type </button>
                     <div class="btns-div typ">
                         <div class="div-bt">
                             <button type="button" onclick="grptyp('line')" class="btn graph-btn">Line Graph</button>
                             <button type="button" onclick="grptyp('pie')" class="btn graph-btn">Pie Chart</button>
                             <button type="button" onclick="grptyp('bar')" class="btn graph-btn">Bar Graph</button>
+                            <button type="button" onclick="grptyp('scatter')" class="btn graph-btn">Scatter Plot</button>
                         </div>
                     </div>
                 </div>
@@ -168,133 +169,65 @@
                             <img src="images/istockphoto-1396048367-612x612.jpg" style="width: 40px; height:40px;" alt="">
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item det-f" href="/stored-data">Reload</a></li>
                           <li><a class="dropdown-item det-f" onclick="detail(0)">Details</a></li>
                           <li><a class="dropdown-item" onclick="rename(0)">Rename label</a></li>
                           <li><a class="dropdown-item" onclick="downloadData(0)"> <form action="/download-data" method="post" class="downloadData"> 
                             <input name="usrid" style="display: none;" value="<%=dat[0].id%>" type="text"> Download data</form> </a></li>
-                          <li><a class="dropdown-item" onclick="deleteData(<%=0%>)"> <form action="/delete-data" method="post" class="deleteData"> 
+                          <li><a class="dropdown-item" onclick="deleteData(0)"> <form action="/delete-data" method="post" class="deleteData"> 
                             <input name="delid" style="display: none;" value="<%=dat[0].id%>" type="text"> Delete data</form> </a></li>
                         </ul>
                     </div>
+                    <script>
+                    var xValues = [<%= dat[0].xaxis %>];
+                    var yValues = [<%= dat[0].yaxis %>];
 
-                <script>
-                    var xValues = [<%= xdata %>];
-                    var yValues = [<%= ydata %>];
-
-                    var data = {
-                        labels: xValues,
-                        datasets: [{
-                            data: yValues,
-                            label:"<%=dat[0].yLabel%>",
-                            borderColor:"black",
-                            fill:false
-                        }]
-                    }
-
-                    var options = {
-                            legend: {display: false},
-                            title: {
-                                display: true,
-                                text: '<%=dat[0].title%>'
-                            },
-                            scales: {
-                                yAxes: [{
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: '<%=dat[0].yLabel%>'
-                                    }
-                                }],
-                                xAxes: [{
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: '<%=dat[0].xLabel%>'
-                                    }
-                                }]
-                            }  
-                        }
-
-                    const configdata = {
-                        type: "line",
-                        data,
-                        options
-                    }
-
-                    const configdatap = {
-                        type: "pie",
-                        data: {
-                        labels: xValues,
-                        datasets: [{
-                            data: yValues,
-                            label:"<%=dat[0].yLabel%>",
-                            backgroundColor:["#2596be", "#be4d25","#49be25","#145369","#041014","#bea925","#000000","#134b5f","42032C","E6D2AA","7FB77E","319DA0","C21010","F675A8"],
-                            fill:false
-                        }]
-                    },
-                        options
-                    }
-
-                    const configdatab = {
-                        type: "bar",
-                        data: {
-                        labels: xValues,
-                        datasets: [{
-                            data: yValues,
-                            label:"<%=dat[0].yLabel%>",
-                            backgroundColor:["#2596be", "#be4d25","#49be25","#145369","#041014","#bea925","#000000","#134b5f","42032C","E6D2AA","7FB77E","319DA0","C21010","F675A8"],
-                            fill:false
-                        }]
-                    },
-                        options
-                    }
-
-                    let myChart = new Chart(
-                        document.getElementsByClassName("chart")[0],
-                        configdata
-                    );
-
+                    var data = [{
+                        x:xValues,
+                        y:yValues,
+                        mode:"markers",
+                        type: "scatter"
+                    }];
+                    
+                    var layout = {
+                        xaxis: {range: [, 100], title: "<%=dat[0].xLabel %>"},
+                        yaxis: {range: [0, 100], title: "<%=dat[0].yLabel %>"},  
+                        title: "<%=dat[0].title %>"
+                    };
+                    
+                    Plotly.newPlot("myPlot", data, layout);
 
                     function grptyp(type) {
-                        myChart.destroy();
-                        if (type === "bar") {
-                            myChart = new Chart(
-                                document.getElementsByClassName("chart")[0],
-                                configdatab
-                            );
+                        document.getElementsByClassName("plotly")[0].remove();
+                        if (type == "line") {
+                            var data = [{
+                                x: xValues,
+                                y: yValues,
+                                mode: "lines",
+                                type: "scatter"
+                            }];
+                            Plotly.newPlot("myPlot", data, layout);
                         }
-                        if (type === "line") {
-                            myChart = new Chart(
-                                document.getElementsByClassName("chart")[0],
-                                configdata
-                            );
+                        if (type == "pie") {
+                            var data = [{labels:xValues, values:yValues, type:"pie"}];
+                            Plotly.newPlot("myPlot", data, layout);
                         }
-                        if (type === "pie") {
-                            myChart = new Chart(
-                                document.getElementsByClassName("chart")[0],
-                                configdatap
-                            );
+                        if (type == "bar") {
+                            var data = [{x:xValues, y:yValues, type:"bar"}];
+                            Plotly.newPlot("myPlot", data, layout);
+                        }
+                        if (type == "scatter") {
+                            var data = [{x:xValues, y:yValues, mode:"markers"}];
+                            Plotly.newPlot("myPlot", data, layout);
                         }
                     }
-                
-                </script>
+
+                    </script>
             </div>
         </div>
     </div>
 <% } else { %>
     <div class="row chart-ddiv">
         <% for(var i=0; i < dat.length;i++) { %>
-            <% for(var j=0; j < dat[i].xaxis.length;j++) { %>
-                <% if(dat[i].xaxis[j] == "null") { %>
-                    <% var cnt = j; %>
-                    <% console.log(dat[i].xaxis.slice(j,1)) %>
-                <% } %>
-            <% } %>
-            <% for(var z=0; z < dat[i].yaxis.length;z++) { %>
-                <% if(dat[i].yaxis[6] == null) { %>
-                <% } %>
-            <% } %>
-                <% var xdata = dat[i].xaxis %>
-                <% var ydata = dat[i].yaxis %>
             <div class="details-div">
                 <img class="close-img" onclick="closeit(<%=i%>)" src="images/close_FILL0_wght400_GRAD0_opsz48.png" alt="">
                 <div class="data-div">
@@ -351,14 +284,14 @@
             <div class="col-md-6 divds">
                 <div class="cdm">
                     <div class="chart-div">
-                        <canvas id="myChart" class="chart"></canvas>
+                        <div id="myPlot<%=i%>" style="width:100%;max-width:700px"></div>
                         <button class="btn grp graph-btn" onclick="graphtypes(<%=i%>)">Graph Type </button>
                         <div class="btns-div typ">
                             <div class="div-bt">
                                 <button type="button" onclick="grptyp<%=i%>('line',<%=i%>)" class="btn graph-btn">Line Graph</button>
                                 <button type="button" onclick="grptyp<%=i%>('pie',<%=i%>)" class="btn graph-btn">Pie Chart</button>
                                 <button type="button" onclick="grptyp<%=i%>('bar',<%=i%>)" class="btn graph-btn">Bar Graph</button>
-                                <!-- <button type="button" onclick="grptyp<%=i%>('scatter',<%=i%>)" class="btn graph-btn">Scatter Plot</button> -->
+                                <button type="button" onclick="grptyp<%=i%>('scatter',<%=i%>)" class="btn graph-btn">Scatter Plot</button>
                             </div>
                         </div>
                     </div>
@@ -367,7 +300,6 @@
                             <img src="images/istockphoto-1396048367-612x612.jpg" style="width: 40px; height:40px;" alt="">
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                          <li><a class="dropdown-item det-f" href="/stored-data">Reload</a></li>
                           <li><a class="dropdown-item det-f" onclick="detail(<%=i%>)">Details</a></li>
                           <li><a class="dropdown-item" onclick="rename(<%=i%>)">Rename label</a></li>
                           <li><a class="dropdown-item" onclick="downloadData(<%=i%>)"> <form action="/download-data" method="post" class="downloadData"> 
@@ -378,105 +310,49 @@
                     </div>
                     
                     <script>
-                    var xValues = [<%= xdata %>];
-                    var yValues = [<%= ydata %>];
+                    var xValues<%=i%> = [<%= dat[i].xaxis %>];
+                    var yValues<%=i%> = [<%= dat[i].yaxis %>];
 
-                    var data = {
-                        labels: xValues,
-                        datasets: [{
-                            data: yValues,
-                            label:"<%=dat[i].yLabel%>",
-                            borderColor:"black",
-                            fill:false
-                        }]
-                    }
+                    var data = [{
+                        x:xValues<%=i%>,
+                        y:yValues<%=i%>,
+                        mode:"markers",
+                        type: "scatter"
+                    }];
+                    
+                    var layout = {
+                        xaxis: {range: [, 100], title: "<%=dat[i].xLabel %>"},
+                        yaxis: {range: [0, 100], title: "<%=dat[i].yLabel %>"},  
+                        title: "<%=dat[i].title %>"
+                    };
+                    
+                    Plotly.newPlot("myPlot<%=i%>", data, layout);
 
-                    var options = {
-                            legend: {display: false},
-                            title: {
-                                display: true,
-                                text: '<%=dat[i].title%>'
-                            },
-                            scales: {
-                                yAxes: [{
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: '<%=dat[i].yLabel%>'
-                                    }
-                                }],
-                                xAxes: [{
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: '<%=dat[i].xLabel%>'
-                                    }
-                                }]
-                            }  
+                    function grptyp<%=i%>(type,num) {
+                        document.getElementsByClassName("plotly")[num].remove();
+                        if (type == "line") {
+                            var data = [{
+                                x: xValues<%=i%>,
+                                y: yValues<%=i%>,
+                                mode: "lines",
+                                type: "scatter"
+                            }];
+                            Plotly.newPlot("myPlot" +num, data, layout);
                         }
-
-                    const configdata<%=i%> = {
-                        type: "line",
-                        data,
-                        options
-                    }
-
-                    const configdatap<%=i%> = {
-                        type: "pie",
-                        data: {
-                        labels: xValues,
-                        datasets: [{
-                            data: yValues,
-                            label:"<%=dat[i].yLabel%>",
-                            backgroundColor:["#2596be", "#be4d25","#49be25","#145369","#041014","#bea925","#000000","#134b5f","42032C","E6D2AA","7FB77E","319DA0","C21010","F675A8"],
-                            fill:false
-                        }]
-                    },
-                        options
-                    }
-                    // const configdatas<%=i%> = {
-                    //     type: "scatter",
-                    //     data,
-                    //     options
-                    // }
-                    const configdatab<%=i%> = {
-                        type: "bar",
-                        data: {
-                        labels: xValues,
-                        datasets: [{
-                            data: yValues,
-                            label:"<%=dat[i].yLabel%>",
-                            backgroundColor:["#2596be","#49be25","#134b5f","#be4d25","#145369","#041014","#bea925","#000000","42032C","E6D2AA","7FB77E","319DA0","C21010","F675A8"],
-                            fill:false
-                        }]
-                    },
-                        options
-                    }
-
-                    let myChart<%=i%> = new Chart(
-                        document.getElementsByClassName("chart")[<%=i%>],
-                        configdata<%=i%>
-                    );
-
-                    function grptyp<%=i%>(type) {
-                        myChart<%=i%>.destroy();
-                        if (type === "bar") {
-                            myChart<%=i%> = new Chart(
-                                document.getElementsByClassName("chart")[<%=i%>],
-                                configdatab<%=i%>
-                            );
+                        if (type == "pie") {
+                            var data = [{labels:xValues<%=i%>, values:yValues<%=i%>, type:"pie"}];
+                            Plotly.newPlot("myPlot" +num, data, layout);
                         }
-                        if (type === "line") {
-                            myChart<%=i%> = new Chart(
-                                document.getElementsByClassName("chart")[<%=i%>],
-                                configdata<%=i%>
-                            );
+                        if (type == "bar") {
+                            var data = [{x:xValues<%=i%>, y:yValues<%=i%>, type:"bar"}];
+                            Plotly.newPlot("myPlot" +num, data, layout);
                         }
-                        if (type === "pie") {
-                            myChart<%=i%> = new Chart(
-                                document.getElementsByClassName("chart")[<%=i%>],
-                                configdatap<%=i%>
-                            );
+                        if (type == "scatter") {
+                            var data = [{x:xValues<%=i%>, y:yValues<%=i%>, mode:"markers"}];
+                            Plotly.newPlot("myPlot" +num, data, layout);
                         }
                     }
+
                     </script>
                 </div>
             </div>
@@ -486,6 +362,5 @@
 <% } %>
 
 <script src="js/dom.js"></script>
-
 
 <%- include("partials/footer.ejs") %>

@@ -47,17 +47,57 @@
 //         console.log('...Done');
 //     });
   
-var h1 = 10;
+// var h1 = 10;
 
-let s1 = 0;
-let s2=1,s3;
+// let s1 = 0;
+// let s2=1,s3;
 
-for(var i=1; i<=h1;i++) {
-    console.log(s1);
-    s3 = s1+s2;
-    s1 =s2;
-    s2 = s3;
-}
+// for(var i=1; i<=h1;i++) {
+//     console.log(s1);
+//     s3 = s1+s2;
+//     s1 =s2;
+//     s2 = s3;
+// }
+
+// var fs = require('fs');
+ 
+// // writeFile function with filename, content and callback function
+// // fs.writeFile(__dirname + '/views/newfile.txt', 'Learn Node FS module', function (err) {
+// //   if (err) throw err;
+// //   console.log('File is created successfully.');
+// // });
+
+// var fd = fs.openSync(__dirname + "/download-data/jk.csv", 'w')
+
+// const stringify = require('csv-stringify');
+// var fs = require('fs');
+
+// let data = [];
+// let columns = {
+//   id: 'id',
+//   name: 'Name'
+// };
+
+// for (var i = 0; i < 10; i++) {
+//   data.push([i, 'Name ' + i]);
+// }
+
+// stringify(data, { header: true, columns: columns }, (err, output) => {
+//   if (err) throw err;
+//   fs.writeFile('my.csv', output, (err) => {
+//     if (err) throw err;
+//     console.log('my.csv saved.');
+//   });
+// });
+
+// let h = ([]);
+// let p =[0];
+// h.push(p);
+
+// console.log(h);
+
+
+
 
 
 

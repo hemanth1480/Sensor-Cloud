@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Sensor Cloud</title>
+    <link rel="icon" type="image/x-icon" href="/images/cloud.png">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <div class="logo-div">
+                <img src="/images/cloud.png" class="logo" alt="">
+                <a class="navbar-brand" href="/">Sensor Cloud</a>
+            </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+               <li class="nav-item dropdown">
+                <a class="nav-link active dropdown-toggle" href="/business-solutions" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Cloud Storage
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <li><a class="dropdown-item" href="/plans-storage">Get Storage</a></li>
+                  <li><a class="dropdown-item" href="/api-key">Get API Key</a></li>
+                  <!-- <li><a class="dropdown-item" href="construction">Construction</a></li> -->
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active c1" href="/documentation">Docs</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active a1" href="/about">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active c1" href="/stored-data">Stored Data</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+<style>
+    table {
+        margin: 50px auto;
+        border: 1px solid black;
+        border-collapse: collapse;
+        border-spacing: 20px;
+    }
+
+    body {
+        background-color: rgba(230, 231, 231, 255);
+        ;
+    }
+
+    h6 {
+        margin-bottom: 0 !important;
+    }
+
+    .btn {
+        position: relative;
+        display: inline-block;
+        padding: 6px 12px;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 20px;
+        color: #333;
+        white-space: nowrap;
+        vertical-align: middle;
+        cursor: pointer;
+        background-color: #eee;
+        background-image: linear-gradient(#fcfcfc, #eee);
+        border: 1px solid #d5d5d5;
+        border-radius: 3px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-appearance: none;
+    }
+</style>
+
+<% if(dat.length < 1) { %>
+<div style="text-align: center;margin:150px auto">
+    <h3>Your had no alloted API Keys</h3>
+    <a href="/api-key" style="text-decoration: none;">
+        <p>Get one</p>
+    </a>
+</div>
+<% } else { %>
+
+<div class="alrt dis" id="load">
+    <div class="alrt2">
+        <form action="/delete-data" method="post">
+            <input type="text" class="inp-val" name="delid" style="display:none;">
+            <div style="display:flex;">
+                <h5 class="del">Deleting API results in deletion of uploaded data</h5>
+                <img src="images/close_FILL0_wght400_GRAD0_opsz48.png" onclick="clode_this()" style="width: 20px; height:20px;margin:20px;"
+                    alt="">
+            </div>
+            <button class="btn del-btn" type="submit">Delete</button>
+        </form>
+    </div>
+</div>
+
+<div class="lop">
+    <div class="data-dv">
+        <h3>Alotted API Keys</h3>
+        <div class="zx">
+            <div class="row sz vi">
+                <div class="col-md-1">
+                    <h5>S.No</h5>
+                </div>
+                <div class="col-md-5">
+                    <h5>Api Key</h5>
+                </div>
+                <div class="col-md-5">
+                    <h5>API Password</h5>
+                </div>
+                <div class="col-md-1">
+                    <h5>Delete</h5>
+                </div>
+            </div>
+            <% var cnt = 0 %>
+            <% for(var i=0;i < dat.length;i++) { %>
+            <div class="row sz">
+                <div class="col-md-1 col-sm-1">
+                    <h6 class="cnt-div"> <%= i +1%></h6>
+                </div>
+                <div class="col-md-5 col-sm-5 flexi">
+                    <p id="myInput"><%=dat[i].apikey%></p>
+                    <div class="too">
+                        <button onclick="myFunction('<%=dat[i].apikey%>','<%=cnt%>')" class="btn" onmouseout="outFunc()">
+                            <span class="tooltiptext myTooltip">Copy to clipboard</span>
+                            <img src="images/clippy.svg" style="width:13px;" alt="">
+                        </button>
+                    </div>
+                </div>
+                <% cnt = cnt + 1%>
+                <div class="col-md-5 col-sm-5 flexi">
+                    <p id="myInput"><%=dat[i].apipass%></p>
+                    <div class="too">
+                        <button onclick="myFunction('<%=dat[i].apipass%>','<%=cnt%>')" class="btn" onmouseout="outFunc()">
+                            <span class="tooltiptext myTooltip">Copy to clipboard</span>
+                            <img src="images/clippy.svg" style="width:13px;" alt="">
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-1 col-sm-1">
+                    <button onclick="deleteNow('<%=dat[i].apikey%>')" class="btn">
+                        <img src="images/delete.png" style="width:20px;height:23px" alt="">
+                    </button>
+                </div>
+            </div>
+            <% cnt = cnt + 1%>
+            <% } %>
+        </div>
+    </div>
+</div>
+<% } %>
+
+<script>
+    function deleteNow(no) {
+        document.getElementsByClassName("alrt")[0].classList.remove("dis");
+        document.getElementsByClassName("alrt")[0].classList.add("vis");
+        document.getElementsByClassName("inp-val")[0].value = no;
+        document.getElementsByClassName("zx")[0].classList.add("blur");
+        window.scrollTo(0,0);
+        document.body.style.overflow = 'hidden';
+    }
+
+    function myFunction(clicked_id,clicked_no) {
+        // var copyText = document.getElementById("myInput");
+        navigator.clipboard.writeText(clicked_id);
+
+        var tooltip = document.getElementsByClassName("myTooltip")[clicked_no];
+        tooltip.innerHTML = "copied!";
+    }
+
+    function outFunc() {
+        var tooltip = document.getElementsByClassName("myTooltip");
+        tooltip.innerHTML = "Copy to clipboard";
+    }
+    function clode_this() {
+        document.getElementsByClassName("alrt")[0].classList.remove("vis");
+        document.getElementsByClassName("alrt")[0].classList.add("dis");
+        document.getElementsByClassName("zx")[0].classList.remove("blur");
+        document.body.style.overflow = 'visible';
+    }
+</script>
+
+<%- include("partials/footer.ejs") %>

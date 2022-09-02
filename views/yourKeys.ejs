@@ -48,6 +48,9 @@
       </nav>
 
 <style>
+    .navbar{
+        z-index: 69;
+    }
     table {
         margin: 50px auto;
         border: 1px solid black;
@@ -105,7 +108,7 @@
                 <img src="images/close_FILL0_wght400_GRAD0_opsz48.png" onclick="clode_this()" style="width: 20px; height:20px;margin:20px;"
                     alt="">
             </div>
-            <button class="btn del-btn" type="submit">Delete</button>
+            <button class="btn del-btn" type="submit" style="color: white;">Delete</button>
         </form>
     </div>
 </div>
@@ -118,11 +121,14 @@
                 <div class="col-md-1">
                     <h5>S.No</h5>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-4">
                     <h5>Api Key</h5>
                 </div>
-                <div class="col-md-5">
-                    <h5>API Password</h5>
+                <div class="col-md-4">
+                    <h5>Api Password</h5>
+                </div>
+                <div class="col-md-2">
+                    <h5>Consumption</h5>
                 </div>
                 <div class="col-md-1">
                     <h5>Delete</h5>
@@ -134,7 +140,7 @@
                 <div class="col-md-1 col-sm-1">
                     <h6 class="cnt-div"> <%= i +1%></h6>
                 </div>
-                <div class="col-md-5 col-sm-5 flexi">
+                <div class="col-md-4 col-sm-4 flexi">
                     <p id="myInput"><%=dat[i].apikey%></p>
                     <div class="too">
                         <button onclick="myFunction('<%=dat[i].apikey%>','<%=cnt%>')" class="btn" onmouseout="outFunc()">
@@ -144,7 +150,7 @@
                     </div>
                 </div>
                 <% cnt = cnt + 1%>
-                <div class="col-md-5 col-sm-5 flexi">
+                <div class="col-md-4 col-sm-4 flexi">
                     <p id="myInput"><%=dat[i].apipass%></p>
                     <div class="too">
                         <button onclick="myFunction('<%=dat[i].apipass%>','<%=cnt%>')" class="btn" onmouseout="outFunc()">
@@ -152,6 +158,13 @@
                             <img src="images/clippy.svg" style="width:13px;" alt="">
                         </button>
                     </div>
+                </div>
+                <div class="col-md-2 col-sm-2">
+                    <% if(consumption[i] == undefined) { %>
+                        <p>0 B/14 MB </p>
+                    <% }else { %> 
+                        <p><%=consumption[i] %> B/14 MB </p>
+                    <% } %>
                 </div>
                 <div class="col-md-1 col-sm-1">
                     <button onclick="deleteNow('<%=dat[i].apikey%>')" class="btn">
@@ -166,14 +179,17 @@
 </div>
 <% } %>
 
+<div class="opac" onclick="remove_blur()"></div>
+
 <script>
     function deleteNow(no) {
         document.getElementsByClassName("alrt")[0].classList.remove("dis");
         document.getElementsByClassName("alrt")[0].classList.add("vis");
         document.getElementsByClassName("inp-val")[0].value = no;
-        document.getElementsByClassName("zx")[0].classList.add("blur");
+        // document.getElementsByClassName("zx")[0].classList.add("blur");
         window.scrollTo(0,0);
         document.body.style.overflow = 'hidden';
+        document.getElementsByClassName("opac")[0].classList.add("fulldiv");
     }
 
     function myFunction(clicked_id,clicked_no) {
@@ -191,8 +207,16 @@
     function clode_this() {
         document.getElementsByClassName("alrt")[0].classList.remove("vis");
         document.getElementsByClassName("alrt")[0].classList.add("dis");
-        document.getElementsByClassName("zx")[0].classList.remove("blur");
+        // document.getElementsByClassName("zx")[0].classList.remove("blur");
         document.body.style.overflow = 'visible';
+        document.getElementsByClassName("opac")[0].classList.remove("fulldiv");
+    }
+    function remove_blur() {
+        document.getElementsByClassName("alrt")[0].classList.remove("vis");
+        document.getElementsByClassName("alrt")[0].classList.add("dis");
+        // document.getElementsByClassName("zx")[0].classList.remove("blur");
+        document.body.style.overflow = 'visible';
+        document.getElementsByClassName("opac")[0].classList.remove("fulldiv");
     }
 </script>
 

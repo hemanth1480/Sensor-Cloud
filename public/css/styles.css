@@ -155,7 +155,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 25px 0 10px;
+    padding: 15px 0 10px;
     margin: 0 auto;
     width: 80%;
     height: 80%;
@@ -163,7 +163,7 @@
 
 .lll{
     width: 450px;
-    height: 240px;
+    height: 260px;
     margin: 210px auto;
     background-color: white;
     border-radius: 20px;
@@ -203,8 +203,8 @@
 
 .l2{
     width: 450px;
-    height: 370px;
-    margin: 180px auto;
+    height: 440px;
+    margin: 130px auto;
     background-color: white;
     border-radius: 20px;
 }
@@ -257,6 +257,9 @@
         width: 98% !important;
         padding: 0!important;
     }
+    .chart-ddiv{
+        margin: 0 auto 50px;
+    }
 }
 
 .st-div1{
@@ -287,7 +290,7 @@
 
 .chart-ddiv{
     width: 100%;
-    margin: 0 auto;
+    margin: 0 auto 140px;
 }
 
 .mjk{
@@ -459,14 +462,14 @@
     }
     .alrt{
         width: 96% !important;
-        margin: 100px auto !important;
+        margin: 200px auto 0 !important;
         left: 2% !important;
         right: 2% !important;
     }
 }
 
 .zx{
-    width: 1000px;
+    width: 1200px;
     margin: 100px auto;
     background-color: white;
     border-radius: 20px;
@@ -476,6 +479,7 @@
 .del-btn{
     background-color: #db3030 !important;
     background-image: radial-gradient(#db3030,#db3030) !important;
+    
 }
 
 .alrt{
@@ -488,6 +492,7 @@
     margin: 100px auto;
     border-radius: 10px;
     height: 130px;
+    z-index: 69;
 }
 
 .alrt2{
@@ -496,10 +501,6 @@
 
 .del{
     margin: 15px auto;
-}
-
-.blur{
-    opacity: 0.4;
 }
 
 .too {
@@ -560,4 +561,18 @@
 
 .cnt-div{
     margin: 8px auto 0 0;
+}
+
+.fulldiv{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: 68;
+    background-color: #000;
+    opacity: .5;
 }

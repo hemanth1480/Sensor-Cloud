@@ -9,6 +9,7 @@ const { StringDecoder } = require("string_decoder");
 const { isNull } = require("util");
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const fs = require("fs");
+var bson = require("bson");
 
 const saltRounds = 12;
 const sR = 2;
@@ -40,6 +41,7 @@ mongoose.connect("mongodb+srv://hemanth:hemanth1234@cluster0.zqpnh.mongodb.net/s
 
 const userSchema = new mongoose.Schema({
     name: String,
+    organisation: String,
     mail: String,
     password: String,
     mailhash: String
@@ -73,7 +75,8 @@ app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({
     extended: true
-}))
+}));
+app.use(express.json());
 app.use(express.static("public"));
 
 app.get("/", (req, res) => {
@@ -88,7 +91,11 @@ app.get("/login", (req, res) => {
     if (req.session.userId) {
         res.redirect("/stored-data");
     } else {
-        res.render("login");
+        if (req.query.gateway === "newRegistration") {
+            res.render("login",{new_user:true});
+        } else {
+            res.render("login",{new_user:false});
+        }
     }
 });
 
@@ -232,15 +239,27 @@ app.get("/logout", (req,res) => {
 
 app.get("/your-keys", (req,res) => {
     if (req.session.userId) {
+        var consu = [];
         API.find({mail:req.session.userId}, (err,foundKeys) => {
             if(err) {
                 res.redirect("/login");
             } else {
-                res.render("yourKeys", {dat:foundKeys});
+                Data.find({mail:req.session.userId}, (er,kl) => {
+                    kl.forEach(element => {
+                        consu.push(bson.calculateObjectSize(element))
+                    });
+                    res.render("yourKeys", {dat:foundKeys,consumption:consu});
+                });
             }
         });
     } else {
         res.redirect("/login");
+    }
+});
+
+app.get("/profile", (req,res) => {
+    if (req.session.userId) {
+        
     }
 });
 
@@ -257,12 +276,13 @@ app.post("/register", (req, res) => {
                         bcrypt.hash(req.body.regname, sR, function (err, hashmail) {
                             const newuser = new User({
                                 name: req.body.name,
+                                organisation: req.body.organisation,
                                 mail: req.body.regname,
                                 password: hash,
                                 mailhash: hashmail
                             });
                             newuser.save();
-                            res.redirect('/?id=' + hashmail);
+                            res.redirect('/login?gateway=newRegistration');
                         });
                     });
                 }

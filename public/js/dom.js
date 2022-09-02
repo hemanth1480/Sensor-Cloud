@@ -43,6 +43,24 @@ function graphtypes(qw) {
 function downloadData(as) {
     document.getElementsByClassName("downloadData")[as].submit();
 }
-function deleteData(oe) {
-    document.getElementsByClassName("deleteData")[oe].submit();
+function deleteData(nom) {
+    document.getElementsByClassName("alrt")[0].classList.remove("dis");
+        document.getElementsByClassName("alrt")[0].classList.add("vis");
+        document.getElementsByClassName("inpVal")[0].value = nom;
+        document.getElementsByClassName("opac")[0].classList.add("fulldiv");
+        document.body.style.overflow = 'hidden';
+}
+function remove_blur() {
+    document.getElementsByClassName("alrt")[0].classList.remove("vis");
+    document.getElementsByClassName("alrt")[0].classList.add("dis");
+    // document.getElementsByClassName("zx")[0].classList.remove("blur");
+    document.body.style.overflow = 'visible';
+    document.getElementsByClassName("opac")[0].classList.remove("fulldiv");
+}
+function clode_this() {
+    document.getElementsByClassName("alrt")[0].classList.remove("vis");
+    document.getElementsByClassName("alrt")[0].classList.add("dis");
+    // document.getElementsByClassName("zx")[0].classList.remove("blur");
+    document.body.style.overflow = 'visible';
+    document.getElementsByClassName("opac")[0].classList.remove("fulldiv");
 }

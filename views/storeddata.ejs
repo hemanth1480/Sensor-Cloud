@@ -12,26 +12,6 @@
 </head>
 <body id="body">
 
-    <style>
-        .container-fluid{
-            width: 65%;
-        }
-        @media (max-width: 950px) {
-            .container-fluid{
-                width: 100%;
-            }
-        }
-        h6{
-            line-height:normal;
-        }
-        table{
-            margin: 10px auto;
-        }
-        tr{
-            margin: 10px;
-        }
-    </style>
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <div class="logo-div">
@@ -50,7 +30,6 @@
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                   <li><a class="dropdown-item" href="/plans-storage">Get Storage</a></li>
                   <li><a class="dropdown-item" href="/api-key">API Key</a></li>
-                  <!-- <li><a class="dropdown-item" href="construction">Construction</a></li> -->
                 </ul>
               </li>
               <li class="nav-item">
@@ -77,7 +56,44 @@
         </div>
       </nav>
 
+      <style>
+        .navbar{
+            z-index: 69;
+        }
+        .container-fluid{
+            width: 65%;
+        }
+        @media (max-width: 950px) {
+            .container-fluid{
+                width: 100%;
+            }
+        }
+        h6{
+            line-height:normal;
+        }
+        table{
+            margin: 10px auto;
+        }
+        tr{
+            margin: 10px;
+        }
+    </style>
+
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"> </script>
+
+      <div class="alrt dis" id="load">
+        <div class="alrt2">
+            <form action="/delete-data" method="post">
+                <input type="text" class="inpVal" name="delid" style="display:none;">
+                <div style="display:flex;">
+                    <h5 class="del">Deleted data can't be retrived</h5>
+                    <img src="images/close_FILL0_wght400_GRAD0_opsz48.png" onclick="clode_this()" style="width: 20px; height:20px;margin:20px;"
+                        alt="">
+                </div>
+                <button class="btn del-btn" type="submit" style="color: white;">Delete</button>
+            </form>
+        </div>
+    </div>
 
 <% var xdata %>
 <% var ydata  %>
@@ -173,8 +189,7 @@
                           <li><a class="dropdown-item" onclick="rename(0)">Rename label</a></li>
                           <li><a class="dropdown-item" onclick="downloadData(0)"> <form action="/download-data" method="post" class="downloadData"> 
                             <input name="usrid" style="display: none;" value="<%=dat[0].id%>" type="text"> Download data</form> </a></li>
-                          <li><a class="dropdown-item" onclick="deleteData(<%=0%>)"> <form action="/delete-data" method="post" class="deleteData"> 
-                            <input name="delid" style="display: none;" value="<%=dat[0].id%>" type="text"> Delete data</form> </a></li>
+                          <li><a class="dropdown-item" onclick="deleteData('<%=dat[0].id%>')"> Delete data </a></li>
                         </ul>
                     </div>
 
@@ -372,8 +387,7 @@
                           <li><a class="dropdown-item" onclick="rename(<%=i%>)">Rename label</a></li>
                           <li><a class="dropdown-item" onclick="downloadData(<%=i%>)"> <form action="/download-data" method="post" class="downloadData"> 
                             <input name="usrid" style="display: none;" value="<%=dat[i].id%>" type="text"> Download data</form> </a></li>
-                          <li><a class="dropdown-item" onclick="deleteData(<%=i%>)"> <form action="/delete-data" method="post" class="deleteData"> 
-                            <input name="delid" style="display: none;" value="<%=dat[i].id%>" type="text"> Delete data</form> </a></li>
+                          <li><a class="dropdown-item" onclick="deleteData('<%=dat[i].id%>')"> Delete data</a></li>
                         </ul>
                     </div>
                     
@@ -432,11 +446,6 @@
                     },
                         options
                     }
-                    // const configdatas<%=i%> = {
-                    //     type: "scatter",
-                    //     data,
-                    //     options
-                    // }
                     const configdatab<%=i%> = {
                         type: "bar",
                         data: {
@@ -484,6 +493,8 @@
     </div>
     
 <% } %>
+
+<div class="opac" onclick="remove_blur()"></div>
 
 <script src="js/dom.js"></script>
 

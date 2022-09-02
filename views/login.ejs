@@ -10,6 +10,11 @@
     <form action="/login" method="post">
         <div class="lll">
             <div class="l-div">
+                <% if(new_user == true) { %> 
+                    <p> <img src="images/verified.png" style="width: 30px;height:30px;" alt=""> Registration succesful. Please Login</p>
+                <%} else { %> 
+                    <p style="visibility:none;"> <img src="" alt=""></p>
+                <% }%>
                 <input type="text" class="form-control login-form" name="logmail" id="formGroupExampleInput" autocomplete="off" required placeholder="mail">
                 <input type="password" class="form-control login-form" name="logpass" required id="formGroupExampleInput" placeholder="password">
                 <button type="submit" class="btn">Login</button>

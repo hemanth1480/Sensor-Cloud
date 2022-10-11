@@ -64,3 +64,8 @@ function clode_this() {
     document.body.style.overflow = 'visible';
     document.getElementsByClassName("opac")[0].classList.remove("fulldiv");
 }
+
+// function enlarge() {
+//     var cl =0 ;
+//     console.log(cl+1);
+// }

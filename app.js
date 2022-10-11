@@ -10,6 +10,7 @@ const { isNull } = require("util");
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const fs = require("fs");
 var bson = require("bson");
+const sendmail = require("./mail.js");
 
 const saltRounds = 12;
 const sR = 2;
@@ -44,15 +45,18 @@ const userSchema = new mongoose.Schema({
     organisation: String,
     mail: String,
     password: String,
-    mailhash: String
+    mailhash: String,
+    verification: String
 });
 
 const dataScheme = new mongoose.Schema({
     id: String,
     pass: String,
     mail: String,
-    xaxis: [String],
-    yaxis: [String],
+    para1: [String],
+    para2: [String],
+    para3: [String],
+    para4: [String],
     timeStamp: [String],
     title: String,
     xLabel:String,
@@ -65,11 +69,22 @@ const apiSchema = new mongoose.Schema({
     apipass: String
 });
 
+const verifyToken = new mongoose.Schema({
+    mail:String,
+    token: String,
+},
+{timestamps: true}
+);
+
+verifyToken.index({createdAt: 1},{expireAfterSeconds: 600});
+
 const User = new mongoose.model("User", userSchema);
 
 const Data = new mongoose.model("Data", dataScheme);
 
 const API = new mongoose.model("API", apiSchema);
+
+const Token = new mongoose.model("Token", verifyToken);
 
 app.set('view engine', 'ejs');
 
@@ -92,9 +107,15 @@ app.get("/login", (req, res) => {
         res.redirect("/stored-data");
     } else {
         if (req.query.gateway === "newRegistration") {
-            res.render("login",{new_user:true});
+            res.render("login",{new_user:true,kk:"stored-data"});
         } else {
-            res.render("login",{new_user:false});
+            let lop;
+            if (req.query.forward == undefined) {
+                lop = "stored-data";
+            } else {
+                lop = req.query.forward;
+            }
+            res.render("login",{new_user:false,kk:lop});
         }
     }
 });
@@ -117,39 +138,32 @@ app.get("/stored-data", (req, res) => {
             res.render("storeddata",{dat:kl});
         });
     } else {
-        res.redirect("/login");
+        res.redirect("/login?forward=stored-data");
     }
 });
 
 app.get("/data/store/api", (req, res) => {
     const UTCTime = new Date();
     const time = UTCTime.toTimeString();
-    if (req.query.xval == undefined && req.query.yval == undefined) {
+    if (req.query.para1 == undefined && req.query.para2 == undefined) {
         res.send("Upload Error. Please send a min of 1 input");
     }  else {
-        let xaxsval,yaxsval;
-        if (req.query.xval == undefined) {
-            xaxsval = null;
-            yaxsval = req.query.yval;
-        } else if (req.query.yval == undefined) {
-            yaxsval = null;
-            xaxsval = req.query.xval;
-        } else {
-            xaxsval = req.query.xval;
-            yaxsval = req.query.yval;
-        }
         Data.find({id: req.query.id}, (err, dat) => {
             if (err) {
                 res.redirect("/error");
             } else if (dat.length != 0) {
                 if (req.query.way == dat[0].pass) {
-                    Data.updateOne({id: req.query.id}, {$push: {xaxis: xaxsval,yaxis: yaxsval,timeStamp:time}}, (err, tres) => {
-                        if (err) {
-                            res.redirect("/login");
-                        } else {
-                            res.send("Suii");
-                        }
-                    });
+                    if (!(bson.calculateObjectSize(dat) > 7000000)) {
+                        Data.updateOne({id: req.query.id}, {$push: {para1: req.query.para1,para2: req.query.para2,para3: req.query.para3,para4: req.query.para4,timeStamp:time}}, (err, tres) => {
+                            if (err) {
+                                res.redirect("/login");
+                            } else {
+                                res.send("Suii");
+                            }
+                        });
+                    } else {
+                        res.send("Storage limit reached. Upgrade your plan.");
+                    }
                 } else{
                     res.send("Error1")
                 }
@@ -171,8 +185,10 @@ app.get("/data/store/api", (req, res) => {
                                 id: req.query.id,
                                 pass: req.query.way,
                                 mail: lol[0].mail,
-                                xaxis: [xaxsval],
-                                yaxis: [yaxsval],
+                                para1: [req.query.para1],
+                                para2: [req.query.para2],
+                                para3: [req.query.para3],
+                                para4: [req.query.para4],
                                 timeStamp: [time],
                                 title: ttl,
                                 xLabel: req.query.xLabel,
@@ -189,8 +205,6 @@ app.get("/data/store/api", (req, res) => {
         });
     }
 });
-
-// http://localhost:59/data/store/api?id=12345&way=67890&xval=10&yval=90
 
 app.get("/api-key", (req,res) => {
     if (req.session.userId) {
@@ -211,7 +225,7 @@ app.get("/api-key", (req,res) => {
                                 apipass: token
                             });
                             newapi.save();
-                            res.redirect("/stored-data");
+                            res.redirect("/your-keys");
                         });
                     }
                   });
@@ -220,7 +234,7 @@ app.get("/api-key", (req,res) => {
             }
         });
     } else{
-        res.redirect("/login");
+        res.redirect("/login?forward=your-keys");
     }
 });
 
@@ -234,7 +248,7 @@ app.get("/error", (req,res) => {
 
 app.get("/logout", (req,res) => {
     req.session.destroy();
-    res.redirect("/login");
+    res.redirect("/login?forward="+req.query.forward);
 });
 
 app.get("/your-keys", (req,res) => {
@@ -253,14 +267,61 @@ app.get("/your-keys", (req,res) => {
             }
         });
     } else {
-        res.redirect("/login");
+        res.redirect("/login?forward=your-keys");
     }
 });
 
 app.get("/profile", (req,res) => {
     if (req.session.userId) {
-        
+        User.find({mail:req.session.userId}, (err,foundUser) => {
+            if (err) {
+                res.redirect("/login");
+            } else {
+                API.find({mail:req.session.userId}, (er,fo) => {
+                    if (er) {
+                        res.redirect("/login");
+                    } else {
+                        res.render("profile",{profile:foundUser,api:fo});
+                    }
+                });
+            }
+        });
+    } else {
+        res.redirect("/login?forward=profile");
     }
+});
+
+app.get("/verifyaccount", (req,res) => {
+    if (req.session.userId) {
+        crypto.randomBytes(30, function(err, pass) {
+            var token = pass.toString('hex');
+            const verifytoken = new Token({
+                mail:req.session.userId,
+                token: token
+            });
+            verifytoken.save();
+            sendmail(req.session.userId,token);
+            res.sendStatus(200);
+        });
+    } else {
+        res.redirect("/login?forward=profile");
+    }
+});
+
+app.get("/accountVerification", (req,res) => {
+    Token.find({token:req.query.verifyid}, (err,ok) => {
+        if (err) {
+            res.redirect("/login");
+        } else if(ok.length !=0) {
+            User.updateOne({mail:ok[0].mail},{$set:{verification:"verified"}}, (err,tk) => {
+                Token.deleteOne({mail:ok[0].mail},(errr,okk) => {
+                    res.redirect("/login");
+                });
+            });
+        } else {
+            res.redirect("/error");
+        }
+    });
 });
 
 app.post("/register", (req, res) => {
@@ -279,7 +340,8 @@ app.post("/register", (req, res) => {
                                 organisation: req.body.organisation,
                                 mail: req.body.regname,
                                 password: hash,
-                                mailhash: hashmail
+                                mailhash: hashmail,
+                                verification: "Unverified"
                             });
                             newuser.save();
                             res.redirect('/login?gateway=newRegistration');
@@ -298,17 +360,21 @@ app.post("/login", (req, res) => {
         mail: req.body.logmail
     }, (err, found) => {
         if (err) {
-            res.redirect("/login");
+            res.redirect("/login?forward=" + req.query.forward);
         } else {
             if (found.length == 0) {
                 res.render("error-files/login-error");
             } else {
                 bcrypt.compare(req.body.logpass, found[0].password, function (err, resu) {
                     if (err) {
-                        res.redirect("/login?id=" + found[0].mailhash);
+                        res.redirect("/login");
                     } else if (resu == true) {
                         req.session.userId = found[0].mail;
-                        res.redirect("/stored-data");
+                        if(req.query.forward != undefined) {
+                            res.redirect("/" + req.query.forward);
+                        } else {
+                            res.redirect("/stored-data");
+                        }
                     } else {
                         res.redirect("/login");
                     }
@@ -328,7 +394,7 @@ app.post("/labelchange", (req,res) => {
             }
         });
     } else {
-        res.redirect("/login");
+        res.redirect("/login?forward=stored-data");
     }
 });
 
@@ -345,8 +411,8 @@ app.post("/download-data", (req,res) => {
                         }
                     });
                 }
-                var xval = uno[0].xaxis;
-                var yval = uno[0].yaxis;
+                var xval = uno[0].para1;
+                var yval = uno[0].para2;
                 var len = [];
                 for(var c=1; c <= xval.length;c++) {
                     len.push(c);
@@ -371,7 +437,7 @@ app.post("/download-data", (req,res) => {
             }
         })
     } else {
-        res.redirect("/login");
+        res.redirect("/login?forward=stored-data");
     }
 });
 
@@ -382,9 +448,11 @@ app.post("/delete-data", (req,res) => {
                 console.log(err);
             } 
             Data.deleteOne({id:req.body.delid}, () => {
-                res.redirect("your-keys")
+                res.redirect("/" + req.query.forward);
             });
         });
+    } else {
+        res.redirect("/login?forward=" + req.query.forward);
     }
 });
 

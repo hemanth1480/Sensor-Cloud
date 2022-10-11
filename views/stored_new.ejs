@@ -46,9 +46,9 @@
                     <img src="/images/profile1.png" style="width: 21px; height:23px" alt="">
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                  <li><a class="dropdown-item" onclick="profile()">Profile</a></li>
                   <li><a class="dropdown-item" href="/account-settings">Settings</a></li>
-                  <li><a class="dropdown-item" href="/logout?forward=stored-data">logout</a></li>
+                  <li><a class="dropdown-item" href="/logout">logout</a></li>
                 </ul>
               </li>
             </ul>
@@ -83,7 +83,7 @@
 
       <div class="alrt dis" id="load">
         <div class="alrt2">
-            <form action="/delete-data?forward=stored-data" method="post">
+            <form action="/delete-data" method="post">
                 <input type="text" class="inpVal" name="delid" style="display:none;">
                 <div style="display:flex;">
                     <h5 class="del">Deleted data can't be retrived</h5>
@@ -111,8 +111,8 @@
 
 <% if(len == 1) { %>
 
-    <% var xdata = dat[0].para1 %>
-    <% var ydata = dat[0].para2 %>
+    <% var xdata = dat[0].xaxis %>
+    <% var ydata = dat[0].yaxis %>
     <div class="details-div">
         <div class="data-div">
             <table>
@@ -196,15 +196,6 @@
                 <script>
                     var xValues = [<%= xdata %>];
                     var yValues = [<%= ydata %>];
-
-                    if (yValues[0] == undefined) {
-                        newY = [];
-                        for(var l=0;l<xValues.length;l++) {
-                            newY.push(l);
-                        }
-                        xValues = newY
-                        yValues = [<%= xdata %>]
-                    }
 
                     var data = {
                         labels: xValues,
@@ -307,18 +298,18 @@
 <% } else { %>
     <div class="row chart-ddiv">
         <% for(var i=0; i < dat.length;i++) { %>
-            <% for(var j=0; j < dat[i].para1.length;j++) { %>
-                <% if(dat[i].para1[j] == "null") { %>
+            <% for(var j=0; j < dat[i].xaxis.length;j++) { %>
+                <% if(dat[i].xaxis[j] == "null") { %>
                     <% var cnt = j; %>
-                    <% console.log(dat[i].para1.slice(j,1)) %>
+                    <% console.log(dat[i].xaxis.slice(j,1)) %>
                 <% } %>
             <% } %>
-            <% for(var z=0; z < dat[i].para2.length;z++) { %>
-                <% if(dat[i].para2[6] == null) { %>
+            <% for(var z=0; z < dat[i].yaxis.length;z++) { %>
+                <% if(dat[i].yaxis[6] == null) { %>
                 <% } %>
             <% } %>
-                <% var xdata = dat[i].para1 %>
-                <% var ydata = dat[i].para2 %>
+                <% var xdata = dat[i].xaxis %>
+                <% var ydata = dat[i].yaxis %>
             <div class="details-div">
                 <img class="close-img" onclick="closeit(<%=i%>)" src="images/close_FILL0_wght400_GRAD0_opsz48.png" alt="">
                 <div class="data-div">
@@ -403,15 +394,6 @@
                     <script>
                     var xValues = [<%= xdata %>];
                     var yValues = [<%= ydata %>];
-
-                    if (yValues[0] == undefined) {
-                        newY = [];
-                        for(var l=0;l<xValues.length;l++) {
-                            newY.push(l);
-                        }
-                        xValues = newY
-                        yValues = [<%= xdata %>]
-                    }
 
                     var data = {
                         labels: xValues,
@@ -515,6 +497,5 @@
 <div class="opac" onclick="remove_blur()"></div>
 
 <script src="js/dom.js"></script>
-
 
 <%- include("partials/footer.ejs") %>

@@ -30,7 +30,6 @@
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                   <li><a class="dropdown-item" href="/plans-storage">Get Storage</a></li>
                   <li><a class="dropdown-item" href="/api-key">Get API Key</a></li>
-                  <!-- <li><a class="dropdown-item" href="construction">Construction</a></li> -->
                 </ul>
               </li>
               <li class="nav-item">
@@ -41,6 +40,16 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link active c1" href="/stored-data">Stored Data</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link active dropdown-toggle" href="/profile" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="/images/profile1.png" style="width: 21px; height:23px" alt="">
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                  <li><a class="dropdown-item" href="/account-settings">Settings</a></li>
+                  <li><a class="dropdown-item" href="/logout?forward=your-keys">logout</a></li>
+                </ul>
               </li>
             </ul>
           </div>
@@ -101,7 +110,7 @@
 
 <div class="alrt dis" id="load">
     <div class="alrt2">
-        <form action="/delete-data" method="post">
+        <form action="/delete-data?forward=your-keys" method="post">
             <input type="text" class="inp-val" name="delid" style="display:none;">
             <div style="display:flex;">
                 <h5 class="del">Deleting API results in deletion of uploaded data</h5>
@@ -161,9 +170,15 @@
                 </div>
                 <div class="col-md-2 col-sm-2">
                     <% if(consumption[i] == undefined) { %>
-                        <p>0 B/14 MB </p>
+                        <p>0 B/7 MB </p>
                     <% }else { %> 
-                        <p><%=consumption[i] %> B/14 MB </p>
+                        <% var consu =0;%>
+                        <% if(consumption[i] >=1000000 ){ %> 
+                           <% consu = consumption[i]/1000000 %>
+                        <% } else { %> 
+                            <% consu = consumption[i] %>
+                        <% } %>
+                        <p><%=consu %> B/7 MB </p>
                     <% } %>
                 </div>
                 <div class="col-md-1 col-sm-1">
@@ -173,6 +188,11 @@
                 </div>
             </div>
             <% cnt = cnt + 1%>
+            <% } %>
+            <% if(dat.length < 4) { %> 
+                <div>
+                    <button class="btn btn-light"> <a href="/api-key" style="text-decoration:none;"> Get a new Key</a> </button>
+                </div>
             <% } %>
         </div>
     </div>

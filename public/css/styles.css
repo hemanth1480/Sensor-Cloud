@@ -155,7 +155,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 15px 0 10px;
+    padding: 15px 0 0px;
     margin: 0 auto;
     width: 80%;
     height: 80%;
@@ -551,7 +551,7 @@
     margin: 0 8px;
   }
 
-  @media (max-width: 950px) { 
+@media (max-width: 950px) { 
     .flexi{
         flex-direction: row-reverse;
         justify-content: flex-end;
@@ -575,4 +575,63 @@
     z-index: 68;
     background-color: #000;
     opacity: .5;
+}
+
+/* profile */
+
+@media (max-width: 950px) { 
+    .profile{
+        width: 96% !important;
+    }
+    .tbl1{
+        width: 96% !important;
+    }
+}
+
+.tbl1{
+    width: 500px;
+}
+
+.prof-2div{
+    text-align: center;
+    position: relative;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+.profile{
+    margin: 20px auto 40px auto;
+    width: 480px;
+    height: 450px;
+    background-color: white;
+    border-radius: 20px;
+}
+
+.verify{
+    text-align: center;
+    width: 360px;
+    height: 40px;
+    margin: 90px auto 0 auto;
+    position: fixed;
+    top: 0;
+    bottom:0;
+    left: 0;
+    right: 0;
+    background-color: #48BF91;
+    border-radius: 10px;
+}
+
+.failed_a{
+    background-color: #E64848;
+    color: white;
+}
+
+@keyframes width_m {
+    from {opacity:0;}
+    to {opacity: 1;}
+}
+
+.frams{
+    animation-name: width_m;
+    animation-duration: 1s;
 }

@@ -96,8 +96,15 @@
 
 // console.log(h);
 
+function onke(k) {
+    console.log(k);
+}
 
+function jk(q) {
+    onke(q);
+}
 
+jk(90);
 
 
 

@@ -7,7 +7,7 @@
 </style>
 
 <div>
-    <form action="/login" method="post">
+    <form action="/login?forward=<%=kk%>" method="post">
         <div class="lll">
             <div class="l-div">
                 <% if(new_user == true) { %> 
@@ -15,13 +15,13 @@
                 <%} else { %> 
                     <p style="visibility:none;"> <img src="" alt=""></p>
                 <% }%>
-                <input type="text" class="form-control login-form" name="logmail" id="formGroupExampleInput" autocomplete="off" required placeholder="mail">
+                <input type="text" class="form-control login-form" name="logmail" autofocus id="formGroupExampleInput" autocomplete="off" required placeholder="mail">
                 <input type="password" class="form-control login-form" name="logpass" required id="formGroupExampleInput" placeholder="password">
                 <button type="submit" class="btn">Login</button>
             </div>
             <div class="fle-div">
-                <a href="/forgot-password" style="padding:10px 10px;text-decoration: none;">forgot password?</a>
-                <a href="/register" style="padding:10px 10px; text-decoration: none;">Sign Up</a>
+                <a href="/forgot-password" style="padding:10px 10px;text-decoration: none;color: rgba(58,104,131,255);">Forgot password?</a>
+                <a href="/register" style="padding:10px 10px; text-decoration: none;color: rgba(58,104,131,255);">Sign Up</a>
             </div>
         </div>
     </form>

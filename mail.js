@@ -3,7 +3,7 @@ var nodemailer = require('nodemailer');
 
 const sendmail = (email,token) => {
     const msg = {
-        from: "admin@sensorstore.xyz",
+        from: "hemanth.m1480@gmail.com",
         to: "hemanth.m1480@gmail.com",
         subject: "Password change request accepted",
         text: "Use the link provided to change our account password " +
@@ -13,8 +13,8 @@ const sendmail = (email,token) => {
     nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: "admin@sensorstore.xyz",
-            pass: "kvmdmoncldgcvbho"
+            user: "hemanth.m1480@gmail.com",
+            pass: "frsvmfxhljxckees"
         },
         port:465,
         host: "smtp.gmail.com"

@@ -311,11 +311,11 @@ app.get("/verifyaccount", (req,res) => {
 app.get("/accountVerification", (req,res) => {
     Token.find({token:req.query.verifyid}, (err,ok) => {
         if (err) {
-            res.redirect("/login");
+            res.redirect("/login?forward=profile");
         } else if(ok.length !=0) {
             User.updateOne({mail:ok[0].mail},{$set:{verification:"verified"}}, (err,tk) => {
                 Token.deleteOne({mail:ok[0].mail},(errr,okk) => {
-                    res.redirect("/login");
+                    res.redirect("/login?forward=profile");
                 });
             });
         } else {

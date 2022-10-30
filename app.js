@@ -59,14 +59,21 @@ const dataScheme = new mongoose.Schema({
     para4: [String],
     timeStamp: [String],
     title: String,
-    xLabel:String,
-    yLabel:String
+    xLabel: String,
+    yLabel: String,
+    zLabel: String,
+    hLabel: String
 });
 
 const apiSchema = new mongoose.Schema({
     mail: String,
     apikey: String,
-    apipass: String
+    apipass: String,
+    name: String,
+    param1: String,
+    param2: String,
+    param3: String,
+    param4: String
 });
 
 const verifyToken = new mongoose.Schema({
@@ -135,6 +142,18 @@ app.get("/forgot-password", (req, res) => {
 app.get("/stored-data", (req, res) => {
     if (req.session.userId) {
         Data.find({mail:req.session.userId}, (err,kl) => {
+            // var x = [];
+            // var y = [];
+            // var z = [];
+            // var h = [];
+            // kl.forEach( one => {
+            //     for(var i=0; i< one.timeStamp.length; i++) {
+            //         x.push({t: one.timeStamp[i],y: one.para1[i]});
+            //         y.push({t: one.timeStamp[i],y: one.para2[i]});
+            //         z.push({t: one.timeStamp[i],y: one.para3[i]});
+            //         h.push({t: one.timeStamp[i],y: one.para4[i]});
+            //     }
+            // });
             res.render("storeddata",{dat:kl});
         });
     } else {
@@ -143,9 +162,24 @@ app.get("/stored-data", (req, res) => {
 });
 
 app.get("/data/store/api", (req, res) => {
-    const UTCTime = new Date();
-    const time = UTCTime.toTimeString();
-    if (req.query.para1 == undefined && req.query.para2 == undefined) {
+
+    let date_ob = new Date();
+
+    let date = ("0" + date_ob.getDate()).slice(-2);
+
+    let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+
+    let year = date_ob.getFullYear();
+
+    let hours = ("0" +  date_ob.getHours()).slice(-2);
+
+    let minutes = ("0" +  date_ob.getMinutes()).slice(-2);
+
+    let seconds = ("0" +  date_ob.getSeconds()).slice(-2);
+
+    var newDate = year + "-" + month + "-" + date + "T" + hours + ":" + minutes + ":" + seconds;
+
+    if (Object.keys(req.query).length < 3) {
         res.send("Upload Error. Please send a min of 1 input");
     }  else {
         Data.find({id: req.query.id}, (err, dat) => {
@@ -154,11 +188,11 @@ app.get("/data/store/api", (req, res) => {
             } else if (dat.length != 0) {
                 if (req.query.way == dat[0].pass) {
                     if (!(bson.calculateObjectSize(dat) > 7000000)) {
-                        Data.updateOne({id: req.query.id}, {$push: {para1: req.query.para1,para2: req.query.para2,para3: req.query.para3,para4: req.query.para4,timeStamp:time}}, (err, tres) => {
+                        Data.updateOne({id: req.query.id}, {$push: {para1: req.query[dat[0].xLabel],para2: req.query[dat[0].yLabel],para3: req.query[dat[0].zLabel],para4: req.query[dat[0].hLabel],timeStamp:newDate}}, (err, tres) => {
                             if (err) {
                                 res.redirect("/login");
                             } else {
-                                res.send("Suii");
+                                res.send("Uploaded");
                             }
                         });
                     } else {
@@ -175,27 +209,25 @@ app.get("/data/store/api", (req, res) => {
                         if (lol.length === 0) {
                             res.send("You had no valid API Key");
                         } else if(lol[0].apipass == req.query.way){
-                            let ttl
-                            if (req.query.title == undefined) {
-                                ttl = "No_Title";
-                            } else {
-                                ttl = req.query.title;
-                            }
+                            par1 = lol[0].param1;
+
                             const newdata = new Data({
                                 id: req.query.id,
                                 pass: req.query.way,
                                 mail: lol[0].mail,
-                                para1: [req.query.para1],
-                                para2: [req.query.para2],
-                                para3: [req.query.para3],
-                                para4: [req.query.para4],
-                                timeStamp: [time],
-                                title: ttl,
-                                xLabel: req.query.xLabel,
-                                yLabel: req.query.yLabel
+                                para1: [req.query[lol[0].param1]],
+                                para2: [req.query[lol[0].param2]],
+                                para3: [req.query[lol[0].param3]],
+                                para4: [req.query[lol[0].param4]],
+                                timeStamp: [newDate],
+                                title: lol[0].name,
+                                xLabel: lol[0].param1,
+                                yLabel: lol[0].param2,
+                                zLabel: lol[0].param3,
+                                hLabel: lol[0].param4
                             });
                             newdata.save();
-                            res.send("Suii");
+                            res.send("Data uploaded");
                         } else {
                             res.send("API verification failed");
                         }
@@ -203,38 +235,6 @@ app.get("/data/store/api", (req, res) => {
                 });
             }
         });
-    }
-});
-
-app.get("/api-key", (req,res) => {
-    if (req.session.userId) {
-        API.find({mail:req.session.userId}, (err,found4) => {
-            if (err) {
-                res.redirect("/error");
-            } else if (found4.length < 4) {
-                crypto.randomBytes(16, function(err, key) {
-                    if(err) {
-                        res.redirect("/error");
-                    } else{
-                        crypto.randomBytes(18, function(err, pass) {
-                            var token1 = key.toString('hex');
-                            var token = pass.toString('hex');
-                            const newapi = new API({
-                                mail:req.session.userId,
-                                apikey: token1,
-                                apipass: token
-                            });
-                            newapi.save();
-                            res.redirect("/your-keys");
-                        });
-                    }
-                  });
-            } else {
-                res.redirect("/limit-reached");
-            }
-        });
-    } else{
-        res.redirect("/login?forward=your-keys");
     }
 });
 
@@ -413,6 +413,8 @@ app.post("/download-data", (req,res) => {
                 }
                 var xval = uno[0].para1;
                 var yval = uno[0].para2;
+                var zval = uno[0].para3;
+                var hval = uno[0].para4;
                 var len = [];
                 for(var c=1; c <= xval.length;c++) {
                     len.push(c);
@@ -421,13 +423,16 @@ app.post("/download-data", (req,res) => {
                     path:__dirname + "/download-data/" + uno[0]._id + "/" + uno[0].title + ".csv",
                     header: [
                         {id: 'number', title: 'S.No'},
+                        {id:'time', title: 'time'},
                         {id: 'xValue', title: 'xValue'},
-                        {id: 'yValue', title: 'yValue'}
+                        {id: 'yValue', title: 'yValue'},
+                        {id: 'zValue', title: 'zValue'},
+                        {id: 'hValue', title: 'hValue'}
                     ]
                 });
                 const records = [];
                 for (let l = 0; l < xval.length; l++) {
-                    var sub = {number:len[l],xValue:xval[l],yValue:yval[l]}
+                    var sub = {number:len[l],xValue:xval[l],yValue:yval[l],zValue:zval[l],hValue:hval[l],time:uno[0].timeStamp[l]}
                     records.push(sub);
                 }
                 csvWriter.writeRecords(records) 
@@ -443,16 +448,92 @@ app.post("/download-data", (req,res) => {
 
 app.post("/delete-data", (req,res) => {
     if (req.session.userId) {
-        API.deleteOne({apikey:req.body.delid}, (err) => {
-            if (err) {
-                console.log(err);
-            } 
-            Data.deleteOne({id:req.body.delid}, () => {
-                res.redirect("/" + req.query.forward);
+        // API.deleteOne({apikey:req.body.delid}, (err) => {
+        //     if (err) {
+        //         console.log(err);
+        //     } 
+            Data.deleteOne({id:req.body.delid}, (err,respu) => {
+                if (err) {
+                    console.log(err);
+                }  else {
+                    res.redirect("/" + req.query.forward);
+                }
             });
-        });
+        // });
     } else {
         res.redirect("/login?forward=" + req.query.forward);
+    }
+});
+
+app.post("/api-key", (req,res) => {
+    if (req.session.userId) {
+        API.find({mail:req.session.userId}, (err,found4) => {
+            if (err) {
+                res.redirect("/error");
+            } else if (found4.length < 4) {
+                crypto.randomBytes(16, function(err, key) {
+                    if(err) {
+                        res.redirect("/error");
+                    } else{
+                        crypto.randomBytes(18, function(err, pass) {
+                            var token1 = key.toString('hex');
+                            var token = pass.toString('hex');
+                            const newapi = new API({
+                                mail:req.session.userId,
+                                apikey: token1,
+                                apipass: token,
+                                name: req.body.name,
+                                param1: req.body.para1,
+                                param2: req.body.para2,
+                                param3: req.body.para3,
+                                param4: req.body.para4
+                            });
+                            newapi.save();
+                            res.redirect("/your-keys");
+                        });
+                    }
+                  });
+            } else {
+                res.redirect("/limit-reached");
+            }
+        });
+    } else{
+        res.redirect("/login?forward=your-keys");
+    }
+});
+
+app.post("/parameterChange", (req,res) => {
+    if (req.session.userId) {
+        console.log(req.body);
+        Data.find({id: req.body.id}, (err,outp) => {
+            if(err) {
+                res.redirect("/error");
+            } else if(outp.length !=0) {
+                Data.updateOne({id: req.body.id},{$set:{title:req.body.name,xLabel:req.body.para1,yLabel:req.body.para2,zLabel:req.body.para3,hLabel:req.body.para4}}, (err,tout) => {
+                    if (err) {
+                        res.redirect("/error");
+                    } else {
+                        API.updateOne({apikey:req.body.id},{$set:{name:req.body.name,param1:req.body.para1,param2:req.body.para2,param3:req.body.para3,param4:req.body.para4}}, (err,uout) => {
+                            if(err) {
+                                res.redirect("/error");
+                            } else{
+                                res.redirect("/your-keys");
+                            }
+                        });
+                    }
+                });
+            } else {
+                API.updateOne({apikey:req.body.id},{$set:{name:req.body.name,param1:req.body.para1,param2:req.body.para2,param3:req.body.para3,param4:req.body.para4}}, (err,uout) => {
+                    if(err) {
+                        res.redirect("/error");
+                    } else{
+                        res.redirect("/your-keys");
+                    }
+                });
+            }
+        });
+    } else {
+        res.redirect("/login");
     }
 });
 

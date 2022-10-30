@@ -95,7 +95,7 @@
 </html> -->
 
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -169,4 +169,48 @@ function outFunc() {
 }
 </script>
 </body>
-</html>
+</html> -->
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+<div class="container">
+  <canvas id="examChart"></canvas>
+</div>
+
+
+<script>
+
+var dat = [{ t: '2022-10-28T16:43:39', y: '19' },
+{ t: '2022-10-28T16:43:40', y: '19' },
+{ t: '2022-10-28T16:43:41', y: '19' },
+{ t: '2022-10-28T16:43:42', y: '19' },
+{ t: '2022-10-28T16:43:43', y: '19' },
+{ t: '2022-10-28T16:43:44', y: '19' },
+{ t: '2022-10-28T16:43:45', y: '19' }];
+
+
+  var ctx = document.getElementById("examChart").getContext("2d");
+
+  var myChart = new Chart(ctx, {
+                        type: 'line',
+                        options: {
+                            scales: {
+                                xAxes: [{
+                                    type: 'time',
+                                    time: {
+                                        unit: 'day'
+                                    }
+                                }]
+                            }
+                        },
+                        data: {
+                            datasets: [{
+                                data: [{t: '2022-10-27T17:36:40',y: '19'},
+{ t: '2022-10-28T16:43:42', y: '19' },
+{ t: '2022-10-29T16:43:43', y: '19' }]
+                            }]
+                        }
+                    });
+
+</script>

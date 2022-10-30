@@ -336,6 +336,9 @@
         right: 5% !important;
         width: 90% !important;
     }
+    .search-div{
+        width: 100%;
+    }
 }
 .data-div{
     margin: 40px auto;
@@ -430,6 +433,27 @@
     overflow: hidden !important;
 }
 
+.search-div{
+    display: flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    justify-items: center;
+    align-items: center;
+    margin: 10px auto;
+    text-align: center;
+    justify-content: center;
+}
+
+.intag{
+    width: 150px;
+    margin: 0 10px;
+}
+
+.clearS{
+    text-align: center;
+}
+
 /* your key */
 
 .data-dv {
@@ -447,7 +471,7 @@
 }
 
 .sz {
-    margin: 30px auto;
+    margin: 20px auto;
 }
 
 @media (max-width: 950px) { 
@@ -465,11 +489,16 @@
         margin: 200px auto 0 !important;
         left: 2% !important;
         right: 2% !important;
+        height: 160px !important;
+    }
+    #myInput{
+        margin: 0 8px;
+        font-size: var(--bs-body-font-size) !important;
     }
 }
 
 .zx{
-    width: 1200px;
+    width: 90%;
     margin: 100px auto;
     background-color: white;
     border-radius: 20px;
@@ -506,9 +535,9 @@
 .too {
     position: relative;
     display: inline-block;
-  }
+}
   
-  .too .tooltiptext {
+.too .tooltiptext {
     visibility: hidden;
     width: 140px;
     background-color: #555;
@@ -523,9 +552,9 @@
     margin-left: -75px;
     opacity: 0;
     transition: opacity 0.3s;
-  }
+}
   
-  .too .tooltiptext::after {
+.too .tooltiptext::after {
     content: "";
     position: absolute;
     top: 100%;
@@ -534,22 +563,23 @@
     border-width: 5px;
     border-style: solid;
     border-color: #555 transparent transparent transparent;
-  }
+}
   
-  .too:hover .tooltiptext {
+.too:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
-  }
+}
 
-  .flexi{
+.flexi{
     display: flex;
     align-items: center;
     justify-content: center;
-  }
+}
 
-  #myInput{
+#myInput{
     margin: 0 8px;
-  }
+    font-size: 15px;
+}
 
 @media (max-width: 950px) { 
     .flexi{
@@ -635,3 +665,70 @@
     animation-name: width_m;
     animation-duration: 1s;
 }
+
+/* your keys */
+
+@media (max-width: 950px) { 
+    .parameter{
+        width: 96% !important;
+        position: fixed;
+        left: 2% !important;
+        right: 2% !important;
+        margin: 100px auto;
+        height: 360px !important;
+    }
+    .param{
+        width: 96% !important;
+        position: fixed;
+        left: 2% !important;
+        right: 2% !important;
+        margin: 100px auto;
+        height: 460px !important;
+    }
+    .tbl1{
+        width: 96% !important;
+    }
+}
+
+.para-input{
+    text-align: center;
+    width: 300px;
+    margin: 10px auto;
+}
+
+.para-in{
+    text-align: center;
+    width: 300px;
+    margin: 0 10px 10px;
+}
+
+.parameter{
+    background-color: white;
+    text-align: center;
+    position: fixed;
+    left: 30%;
+    right: 30%;
+    width: 600px;
+    margin: 100px auto;
+    border-radius: 10px;
+    height: 350px;
+    z-index: 69;
+}
+
+.par2{
+    margin:20px auto !important;
+}
+
+.param{
+    background-color: white;
+    text-align: center;
+    position: fixed;
+    left: 30%;
+    right: 30%;
+    width: 600px;
+    margin: 60px auto;
+    border-radius: 10px;
+    height: 450px;
+    z-index: 69;
+}
+

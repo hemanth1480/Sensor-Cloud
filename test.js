@@ -96,15 +96,266 @@
 
 // console.log(h);
 
-function onke(k) {
-    console.log(k);
-}
+// function onke(k) {
+//     console.log(k);
+// }
 
-function jk(q) {
-    onke(q);
-}
+// function jk(q) {
+//     onke(q);
+// }
 
-jk(90);
+// jk(90);
 
+// var hh = {
+//     a:"kl",
+//     b:"op"
+// }
+
+// console.log(hh.a);
+
+// console.log(hh["a"]);
+// const j = ["op","p","i"];
+
+// const h = j.slice(0,1)[0];
+
+// var k =[];
+
+// k.push(h[0])
+
+// console.log(h);
+
+// important code
+
+// var xValues = [ < %= xdata % > ];
+                    // var yValues = [ < %= ydata % > ];
+
+                    // if (yValues[0] == undefined) {
+                    //     newY = [];
+                    //     for (var l = 0; l < xValues.length; l++) {
+                    //         newY.push(l);
+                    //     }
+                    //     xValues = newY
+                    //     yValues = [ < %= xdata % > ]
+                    // }
+
+                    // var data = {
+                    //     labels: xValues,
+                    //     datasets: [{
+                    //         data: yValues,
+                    //         label: "<%=dat[i].yLabel%>",
+                    //         borderColor: "black",
+                    //         fill: false
+                    //     }]
+                    // }
+
+                    // var options = {
+                    //     legend: {
+                    //         display: false
+                    //     },
+                    //     title: {
+                    //         display: true,
+                    //         text: '<%=dat[i].title%>'
+                    //     },
+                    //     scales: {
+                    //         yAxes: [{
+                    //             scaleLabel: {
+                    //                 display: true,
+                    //                 labelString: '<%=dat[i].yLabel%>'
+                    //             }
+                    //         }],
+                    //         xAxes: [{
+                    //             scaleLabel: {
+                    //                 display: true,
+                    //                 labelString: '<%=dat[i].xLabel%>'
+                    //             }
+                    //         }]
+                    //     }
+                    // }
+
+                    // const configdata < %= i % > = {
+                    //     type: "line",
+                    //     data,
+                    //     options
+                    // }
+
+                    // const configdatap < %= i % > = {
+                    //     type: "pie",
+                    //     data: {
+                    //         labels: xValues,
+                    //         datasets: [{
+                    //             data: yValues,
+                    //             label: "<%=dat[i].yLabel%>",
+                    //             backgroundColor: ["#2596be", "#be4d25", "#49be25", "#145369", "#041014",
+                    //                 "#bea925", "#000000", "#134b5f", "42032C", "E6D2AA", "7FB77E",
+                    //                 "319DA0", "C21010", "F675A8"
+                    //             ],
+                    //             fill: false
+                    //         }]
+                    //     },
+                    //     options
+                    // }
+                    // const configdatab < %= i % > = {
+                    //     type: "bar",
+                    //     data: {
+                    //         labels: xValues,
+                    //         datasets: [{
+                    //             data: yValues,
+                    //             label: "<%=dat[i].yLabel%>",
+                    //             backgroundColor: ["#2596be", "#49be25", "#134b5f", "#be4d25", "#145369",
+                    //                 "#041014", "#bea925", "#000000", "42032C", "E6D2AA", "7FB77E",
+                    //                 "319DA0", "C21010", "F675A8"
+                    //             ],
+                    //             fill: false
+                    //         }]
+                    //     },
+                    //     options
+                    // }
+
+                    // let myChart < %= i % > = new Chart(
+                    //     document.getElementsByClassName("chart")[ < %= i % > ],
+                    //     configdata < %= i % >
+                    // );
+
+                    // function grptyp < %= i % > (type) {
+                    //     myChart < %= i % > .destroy();
+                    //     if (type === "bar") {
+                    //         myChart < %= i % > = new Chart(
+                    //             document.getElementsByClassName("chart")[ < %= i % > ],
+                    //             configdatab < %= i % >
+                    //         );
+                    //     }
+                    //     if (type === "line") {
+                    //         myChart < %= i % > = new Chart(
+                    //             document.getElementsByClassName("chart")[ < %= i % > ],
+                    //             configdata < %= i % >
+                    //         );
+                    //     }
+                    //     if (type === "pie") {
+                    //         myChart < %= i % > = new Chart(
+                    //             document.getElementsByClassName("chart")[ < %= i % > ],
+                    //             configdatap < %= i % >
+                    //         );
+                    //     }
+                    // }
+
+
+
+// var ad =[];
+                    // let gh;
+                    // for(var i=0; i< ;i++) {
+                    //     gh = "{t:<%= dat[0].timeStamp[i] %>,y:<%= dat[0].para2[i] %>},";
+                    //     ad.push(gh);
+                    // }
+                    // console.log(ad);
+
+                    // var data = {
+                    //     labels: xValues,
+                    //     datasets: [{
+                    //         data: xValues,
+                    //         borderColor: "black",
+                    //         fill: false
+                    //     }, {
+                    //         data: yValues,
+                    //         borderColor: "blue",
+                    //         fill: false
+                    //     }, {
+                    //         data: zValues,
+                    //         borderColor: "orange",
+                    //         fill: false
+                    //     }, {
+                    //         data: hValues,
+                    //         borderColor: "green",
+                    //         fill: false
+                    //     }]
+                    // }
+
+                    // var options = {
+                    //     legend: {
+                    //         display: false
+                    //     },
+                    //     title: {
+                    //         display: true,
+                    //         text: '<%=dat[0].title%>'
+                    //     },
+                    //     scales: {
+                    //         yAxes: [{
+                    //             scaleLabel: {
+                    //                 display: true,
+                    //             }
+                    //         }],
+                    //         xAxes: [{
+                    //             scaleLabel: {
+                    //                 display: true,
+                    //             }
+                    //         }]
+                    //     }
+                    // }
+
+                    // const configdata = {
+                    //     type: "line",
+                    //     data,
+                    //     options
+                    // }
+
+                    // const configdatap = {
+                    //     type: "pie",
+                    //     data: {
+                    //     labels: xValues,
+                    //     datasets: [{
+                    //         data: yValues,
+                    //         label:"<%=dat[0].yLabel%>",
+                    //         backgroundColor:["#2596be", "#be4d25","#49be25","#145369","#041014","#bea925","#000000","#134b5f","42032C","E6D2AA","7FB77E","319DA0","C21010","F675A8"],
+                    //         fill:false
+                    //     }]
+                    // },
+                    //     options
+                    // }
+
+                    // const configdatab = {
+                    //     type: "bar",
+                    //     data: {
+                    //     labels: xValues,
+                    //     datasets: [{
+                    //         data: yValues,
+                    //         label:"<%=dat[0].yLabel%>",
+                    //         backgroundColor:["#2596be", "#be4d25","#49be25","#145369","#041014","#bea925","#000000","#134b5f","42032C","E6D2AA","7FB77E","319DA0","C21010","F675A8"],
+                    //         fill:false
+                    //     }]
+                    // },
+                    //     options
+                    // }
+
+                    // let myChart = new Chart(
+                    //     document.getElementsByClassName("chart")[0],
+                    //     configdata
+                    // );\
+
+
+// var j =["p","o"];
+
+// console.log(j.length);
+
+// j.length=0;
+
+// console.log(j.length);
+
+// var l =[90,89];
+// var h=[90,80];
+// var j =[];
+
+// l.map( op => {
+//     h.map(io =>{
+//         if (op == io) {
+//             j.push(op)
+//         }
+//     })
+// });
+
+// console.log(l.slice(0));
+// console.log(l,h,j);
+
+var hj0 = 90
+
+console.log(hj0);
 
 

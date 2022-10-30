@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <title>Sensor Cloud</title>
     <link rel="icon" type="image/x-icon" href="/images/cloud.png">
     <link rel="stylesheet" href="/css/styles.css">
 </head>
+
 <body id="body">
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -18,124 +23,150 @@
                 <img src="/images/cloud.png" class="logo" alt="">
                 <a class="navbar-brand" href="/">Sensor Cloud</a>
             </div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-               <li class="nav-item dropdown">
-                <a class="nav-link active dropdown-toggle" href="/business-solutions" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Cloud Storage
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <li><a class="dropdown-item" href="/plans-storage">Get Storage</a></li>
-                  <li><a class="dropdown-item" href="/api-key">API Key</a></li>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link active dropdown-toggle" href="/business-solutions"
+                            id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Cloud Storage
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="/plans-storage">Get Storage</a></li>
+                            <li><a class="dropdown-item" href="/api-key">API Key</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active c1" href="/documentation">Docs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active a1" href="/your-keys">Your APIs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active c1" href="/contactus">Contact Us</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link active dropdown-toggle" href="/profile" id="navbarDropdownMenuLink"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="/images/profile1.png" style="width: 21px; height:23px" alt="">
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                            <li><a class="dropdown-item" href="/account-settings">Settings</a></li>
+                            <li><a class="dropdown-item" href="/logout?forward=stored-data">logout</a></li>
+                        </ul>
+                    </li>
                 </ul>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active c1" href="/documentation">Docs</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active a1" href="/your-keys">Your APIs</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active c1" href="/contactus">Contact Us</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link active dropdown-toggle" href="/profile" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="/images/profile1.png" style="width: 21px; height:23px" alt="">
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <li><a class="dropdown-item" href="/profile">Profile</a></li>
-                  <li><a class="dropdown-item" href="/account-settings">Settings</a></li>
-                  <li><a class="dropdown-item" href="/logout?forward=stored-data">logout</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
+            </div>
         </div>
-      </nav>
+    </nav>
 
-      <style>
-        .navbar{
+    <style>
+        .navbar {
             z-index: 69;
         }
-        .container-fluid{
+
+        .container-fluid {
             width: 65%;
         }
+
         @media (max-width: 950px) {
-            .container-fluid{
+            .container-fluid {
                 width: 100%;
             }
         }
-        h6{
-            line-height:normal;
+
+        h6 {
+            line-height: normal;
         }
-        table{
+
+        table {
             margin: 10px auto;
         }
-        tr{
+
+        tr {
             margin: 10px;
         }
     </style>
 
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"> </script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"> </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 
-      <div class="alrt dis" id="load">
+    <div class="alrt dis" id="load">
         <div class="alrt2">
             <form action="/delete-data?forward=stored-data" method="post">
                 <input type="text" class="inpVal" name="delid" style="display:none;">
                 <div style="display:flex;">
-                    <h5 class="del">Deleted data can't be retrived</h5>
-                    <img src="images/close_FILL0_wght400_GRAD0_opsz48.png" onclick="clode_this()" style="width: 20px; height:20px;margin:20px;"
-                        alt="">
+                    <h5 class="del">Uploaded data will be deleted and can't be retrived. API key is not deleted.</h5>
+                    <img src="images/close_FILL0_wght400_GRAD0_opsz48.png" onclick="clode_this()"
+                        style="width: 20px; height:20px;margin:20px;" alt="">
                 </div>
                 <button class="btn del-btn" type="submit" style="color: white;">Delete</button>
             </form>
         </div>
     </div>
 
-<% var xdata %>
-<% var ydata  %>
-<% var len = dat.length %>
+    <% var len = dat.length %>
 
-<% if (len == 0) { %>
+    <% if (len == 0) { %>
     <div class="st-div1">
         <h4 id="blr" style="margin: 200px auto;">You have No uploaded data</h4>
     </div>
-<% } else { %>
+    <% } else { %>
     <div class="st-div1">
         <h4 id="blr">Uploaded Data</h4>
     </div>
-<% } %>
+    <% } %>
 
-<% if(len == 1) { %>
-
-    <% var xdata = dat[0].para1 %>
-    <% var ydata = dat[0].para2 %>
+    <% if(len == 1) { %>
     <div class="details-div">
         <div class="data-div">
             <table>
                 <img class="close-img" onclick="closeit(0)" src="images/close_FILL0_wght400_GRAD0_opsz48.png" alt="">
                 <tr>
-                    <th><h6>Id:</h6></th>
-                    <th><p class="para"><%=dat[0]._id%></p></th>
+                    <th>
+                        <h6>Id:</h6>
+                    </th>
+                    <th>
+                        <p class="para"><%=dat[0]._id%></p>
+                    </th>
                 </tr>
                 <tr>
-                    <th><h6>API Key:</h6></th>
-                    <th><p class="para"><%=dat[0].id%></p></th>
+                    <th>
+                        <h6>API Key:</h6>
+                    </th>
+                    <th>
+                        <p class="para"><%=dat[0].id%></p>
+                    </th>
                 </tr>
                 <tr>
-                    <th><h6>Title:</h6></th>
-                    <th><p class="para"><%= dat[0].title%></p></th>
+                    <th>
+                        <h6>Title:</h6>
+                    </th>
+                    <th>
+                        <p class="para"><%= dat[0].title%></p>
+                    </th>
                 </tr>
                 <tr>
-                    <th><h6>xLabel:</h6></th>
-                    <th><p class="para"><%=dat[0].xLabel%></p></th>
+                    <th>
+                        <h6>xLabel:</h6>
+                    </th>
+                    <th>
+                        <p class="para"><%=dat[0].xLabel%></p>
+                    </th>
                 </tr>
                 <tr>
-                    <th><h6>yLabel:</h6></th>
-                    <th><p class="para"><%=dat[0].yLabel%></p></th>
+                    <th>
+                        <h6>yLabel:</h6>
+                    </th>
+                    <th>
+                        <p class="para"><%=dat[0].yLabel%></p>
+                    </th>
                 </tr>
             </table>
         </div>
@@ -151,15 +182,18 @@
                 <input type="text" name="id" value="<%=dat[0].id%>" style="display: none;">
                 <div class="label-btn">
                     <h6 class="label-head" style="margin: 0 18px">Title</h6>
-                    <input type="text" name="title" class="form-control" autocomplete="off" value="<%=dat[0].title%>" id="formGroupExampleInput" placeholder="Title">
+                    <input type="text" name="title" class="form-control" autocomplete="off" value="<%=dat[0].title%>"
+                        id="formGroupExampleInput" placeholder="Title">
                 </div>
                 <div class="label-btn">
                     <h6 class="label-head">xLabel</h6>
-                    <input type="text" name="xlabel" class="form-control" autocomplete="off" value="<%=dat[0].xLabel%>" id="formGroupExampleInput" placeholder="x-Label">
+                    <input type="text" name="xlabel" class="form-control" autocomplete="off" value="<%=dat[0].xLabel%>"
+                        id="formGroupExampleInput" placeholder="x-Label">
                 </div>
                 <div class="label-btn">
                     <h6 class="label-head">yLabel</h6>
-                    <input type="text" name="ylabel" class="form-control" autocomplete="off" value="<%=dat[0].yLabel%>" id="formGroupExampleInput" placeholder="y-Label">
+                    <input type="text" name="ylabel" class="form-control" autocomplete="off" value="<%=dat[0].yLabel%>"
+                        id="formGroupExampleInput" placeholder="y-Label">
                 </div>
                 <button type="btnsubmit" onclick="submitform(0)" id="your-id" class="btn">Update</button>
             </form>
@@ -170,351 +204,426 @@
             <div class="cdm1">
                 <div class="chart-div">
                     <canvas id="myChart" class="chart"></canvas>
-                    <button class="btn grp graph-btn" onclick="graphtypes(0)">Graph Type </button>
-                    <div class="btns-div typ">
-                        <div class="div-bt">
-                            <button type="button" onclick="grptyp('line')" class="btn graph-btn">Line Graph</button>
-                            <button type="button" onclick="grptyp('pie')" class="btn graph-btn">Pie Chart</button>
-                            <button type="button" onclick="grptyp('bar')" class="btn graph-btn">Bar Graph</button>
-                        </div>
+                    <div class="search-div">
+                        <h6>Search by date: </h6>
+                        <input type="date" class="form-control intag">
+                        <button class="btn btag" onclick="searchs()">Search</button>
+                    </div>
+                    <div class="clearS">
+                        <button class="btn btag" onclick="searchs('clear')">Clear Search</button>
                     </div>
                 </div>
-                    <div class="hov-div">
-                        <a class="nav-link active dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="images/istockphoto-1396048367-612x612.jpg" style="width: 40px; height:40px;" alt="">
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item det-f" href="/stored-data">Reload</a></li>
-                          <li><a class="dropdown-item det-f" onclick="detail(0)">Details</a></li>
-                          <li><a class="dropdown-item" onclick="rename(0)">Rename label</a></li>
-                          <li><a class="dropdown-item" onclick="downloadData(0)"> <form action="/download-data" method="post" class="downloadData"> 
-                            <input name="usrid" style="display: none;" value="<%=dat[0].id%>" type="text"> Download data</form> </a></li>
-                          <li><a class="dropdown-item" onclick="deleteData('<%=dat[0].id%>')"> Delete data </a></li>
-                        </ul>
-                    </div>
+                <div class="hov-div">
+                    <a class="nav-link active dropdown-toggle" id="navbarDropdownMenuLink" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="images/istockphoto-1396048367-612x612.jpg" style="width: 40px; height:40px;" alt="">
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item det-f" href="/stored-data">Reload</a></li>
+                        <li><a class="dropdown-item det-f" onclick="detail(0)">Details</a></li>
+                        <li><a class="dropdown-item" onclick="rename(0)">Rename label</a></li>
+                        <li><a class="dropdown-item" onclick="downloadData(0)">
+                                <form action="/download-data" method="post" class="downloadData">
+                                    <input name="usrid" style="display: none;" value="<%=dat[0].id%>" type="text">
+                                    Download data</form>
+                            </a></li>
+                        <li><a class="dropdown-item" onclick="deleteData('<%=dat[0].id%>')"> Delete data </a></li>
+                    </ul>
+                </div>
 
                 <script>
-                    var xValues = [<%= xdata %>];
-                    var yValues = [<%= ydata %>];
 
-                    if (yValues[0] == undefined) {
-                        newY = [];
-                        for(var l=0;l<xValues.length;l++) {
-                            newY.push(l);
-                        }
-                        xValues = newY
-                        yValues = [<%= xdata %>]
-                    }
+                    
 
-                    var data = {
-                        labels: xValues,
-                        datasets: [{
-                            data: yValues,
-                            label:"<%=dat[0].yLabel%>",
-                            borderColor:"black",
-                            fill:false
-                        }]
-                    }
+                   <% var x = []; %>
+                   <% var y = []; %>
+                   <% var z = []; %>
+                   <% var h = []; %>
 
-                    var options = {
-                            legend: {display: false},
-                            title: {
-                                display: true,
-                                text: '<%=dat[0].title%>'
+                   <% for(var i=0; i< dat[0].para1.length; i++) { %> 
+                    <% x.push({t: dat[0].timeStamp[i],y: dat[0].para1[i]}); %>
+                   <% } %>
+                   <% for(var i=0; i< dat[0].para2.length; i++) { %> 
+                    <% y.push({t: dat[0].timeStamp[i],y: dat[0].para2[i]}); %>
+                   <% } %>
+                   <% for(var i=0; i< dat[0].para3.length; i++) { %> 
+                    <% z.push({t: dat[0].timeStamp[i],y: dat[0].para3[i]}); %>
+                   <% } %>
+                   <% for(var i=0; i< dat[0].para4.length; i++) { %> 
+                    <% h.push({t: dat[0].timeStamp[i],y: dat[0].para4[i]}); %>
+                   <% } %>
+
+                  const newData =[{
+                                data: <%- JSON.stringify(x) %>,
+                                borderColor: "black",
+                                fill: false,
+                                label:"<%=dat[0].xLabel%>" + "(<%=dat[0].para1.length%>)",
+                                // pointRadius: 0,
+                            }];
+
+                  const newData1 =[{
+                                data: <%- JSON.stringify(x) %>,
+                                borderColor: "black",
+                                fill: false,
+                                label:"<%=dat[0].xLabel%>" + "(<%=dat[0].para1.length%>)",
+                                // pointRadius: 0,
+                            },{
+                                data: <%- JSON.stringify(y) %>,
+                                borderColor: "#2596be",
+                                fill: false,
+                                label:"<%=dat[0].yLabel%>" + "(<%=dat[0].para2.length%>)",
+                                // pointRadius: 0,
                             },
+                            {
+                                data: <%- JSON.stringify(z) %>,
+                                borderColor: "#be4d25",
+                                fill: false,
+                                label:"<%=dat[0].zLabel%>" + "(<%=dat[0].para3.length%>)",
+                                // pointRadius: 0,
+                            },
+                            {
+                                data: <%- JSON.stringify(h) %>,
+                                borderColor: "#49be25",
+                                fill: false,
+                                label:"<%=dat[0].hLabel%>" + "(<%=dat[0].para4.length%>)",
+                                // pointRadius: 0,
+                            }];
+
+                    var arr =["<%=dat[0].yLabel%>","<%=dat[0].zLabel%>","<%=dat[0].hLabel%>"];
+
+                    let data =[{
+                                data: <%- JSON.stringify(y) %>,
+                                borderColor: "#2596be",
+                                fill: false,
+                                label:"<%=dat[0].yLabel%>" + "(<%=dat[0].para2.length%>)",
+                                // pointRadius: 0,
+                            },
+                            {
+                                data: <%- JSON.stringify(z) %>,
+                                borderColor: "#be4d25",
+                                fill: false,
+                                label:"<%=dat[0].zLabel%>" + "(<%=dat[0].para3.length%>)",
+                                // pointRadius: 0,
+                            },
+                            {
+                                data: <%- JSON.stringify(h) %>,
+                                borderColor: "#49be25",
+                                fill: false,
+                                label:"<%=dat[0].hLabel%>" + "(<%=dat[0].para4.length%>)",
+                                // pointRadius: 0,
+                            }];
+
+                    for(var q=0;q < 3; q++) {
+                        if (arr[q] != "" && arr[q] != "none") {
+                            newData.push(data.slice(q,q+1)[0]);
+                        }
+                    }
+                    
+                    var hdata =[];
+                    hdata= newData;
+
+                    let ctx = document.getElementsByClassName("chart")[0];
+
+                    var myChart = new Chart(ctx, {
+                        type: 'line',
+                        options: {
                             scales: {
-                                yAxes: [{
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: '<%=dat[0].yLabel%>'
-                                    }
-                                }],
                                 xAxes: [{
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: '<%=dat[0].xLabel%>'
+                                    type: 'time',
+                                    time: {
+                                        unit: 'day'
                                     }
                                 }]
-                            }  
-                        }
-
-                    const configdata = {
-                        type: "line",
-                        data,
-                        options
-                    }
-
-                    const configdatap = {
-                        type: "pie",
+                            }
+                        },
                         data: {
-                        labels: xValues,
-                        datasets: [{
-                            data: yValues,
-                            label:"<%=dat[0].yLabel%>",
-                            backgroundColor:["#2596be", "#be4d25","#49be25","#145369","#041014","#bea925","#000000","#134b5f","42032C","E6D2AA","7FB77E","319DA0","C21010","F675A8"],
-                            fill:false
-                        }]
-                    },
-                        options
-                    }
-
-                    const configdatab = {
-                        type: "bar",
-                        data: {
-                        labels: xValues,
-                        datasets: [{
-                            data: yValues,
-                            label:"<%=dat[0].yLabel%>",
-                            backgroundColor:["#2596be", "#be4d25","#49be25","#145369","#041014","#bea925","#000000","#134b5f","42032C","E6D2AA","7FB77E","319DA0","C21010","F675A8"],
-                            fill:false
-                        }]
-                    },
-                        options
-                    }
-
-                    let myChart = new Chart(
-                        document.getElementsByClassName("chart")[0],
-                        configdata
-                    );
-
-
-                    function grptyp(type) {
-                        myChart.destroy();
-                        if (type === "bar") {
-                            myChart = new Chart(
-                                document.getElementsByClassName("chart")[0],
-                                configdatab
-                            );
+                            datasets: hdata
                         }
-                        if (type === "line") {
-                            myChart = new Chart(
-                                document.getElementsByClassName("chart")[0],
-                                configdata
-                            );
-                        }
-                        if (type === "pie") {
-                            myChart = new Chart(
-                                document.getElementsByClassName("chart")[0],
-                                configdatap
-                            );
+                    });
+
+                    function searchs(ins) {
+                        const num = newData.length;
+                        var labels = ["<%=dat[0].xLabel%>","<%=dat[0].yLabel%>","<%=dat[0].zLabel%>","<%=dat[0].hLabel%>"];
+                        var date = document.getElementsByClassName("intag")[0].value;
+                        if (ins == 'clear') {
+                            for(var e=0; e< num; e++) {
+                                hdata[e].data.length = 0;
+                                for(var s=0; s< newData1[e].data.length; s++){
+                                    hdata[e].data.push(newData1[e].data[s]);
+                                }
+                                hdata[e].label = labels[e] + "(" + newData1[e].data.length + ")";
+                            }
+                            myChart.update();
+                        } else {
+                            for(var a=0; a< num ;a++) {
+                                var newxData =[];
+                                for(var w=0;w< newData1[a].data.length; w++) {
+                                    if (newData1[a].data[w].t.slice(0,10) == date) {
+                                      newxData.push(newData1[a].data[w])
+                                    } 
+                                }
+                                hdata[a].data = newxData;
+                                hdata[a].label = labels[a] + "(" + newxData.length + ")";
+                            }
+                            myChart.update();
                         }
                     }
-                
                 </script>
             </div>
         </div>
     </div>
-<% } else { %>
+    <% } else { %>
     <div class="row chart-ddiv">
         <% for(var i=0; i < dat.length;i++) { %>
-            <% for(var j=0; j < dat[i].para1.length;j++) { %>
-                <% if(dat[i].para1[j] == "null") { %>
-                    <% var cnt = j; %>
-                    <% console.log(dat[i].para1.slice(j,1)) %>
-                <% } %>
-            <% } %>
-            <% for(var z=0; z < dat[i].para2.length;z++) { %>
-                <% if(dat[i].para2[6] == null) { %>
-                <% } %>
-            <% } %>
-                <% var xdata = dat[i].para1 %>
-                <% var ydata = dat[i].para2 %>
-            <div class="details-div">
-                <img class="close-img" onclick="closeit(<%=i%>)" src="images/close_FILL0_wght400_GRAD0_opsz48.png" alt="">
-                <div class="data-div">
-                    <table>
-                        <tr>
-                            <th><h6>Id:</h6></th>
-                            <th><p class="para"><%=dat[i]._id%></p></th>
-                        </tr>
-                        <tr>
-                            <th><h6>API Key:</h6></th>
-                            <th><p class="para"><%=dat[i].id%></p></th>
-                        </tr>
-                        <tr>
-                            <th><h6>Title:</h6></th>
-                            <th><p class="para"><%= dat[i].title%></p></th>
-                        </tr>
-                        <tr>
-                            <th><h6>xLabel:</h6></th>
-                            <th><p class="para"><%=dat[i].xLabel%></p></th>
-                        </tr>
-                        <tr>
-                            <th><h6>yLabel:</h6></th>
-                            <th><p class="para"><%=dat[i].yLabel%></p></th>
-                        </tr>
-                    </table>
-                </div>
+        <div class="details-div">
+            <img class="close-img" onclick="closeit(<%=i%>)" src="images/close_FILL0_wght400_GRAD0_opsz48.png" alt="">
+            <div class="data-div">
+                <table>
+                    <tr>
+                        <th>
+                            <h6>Id:</h6>
+                        </th>
+                        <th>
+                            <p class="para"><%=dat[i]._id%></p>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>API Key:</h6>
+                        </th>
+                        <th>
+                            <p class="para"><%=dat[i].id%></p>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Title:</h6>
+                        </th>
+                        <th>
+                            <p class="para"><%= dat[i].title%></p>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>xLabel:</h6>
+                        </th>
+                        <th>
+                            <p class="para"><%=dat[i].xLabel%></p>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>yLabel:</h6>
+                        </th>
+                        <th>
+                            <p class="para"><%=dat[i].yLabel%></p>
+                        </th>
+                    </tr>
+                </table>
             </div>
+        </div>
 
-            <div class="updatelabel-div">
-                <div style="display: flex; margin: 15px 0 0 0; align-items: center; justify-content: space-between;">
-                    <p style="margin:0 0 0 30px;">Graph <%=i +1%></p>
-                    <img class="close-img2" onclick="closeit_up(<%=i%>)" src="images/close_FILL0_wght400_GRAD0_opsz48.png" alt="">
-                </div>
-                <div class="rename-div">
-                    <form id="formupdate" action="/labelchange" method="post">
-                        <input type="text" name="id" value="<%=dat[i].id%>" style="display: none;">
-                        <div class="label-btn">
-                            <h6 class="label-head" style="margin: 0 18px">Title</h6>
-                            <input type="text" name="title" class="form-control" autocomplete="off" value="<%=dat[i].title%>" id="formGroupExampleInput" placeholder="Title">
-                        </div>
-                        <div class="label-btn">
-                            <h6 class="label-head">xLabel</h6>
-                            <input type="text" name="xlabel" class="form-control" autocomplete="off" value="<%=dat[i].xLabel%>" id="formGroupExampleInput" placeholder="x-Label">
-                        </div>
-                        <div class="label-btn">
-                            <h6 class="label-head">yLabel</h6>
-                            <input type="text" name="ylabel" class="form-control" autocomplete="off" value="<%=dat[i].yLabel%>" id="formGroupExampleInput" placeholder="y-Label">
-                        </div>
-                        <button type="btnsubmit" onclick="submitform(<%=i%>)" id="your-id" class="btn">Update</button>
-                    </form>
-                </div>
+        <div class="updatelabel-div">
+            <div style="display: flex; margin: 15px 0 0 0; align-items: center; justify-content: space-between;">
+                <p style="margin:0 0 0 30px;">Graph <%=i +1%></p>
+                <img class="close-img2" onclick="closeit_up(<%=i%>)" src="images/close_FILL0_wght400_GRAD0_opsz48.png"
+                    alt="">
             </div>
-
-            <div class="col-md-6 divds">
-                <div class="cdm">
-                    <div class="chart-div">
-                        <canvas id="myChart" class="chart"></canvas>
-                        <button class="btn grp graph-btn" onclick="graphtypes(<%=i%>)">Graph Type </button>
-                        <div class="btns-div typ">
-                            <div class="div-bt">
-                                <button type="button" onclick="grptyp<%=i%>('line',<%=i%>)" class="btn graph-btn">Line Graph</button>
-                                <button type="button" onclick="grptyp<%=i%>('pie',<%=i%>)" class="btn graph-btn">Pie Chart</button>
-                                <button type="button" onclick="grptyp<%=i%>('bar',<%=i%>)" class="btn graph-btn">Bar Graph</button>
-                                <!-- <button type="button" onclick="grptyp<%=i%>('scatter',<%=i%>)" class="btn graph-btn">Scatter Plot</button> -->
-                            </div>
-                        </div>
+            <div class="rename-div">
+                <form id="formupdate" action="/labelchange" method="post">
+                    <input type="text" name="id" value="<%=dat[i].id%>" style="display: none;">
+                    <div class="label-btn">
+                        <h6 class="label-head" style="margin: 0 18px">Title</h6>
+                        <input type="text" name="title" class="form-control" autocomplete="off"
+                            value="<%=dat[i].title%>" id="formGroupExampleInput" placeholder="Title">
                     </div>
-                    <div class="hov-div">
-                        <a class="nav-link active dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="images/istockphoto-1396048367-612x612.jpg" style="width: 40px; height:40px;" alt="">
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                          <li><a class="dropdown-item det-f" href="/stored-data">Reload</a></li>
-                          <li><a class="dropdown-item det-f" onclick="detail(<%=i%>)">Details</a></li>
-                          <li><a class="dropdown-item" onclick="rename(<%=i%>)">Rename label</a></li>
-                          <li><a class="dropdown-item" onclick="downloadData(<%=i%>)"> <form action="/download-data" method="post" class="downloadData"> 
-                            <input name="usrid" style="display: none;" value="<%=dat[i].id%>" type="text"> Download data</form> </a></li>
-                          <li><a class="dropdown-item" onclick="deleteData('<%=dat[i].id%>')"> Delete data</a></li>
-                        </ul>
+                    <div class="label-btn">
+                        <h6 class="label-head">xLabel</h6>
+                        <input type="text" name="xlabel" class="form-control" autocomplete="off"
+                            value="<%=dat[i].xLabel%>" id="formGroupExampleInput" placeholder="x-Label">
                     </div>
-                    
-                    <script>
-                    var xValues = [<%= xdata %>];
-                    var yValues = [<%= ydata %>];
+                    <div class="label-btn">
+                        <h6 class="label-head">yLabel</h6>
+                        <input type="text" name="ylabel" class="form-control" autocomplete="off"
+                            value="<%=dat[i].yLabel%>" id="formGroupExampleInput" placeholder="y-Label">
+                    </div>
+                    <button type="btnsubmit" onclick="submitform(<%=i%>)" id="your-id" class="btn">Update</button>
+                </form>
+            </div>
+        </div>
 
-                    if (yValues[0] == undefined) {
-                        newY = [];
-                        for(var l=0;l<xValues.length;l++) {
-                            newY.push(l);
-                        }
-                        xValues = newY
-                        yValues = [<%= xdata %>]
-                    }
+        <div class="col-md-6 divds">
+            <div class="cdm">
+                <div class="chart-div">
+                    <canvas id="myChart" class="chart"></canvas>
+                    <div class="search-div">
+                        <h6>Search by date: </h6>
+                        <input type="date" class="form-control intag">
+                        <button class="btn btag" onclick="searchs('no','<%=i%>')">Search</button>
+                    </div>
+                    <div class="clearS">
+                        <button class="btn btag" onclick="searchs('clear','<%=i%>')">Clear Search</button>
+                    </div>
+                </div>
+                <div class="hov-div">
+                    <a class="nav-link active dropdown-toggle" id="navbarDropdownMenuLink" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="images/istockphoto-1396048367-612x612.jpg" style="width: 40px; height:40px;" alt="">
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item det-f" href="/stored-data">Reload</a></li>
+                        <li><a class="dropdown-item det-f" onclick="detail(<%=i%>)">Details</a></li>
+                        <li><a class="dropdown-item" onclick="rename(<%=i%>)">Rename label</a></li>
+                        <li><a class="dropdown-item" onclick="downloadData(<%=i%>)">
+                                <form action="/download-data" method="post" class="downloadData">
+                                    <input name="usrid" style="display: none;" value="<%=dat[i].id%>" type="text">
+                                    Download data</form>
+                            </a></li>
+                        <li><a class="dropdown-item" onclick="deleteData('<%=dat[i].id%>')"> Delete data</a></li>
+                    </ul>
+                </div>
 
-                    var data = {
-                        labels: xValues,
-                        datasets: [{
-                            data: yValues,
-                            label:"<%=dat[i].yLabel%>",
-                            borderColor:"black",
-                            fill:false
-                        }]
-                    }
+                <script>
+                    var x<%= i%> = [];
+                    var y<%= i%> = [];
+                    var z<%= i%> = [];
+                    var h<%= i%> = [];
 
-                    var options = {
-                            legend: {display: false},
-                            title: {
-                                display: true,
-                                text: '<%=dat[i].title%>'
+                    <% for(var a=0; a< dat[i].para1.length; a++) { %> 
+                       x<%= i%>.push({t: "<%= dat[i].timeStamp[a] %>",y: "<%= dat[i].para1[a] %>"}); 
+                   <% } %>
+                   <% for(var a=0; a< dat[i].para2.length; a++) { %> 
+                       y<%= i%>.push({t: "<%= dat[i].timeStamp[a]%>",y: "<%= dat[i].para2[a]%>"});
+                   <% } %>
+                   <% for(var a=0; a< dat[i].para3.length; a++) { %> 
+                       z<%= i%>.push({t: "<%= dat[i].timeStamp[a]%>",y: "<%= dat[i].para3[a]%>"});
+                   <% } %>
+                   <% for(var a=0; a< dat[i].para4.length; a++) { %> 
+                       h<%= i%>.push({t: "<%= dat[i].timeStamp[a]%>",y: "<%= dat[i].para4[a]%>"});
+                   <% } %>
+
+                    var newData<%= i %> =[{
+                                data: x<%= i %>,
+                                borderColor: "black",
+                                fill: false,
+                                label:"<%=dat[i].xLabel%>",
+                                pointRadius: 0,
+                            }];
+
+                    var arr<%= i %> =["<%=dat[i].yLabel%>","<%=dat[i].zLabel%>","<%=dat[i].hLabel%>"];
+
+                    let data<%= i%> =[{
+                                data: y<%= i %>,
+                                borderColor: "#2596be",
+                                fill: false,
+                                label:"<%=dat[i].yLabel%>",
+                                pointRadius: 0,
                             },
+                            {
+                                data: z<%= i %>,
+                                borderColor: "#be4d25",
+                                fill: false,
+                                label:"<%=dat[i].zLabel%>",
+                                pointRadius: 0,
+                            },
+                            {
+                                data: h<%= i %>,
+                                borderColor: "#49be25",
+                                fill: false,
+                                label:"<%=dat[i].hLabel%>",
+                                pointRadius: 0,
+                            }];
+
+                            const newData1<%= i %> =[{
+                        data: x<%= i %>,
+                        borderColor: "black",
+                        fill: false,
+                        label:"<%=dat[0].xLabel%>" + "(<%=dat[0].para1.length%>)"
+                        },{
+                        data: y<%= i %>,
+                        borderColor: "#2596be",
+                        fill: false,
+                        label:"<%=dat[0].yLabel%>" + "(<%=dat[0].para2.length%>)"
+                        },{
+                        data: z<%= i %>,
+                        borderColor: "#be4d25",
+                        fill: false,
+                        label:"<%=dat[0].zLabel%>" + "(<%=dat[0].para3.length%>)"
+                        },{
+                        data: h<%= i %>,
+                        borderColor: "#49be25",
+                        fill: false,
+                        label:"<%=dat[0].hLabel%>" + "(<%=dat[0].para4.length%>)",
+                        }];
+
+                    for(var q=0;q < 3; q++) {
+                        if (arr<%= i %>[q] != "" && arr<%= i %>[q] != "none") {
+                            newData<%= i %>.push(data<%= i %>.slice(q,q+1)[0]);
+                        }
+                    }
+
+                    var hdata<%= i %> =[];
+                    hdata<%= i %>= newData<%= i %>;
+
+                    let ctx<%= i %> = document.getElementsByClassName("chart")[<%= i %>];
+
+                    var myChart<%= i %> = new Chart(ctx<%= i %>, {
+                        type: 'line',
+                        options: {
                             scales: {
-                                yAxes: [{
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: '<%=dat[i].yLabel%>'
-                                    }
-                                }],
                                 xAxes: [{
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: '<%=dat[i].xLabel%>'
+                                    type: 'time',
+                                    time: {
+                                        unit: 'day'
                                     }
                                 }]
-                            }  
-                        }
-
-                    const configdata<%=i%> = {
-                        type: "line",
-                        data,
-                        options
-                    }
-
-                    const configdatap<%=i%> = {
-                        type: "pie",
+                            }
+                        },
                         data: {
-                        labels: xValues,
-                        datasets: [{
-                            data: yValues,
-                            label:"<%=dat[i].yLabel%>",
-                            backgroundColor:["#2596be", "#be4d25","#49be25","#145369","#041014","#bea925","#000000","#134b5f","42032C","E6D2AA","7FB77E","319DA0","C21010","F675A8"],
-                            fill:false
-                        }]
-                    },
-                        options
-                    }
-                    const configdatab<%=i%> = {
-                        type: "bar",
-                        data: {
-                        labels: xValues,
-                        datasets: [{
-                            data: yValues,
-                            label:"<%=dat[i].yLabel%>",
-                            backgroundColor:["#2596be","#49be25","#134b5f","#be4d25","#145369","#041014","#bea925","#000000","42032C","E6D2AA","7FB77E","319DA0","C21010","F675A8"],
-                            fill:false
-                        }]
-                    },
-                        options
+                            datasets: hdata<%= i %>
+                        }
+                    });
+
+                    function searchs(cls,number) {
+                        const num = newData<%= i %>.length;
+                        var labels = ["<%=dat[i].xLabel%>","<%=dat[i].yLabel%>","<%=dat[i].zLabel%>","<%=dat[i].hLabel%>"];
+                        var date<%= i %> = document.getElementsByClassName("intag")[number].value;
+                        if (cls == 'clear') {
+                            for(var e=0; e< num; e++) {
+                                hdata<%= i %>[e].data.length = 0;
+                                for(var s=0; s< newData1<%= i %>[e].data.length; s++){
+                                    hdata<%= i %>[e].data.push(newData1<%= i %>[e].data[s]);
+                                }
+                                hdata<%= i %>[e].label = labels[e] + "(" + newData1<%= i %>[e].data.length + ")";
+                            }
+                            myChart<%= i %>.update();
+                        } else {
+                            for(var a=0; a< num ;a++) {
+                                var newxData<%= i %> =[];
+                                for(var w=0;w< newData1<%= i %>[a].data.length; w++) {
+                                    if (newData1<%= i %>[a].data[w].t.slice(0,10) == date<%= i %>) {
+                                      newxData<%= i %>.push(newData1<%= i %>[a].data[w])
+                                    } 
+                                }
+                                hdata<%= i %>[a].data = newxData<%= i %>;
+                                hdata<%= i %>[a].label = labels[a] + "(" + newxData<%= i %>.length + ")";
+                            }
+                            myChart<%= i %>.update();
+                        }
                     }
 
-                    let myChart<%=i%> = new Chart(
-                        document.getElementsByClassName("chart")[<%=i%>],
-                        configdata<%=i%>
-                    );
-
-                    function grptyp<%=i%>(type) {
-                        myChart<%=i%>.destroy();
-                        if (type === "bar") {
-                            myChart<%=i%> = new Chart(
-                                document.getElementsByClassName("chart")[<%=i%>],
-                                configdatab<%=i%>
-                            );
-                        }
-                        if (type === "line") {
-                            myChart<%=i%> = new Chart(
-                                document.getElementsByClassName("chart")[<%=i%>],
-                                configdata<%=i%>
-                            );
-                        }
-                        if (type === "pie") {
-                            myChart<%=i%> = new Chart(
-                                document.getElementsByClassName("chart")[<%=i%>],
-                                configdatap<%=i%>
-                            );
-                        }
-                    }
-                    </script>
-                </div>
+                    
+                </script>
             </div>
+        </div>
         <% } %>
     </div>
-    
-<% } %>
 
-<div class="opac" onclick="remove_blur()"></div>
+    <% } %>
 
-<script src="js/dom.js"></script>
+    <div class="opac" onclick="remove_blur()"></div>
+
+    <script src="js/dom.js"></script>
 
 
-<%- include("partials/footer.ejs") %>
+    <%- include("partials/footer.ejs") %>

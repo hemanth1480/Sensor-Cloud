@@ -120,7 +120,7 @@ app.get("/login", (req, res) => {
             if (req.query.forward == undefined) {
                 lop = "stored-data";
             } else {
-                lop = req.query.forward;
+                lop = req.query.forward +"&id=" + req.query.id;
             }
             res.render("login",{new_user:false,kk:lop});
         }
@@ -324,6 +324,22 @@ app.get("/accountVerification", (req,res) => {
     });
 });
 
+app.get("/enlarge", (req,res) => {
+    if (req.session.userId) {
+        Data.find({id:req.query.id}, (err,output) => {
+            if (err) {
+                res.redirect("/error")
+            } else if (output.length != 0) {
+                res.render("enlarge/enlarge",{inp:output})
+            } else {
+                res.redirect("/login")
+            }
+        })
+    } else {
+        res.redirect("/login?forward=enlarge&id=" + req.query.id);
+    }
+});
+
 app.post("/register", (req, res) => {
     if (req.body.name.length == 0 || req.body.regname.length ==0) {
         res.redirect("/register");
@@ -367,13 +383,16 @@ app.post("/login", (req, res) => {
             } else {
                 bcrypt.compare(req.body.logpass, found[0].password, function (err, resu) {
                     if (err) {
-                        res.redirect("/login");
+                        res.redirect("/login?forward=" + req.query.forward);
                     } else if (resu == true) {
                         req.session.userId = found[0].mail;
-                        if(req.query.forward != undefined) {
+                        if(req.query.forward != undefined && req.query.id != undefined) {
+                            res.redirect("/" + req.query.forward + "?id=" + req.query.id);
+                        } else if(req.query.forward != undefined) {
                             res.redirect("/" + req.query.forward);
-                        } else {
-                            res.redirect("/stored-data");
+                        }  else {
+                            res.send("idiot")
+                            // res.redirect("/stored-data");
                         }
                     } else {
                         res.redirect("/login");
@@ -390,7 +409,18 @@ app.post("/labelchange", (req,res) => {
             if (err) {
                 res.redirect("/stored-data");
             } else {
-                res.redirect("/stored-data");
+                API.updateOne({apikey:req.body.id},{$set: {name: req.body.title,param1:req.body.xlabel,param2:req.body.ylabel}},(er,dres) => {
+                    if (er) {
+                        res.redirect("/error");
+                    } else {
+                        console.log(dres);
+                        if (req.query.id == null) {
+                            res.redirect("/stored-data");
+                        } else {
+                            res.redirect("/enlarge?id=" + req.query.id);
+                        }
+                    }
+                });            
             }
         });
     } else {

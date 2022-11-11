@@ -354,8 +354,43 @@
 // console.log(l.slice(0));
 // console.log(l,h,j);
 
-var hj0 = 90
 
-console.log(hj0);
+// <!-- <div class="updatelabel-div">
+// <div style="display: flex; margin: 15px 0 0 0; align-items: center; justify-content: space-between;">
+//     <p style="margin:0 0 0 30px;">Graph <%=i +1%></p>
+//     <img class="close-img2" onclick="closeit_up(<%=i%>)" src="images/close_FILL0_wght400_GRAD0_opsz48.png"
+//         alt="">
+// </div>
+// <div class="rename-div">
+//     <form id="formupdate" action="/labelchange?gateway=stored-data" method="post">
+//         <input type="text" name="id" value="<%=dat[i].id%>" style="display: none;">
+//         <div class="label-btn">
+//             <h6 class="label-head" style="margin: 0 18px">Title</h6>
+//             <input type="text" name="title" class="form-control" autocomplete="off"
+//                 value="<%=dat[i].title%>" id="formGroupExampleInput" placeholder="Title">
+//         </div>
+//         <div class="label-btn">
+//             <h6 class="label-head">xLabel</h6>
+//             <input type="text" name="xlabel" class="form-control" autocomplete="off"
+//                 value="<%=dat[i].xLabel%>" id="formGroupExampleInput" placeholder="x-Label">
+//         </div>
+//         <div class="label-btn">
+//             <h6 class="label-head">yLabel</h6>
+//             <input type="text" name="ylabel" class="form-control" autocomplete="off"
+//                 value="<%=dat[i].yLabel%>" id="formGroupExampleInput" placeholder="y-Label">
+//         </div>
+//         <button type="btnsubmit" onclick="submitform(<%=i%>)" id="your-id" class="btn">Update</button>
+//     </form>
+// </div>
+// </div> -->
+
+var hj0 = 90;
+var h =0;
+
+if (hj0 >80 && h>1) {
+    console.log(hj0);
+}
+
+
 
 

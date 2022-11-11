@@ -168,17 +168,33 @@
                         <p class="para"><%=dat[0].yLabel%></p>
                     </th>
                 </tr>
+                <tr>
+                    <th>
+                        <h6>yLabel:</h6>
+                    </th>
+                    <th>
+                        <p class="para"><%=dat[0].zLabel%></p>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <h6>yLabel:</h6>
+                    </th>
+                    <th>
+                        <p class="para"><%=dat[0].hLabel%></p>
+                    </th>
+                </tr>
             </table>
         </div>
     </div>
 
-    <div class="updatelabel-div">
+    <!-- <div class="updatelabel-div">
         <div style="display: flex; margin: 15px 0 0 0; align-items: center; justify-content: space-between;">
             <p style="margin:0 0 0 30px;">Graph <%=1%></p>
             <img class="close-img2" onclick="closeit_up(0)" src="images/close_FILL0_wght400_GRAD0_opsz48.png" alt="">
         </div>
         <div class="rename-div">
-            <form id="formupdate" action="/labelchange" method="post">
+            <form id="formupdate" action="/labelchange?gateway=stored-data" method="post">
                 <input type="text" name="id" value="<%=dat[0].id%>" style="display: none;">
                 <div class="label-btn">
                     <h6 class="label-head" style="margin: 0 18px">Title</h6>
@@ -198,7 +214,7 @@
                 <button type="btnsubmit" onclick="submitform(0)" id="your-id" class="btn">Update</button>
             </form>
         </div>
-    </div>
+    </div> -->
     <div class="mjk">
         <div class="klo">
             <div class="cdm1">
@@ -216,12 +232,23 @@
                 <div class="hov-div">
                     <a class="nav-link active dropdown-toggle" id="navbarDropdownMenuLink" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="images/istockphoto-1396048367-612x612.jpg" style="width: 40px; height:40px;" alt="">
+                        <img src="images/istockphoto-1396048367-612x612.jpg" class="op" style="width: 40px; height:40px;" alt="">
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item det-f" href="/enlarge?id=<%= dat[0].id %>"
+                            onclick="window.open(this.href,'targetWindow',
+                                                            `toolbar=no,
+                                                             location=no,
+                                                             status=no,
+                                                             menubar=no,
+                                                             scrollbars=yes,
+                                                             resizable=yes,
+                                                             width=SomeSize,
+                                                             height=SomeSize`);
+                          return false;">Enlarge</a></li>
                         <li><a class="dropdown-item det-f" href="/stored-data">Reload</a></li>
                         <li><a class="dropdown-item det-f" onclick="detail(0)">Details</a></li>
-                        <li><a class="dropdown-item" onclick="rename(0)">Rename label</a></li>
+                        <!-- <li><a class="dropdown-item" onclick="rename(0)">Rename label</a></li> -->
                         <li><a class="dropdown-item" onclick="downloadData(0)">
                                 <form action="/download-data" method="post" class="downloadData">
                                     <input name="usrid" style="display: none;" value="<%=dat[0].id%>" type="text">
@@ -334,8 +361,8 @@
                                         unit: 'day'
                                     }
                                 }]
-                            }
-                        },
+                        }
+                    },
                         data: {
                             datasets: hdata
                         }
@@ -419,38 +446,26 @@
                             <p class="para"><%=dat[i].yLabel%></p>
                         </th>
                     </tr>
+                    <tr>
+                        <th>
+                            <h6>yLabel:</h6>
+                        </th>
+                        <th>
+                            <p class="para"><%=dat[i].zLabel%></p>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>yLabel:</h6>
+                        </th>
+                        <th>
+                            <p class="para"><%=dat[i].hLabel%></p>
+                        </th>
+                    </tr>
                 </table>
             </div>
         </div>
 
-        <div class="updatelabel-div">
-            <div style="display: flex; margin: 15px 0 0 0; align-items: center; justify-content: space-between;">
-                <p style="margin:0 0 0 30px;">Graph <%=i +1%></p>
-                <img class="close-img2" onclick="closeit_up(<%=i%>)" src="images/close_FILL0_wght400_GRAD0_opsz48.png"
-                    alt="">
-            </div>
-            <div class="rename-div">
-                <form id="formupdate" action="/labelchange" method="post">
-                    <input type="text" name="id" value="<%=dat[i].id%>" style="display: none;">
-                    <div class="label-btn">
-                        <h6 class="label-head" style="margin: 0 18px">Title</h6>
-                        <input type="text" name="title" class="form-control" autocomplete="off"
-                            value="<%=dat[i].title%>" id="formGroupExampleInput" placeholder="Title">
-                    </div>
-                    <div class="label-btn">
-                        <h6 class="label-head">xLabel</h6>
-                        <input type="text" name="xlabel" class="form-control" autocomplete="off"
-                            value="<%=dat[i].xLabel%>" id="formGroupExampleInput" placeholder="x-Label">
-                    </div>
-                    <div class="label-btn">
-                        <h6 class="label-head">yLabel</h6>
-                        <input type="text" name="ylabel" class="form-control" autocomplete="off"
-                            value="<%=dat[i].yLabel%>" id="formGroupExampleInput" placeholder="y-Label">
-                    </div>
-                    <button type="btnsubmit" onclick="submitform(<%=i%>)" id="your-id" class="btn">Update</button>
-                </form>
-            </div>
-        </div>
 
         <div class="col-md-6 divds">
             <div class="cdm">
@@ -459,10 +474,10 @@
                     <div class="search-div">
                         <h6>Search by date: </h6>
                         <input type="date" class="form-control intag">
-                        <button class="btn btag" onclick="searchs('no','<%=i%>')">Search</button>
+                        <button class="btn btag" onclick="searchs<%= i %>('no','<%=i%>')">Search</button>
                     </div>
                     <div class="clearS">
-                        <button class="btn btag" onclick="searchs('clear','<%=i%>')">Clear Search</button>
+                        <button class="btn btag" onclick="searchs<%= i %>('clear','<%=i%>')">Clear Search</button>
                     </div>
                 </div>
                 <div class="hov-div">
@@ -471,9 +486,20 @@
                         <img src="images/istockphoto-1396048367-612x612.jpg" style="width: 40px; height:40px;" alt="">
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item det-f" href="/stored-data">Reload</a></li>
+                        <li><a class="dropdown-item det-f" href="/enlarge?id=<%= dat[i].id %>"
+                            onclick="window.open(this.href,'targetWindow',
+                                                            `toolbar=no,
+                                                             location=no,
+                                                             status=no,
+                                                             menubar=no,
+                                                             scrollbars=yes,
+                                                             resizable=yes,
+                                                             width=SomeSize,
+                                                             height=SomeSize`);
+                          return false;">Enlarge</a></li>
+                        <li><a class="dropdown-item det-f" href="/stored-data" type="button">Reload</a></li>
                         <li><a class="dropdown-item det-f" onclick="detail(<%=i%>)">Details</a></li>
-                        <li><a class="dropdown-item" onclick="rename(<%=i%>)">Rename label</a></li>
+                        <!-- <li><a class="dropdown-item" onclick="rename(<%=i%>)">Rename label</a></li> -->
                         <li><a class="dropdown-item" onclick="downloadData(<%=i%>)">
                                 <form action="/download-data" method="post" class="downloadData">
                                     <input name="usrid" style="display: none;" value="<%=dat[i].id%>" type="text">
@@ -502,12 +528,11 @@
                        h<%= i%>.push({t: "<%= dat[i].timeStamp[a]%>",y: "<%= dat[i].para4[a]%>"});
                    <% } %>
 
-                    var newData<%= i %> =[{
+                    var halfdata<%= i %> =[{
                                 data: x<%= i %>,
                                 borderColor: "black",
                                 fill: false,
-                                label:"<%=dat[i].xLabel%>",
-                                pointRadius: 0,
+                                label:"<%=dat[i].xLabel%>" + "(<%=dat[i].para1.length%>)"
                             }];
 
                     var arr<%= i %> =["<%=dat[i].yLabel%>","<%=dat[i].zLabel%>","<%=dat[i].hLabel%>"];
@@ -516,54 +541,51 @@
                                 data: y<%= i %>,
                                 borderColor: "#2596be",
                                 fill: false,
-                                label:"<%=dat[i].yLabel%>",
-                                pointRadius: 0,
+                                label:"<%=dat[i].yLabel%>" + "(<%=dat[i].para2.length%>)"
                             },
                             {
                                 data: z<%= i %>,
                                 borderColor: "#be4d25",
                                 fill: false,
-                                label:"<%=dat[i].zLabel%>",
-                                pointRadius: 0,
+                                label:"<%=dat[i].zLabel%>" + "(<%=dat[i].para3.length%>)"
                             },
                             {
                                 data: h<%= i %>,
                                 borderColor: "#49be25",
                                 fill: false,
-                                label:"<%=dat[i].hLabel%>",
-                                pointRadius: 0,
+                                label:"<%=dat[i].hLabel%>" + "(<%=dat[i].para4.length%>)"
                             }];
 
                             const newData1<%= i %> =[{
                         data: x<%= i %>,
                         borderColor: "black",
                         fill: false,
-                        label:"<%=dat[0].xLabel%>" + "(<%=dat[0].para1.length%>)"
+                        label:"<%=dat[i].xLabel%>" + "(<%=dat[i].para1.length%>)"
                         },{
                         data: y<%= i %>,
                         borderColor: "#2596be",
                         fill: false,
-                        label:"<%=dat[0].yLabel%>" + "(<%=dat[0].para2.length%>)"
+                        label:"<%=dat[i].yLabel%>" + "(<%=dat[i].para2.length%>)"
                         },{
                         data: z<%= i %>,
                         borderColor: "#be4d25",
                         fill: false,
-                        label:"<%=dat[0].zLabel%>" + "(<%=dat[0].para3.length%>)"
+                        label:"<%=dat[i].zLabel%>" + "(<%=dat[i].para3.length%>)"
                         },{
                         data: h<%= i %>,
                         borderColor: "#49be25",
                         fill: false,
-                        label:"<%=dat[0].hLabel%>" + "(<%=dat[0].para4.length%>)",
+                        label:"<%=dat[i].hLabel%>" + "(<%=dat[i].para4.length%>)",
                         }];
 
                     for(var q=0;q < 3; q++) {
                         if (arr<%= i %>[q] != "" && arr<%= i %>[q] != "none") {
-                            newData<%= i %>.push(data<%= i %>.slice(q,q+1)[0]);
+                            halfdata<%= i %>.push(data<%= i %>.slice(q,q+1)[0]);
                         }
                     }
 
                     var hdata<%= i %> =[];
-                    hdata<%= i %>= newData<%= i %>;
+                    hdata<%= i %>= halfdata<%= i %>;
 
                     let ctx<%= i %> = document.getElementsByClassName("chart")[<%= i %>];
 
@@ -584,11 +606,13 @@
                         }
                     });
 
-                    function searchs(cls,number) {
-                        const num = newData<%= i %>.length;
+                    var cnt<%= i %> =0;
+
+                    function searchs<%= i %>(cls,number) {
+                        const num = halfdata<%= i %>.length;
                         var labels = ["<%=dat[i].xLabel%>","<%=dat[i].yLabel%>","<%=dat[i].zLabel%>","<%=dat[i].hLabel%>"];
                         var date<%= i %> = document.getElementsByClassName("intag")[number].value;
-                        if (cls == 'clear') {
+                        if (cls == 'clear' && cnt<%= i %> >0) {
                             for(var e=0; e< num; e++) {
                                 hdata<%= i %>[e].data.length = 0;
                                 for(var s=0; s< newData1<%= i %>[e].data.length; s++){
@@ -596,6 +620,7 @@
                                 }
                                 hdata<%= i %>[e].label = labels[e] + "(" + newData1<%= i %>[e].data.length + ")";
                             }
+                            document.getElementsByClassName("intag")[<%= i %>].value = null;
                             myChart<%= i %>.update();
                         } else {
                             for(var a=0; a< num ;a++) {
@@ -609,10 +634,9 @@
                                 hdata<%= i %>[a].label = labels[a] + "(" + newxData<%= i %>.length + ")";
                             }
                             myChart<%= i %>.update();
+                            cnt<%= i %> =1;
                         }
                     }
-
-                    
                 </script>
             </div>
         </div>

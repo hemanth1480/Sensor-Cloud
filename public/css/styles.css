@@ -312,7 +312,7 @@
     display: none;
     background-color: rgba(230,231,231,255);
     width: 460px;
-    height: 250px;
+    height: 300px;
     margin: 20px auto;
     border-radius: 20px;
     z-index: 2;
@@ -321,10 +321,10 @@
 @media (max-width: 950px) { 
     .details-div{
         width: 96%;
-        height: 250px;
+        height: 300px;
         position: fixed;
-        left: 3.5%;
-        right: 3.5%;
+        left: 2%;
+        right: 2%;
         margin: 0 auto;
     }
     .para{
@@ -732,3 +732,12 @@
     z-index: 69;
 }
 
+/* enlarge */
+
+.enlarge-div{
+    width: 80%;
+    height: 75%;
+    margin: 100px auto 50px;
+    display: flex;
+    /* justify-content: center; */
+}

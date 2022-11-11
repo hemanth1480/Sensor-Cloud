@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Sensor Cloud</title>
+    <link rel="icon" type="image/x-icon" href="/images/cloud.png">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body id="body">
+
+    <style>
+        .alrt{
+            margin-top: 150px !important;
+        }
+        .details-div{
+            margin-top: 150px !important;
+        }
+        .updatelabel-div{
+            margin-top: 150px !important;
+        }
+    </style>
+
+    <div class="alrt del dis" id="load">
+        <div class="alrt2">
+            <form action="/delete-data?forward=stored-data" method="post">
+                <input type="text" class="inpVal" name="delid" style="display:none;">
+                <div style="display:flex;">
+                    <h5 class="del">Uploaded data will be deleted and can't be retrived. API key is not deleted.</h5>
+                    <img src="images/close_FILL0_wght400_GRAD0_opsz48.png" onclick="clode_this()"
+                        style="width: 20px; height:20px;margin:20px;" alt="">
+                </div>
+                <button class="btn del-btn" type="submit" style="color: white;">Delete</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="details-div">
+    <div class="data-div">
+        <table>
+            <img class="close-img" onclick="closeit(0)" src="images/close_FILL0_wght400_GRAD0_opsz48.png" alt="">
+            <tr>
+                <th>
+                    <h6>Id:</h6>
+                </th>
+                <th>
+                    <p class="para"><%=inp[0]._id%></p>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <h6>API Key:</h6>
+                </th>
+                <th>
+                    <p class="para"><%=inp[0].id%></p>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <h6>Title:</h6>
+                </th>
+                <th>
+                    <p class="para"><%= inp[0].title%></p>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <h6>xLabel:</h6>
+                </th>
+                <th>
+                    <p class="para"><%=inp[0].xLabel%></p>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <h6>yLabel:</h6>
+                </th>
+                <th>
+                    <p class="para"><%=inp[0].yLabel%></p>
+                </th>
+            </tr>
+        </table>
+    </div>
+</div>
+</div>
+
+<div class="updatelabel-div">
+    <div style="display: flex; margin: 15px 0 0 0; align-items: center; justify-content: space-between;">
+        <p style="margin:0 0 0 30px;">Graph <%=1%></p>
+        <img class="close-img2" onclick="closeit_up(0)" src="images/close_FILL0_wght400_GRAD0_opsz48.png" alt="">
+    </div>
+    <div class="rename-div">
+        <form id="formupdate" action="/labelchange?gateway=enlarge&id=<%=inp[0].id%>" method="post">
+            <input type="text" name="id" value="<%=inp[0].id%>" style="display: none;">
+            <div class="label-btn">
+                <h6 class="label-head" style="margin: 0 18px">Title</h6>
+                <input type="text" name="title" class="form-control" autocomplete="off" value="<%=inp[0].title%>"
+                    id="formGroupExampleInput" placeholder="Title">
+            </div>
+            <div class="label-btn">
+                <h6 class="label-head">xLabel</h6>
+                <input type="text" name="xlabel" class="form-control" autocomplete="off" value="<%=inp[0].xLabel%>"
+                    id="formGroupExampleInput" placeholder="x-Label">
+            </div>
+            <div class="label-btn">
+                <h6 class="label-head">yLabel</h6>
+                <input type="text" name="ylabel" class="form-control" autocomplete="off" value="<%=inp[0].yLabel%>"
+                    id="formGroupExampleInput" placeholder="y-Label">
+            </div>
+            <button type="btnsubmit" onclick="submitform(0)" id="your-id" class="btn">Update</button>
+        </form>
+    </div>
+</div>
+
+    <div class="enlarge-div">
+            <div class="chart-div">
+                <canvas id="myChart" class="chart"></canvas>
+                <div class="search-div">
+                    <h6>Search by date: </h6>
+                    <input type="date" class="form-control intag">
+                    <button class="btn btag" onclick="searchs()">Search</button>
+                </div>
+                <div class="clearS">
+                    <button class="btn btag" onclick="searchs('clear')">Clear Search</button>
+                </div>
+            </div>
+            <div class="hov-div">
+                <a class="nav-link active dropdown-toggle" id="navbarDropdownMenuLink" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="images/istockphoto-1396048367-612x612.jpg" class="op" style="width: 40px; height:40px;" alt="">
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item det-f" href="/enlarge?id=<%=inp[0].id%>">Reload</a></li>
+                    <li><a class="dropdown-item det-f" onclick="detail(0)">Details</a></li>
+                    <li><a class="dropdown-item" onclick="downloadData(0)">
+                            <form action="/download-data" method="post" class="downloadData">
+                                <input name="usrid" style="display: none;" value="<%=inp[0].id%>" type="text">
+                                Download data</form>
+                        </a></li>
+                    <li><a class="dropdown-item" onclick="deleteData('<%=inp[0].id%>')"> Delete data </a></li>
+                </ul>
+            </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+
+    <script>
+
+                    
+
+        <% var x = []; %>
+        <% var y = []; %>
+        <% var z = []; %>
+        <% var h = []; %>
+
+        <% for(var i=0; i< inp[0].para1.length; i++) { %> 
+         <% x.push({t: inp[0].timeStamp[i],y: inp[0].para1[i]}); %>
+        <% } %>
+        <% for(var i=0; i< inp[0].para2.length; i++) { %> 
+         <% y.push({t: inp[0].timeStamp[i],y: inp[0].para2[i]}); %>
+        <% } %>
+        <% for(var i=0; i< inp[0].para3.length; i++) { %> 
+         <% z.push({t: inp[0].timeStamp[i],y: inp[0].para3[i]}); %>
+        <% } %>
+        <% for(var i=0; i< inp[0].para4.length; i++) { %> 
+         <% h.push({t: inp[0].timeStamp[i],y: inp[0].para4[i]}); %>
+        <% } %>
+
+       const newData =[{
+                     data: <%- JSON.stringify(x) %>,
+                     borderColor: "black",
+                     fill: false,
+                     label:"<%=inp[0].xLabel%>" + "(<%=inp[0].para1.length%>)",
+                     // pointRadius: 0,
+                 }];
+
+       const newData1 =[{
+                     data: <%- JSON.stringify(x) %>,
+                     borderColor: "black",
+                     fill: false,
+                     label:"<%=inp[0].xLabel%>" + "(<%=inp[0].para1.length%>)",
+                     // pointRadius: 0,
+                 },{
+                     data: <%- JSON.stringify(y) %>,
+                     borderColor: "#2596be",
+                     fill: false,
+                     label:"<%=inp[0].yLabel%>" + "(<%=inp[0].para2.length%>)",
+                     // pointRadius: 0,
+                 },
+                 {
+                     data: <%- JSON.stringify(z) %>,
+                     borderColor: "#be4d25",
+                     fill: false,
+                     label:"<%=inp[0].zLabel%>" + "(<%=inp[0].para3.length%>)",
+                     // pointRadius: 0,
+                 },
+                 {
+                     data: <%- JSON.stringify(h) %>,
+                     borderColor: "#49be25",
+                     fill: false,
+                     label:"<%=inp[0].hLabel%>" + "(<%=inp[0].para4.length%>)",
+                     // pointRadius: 0,
+                 }];
+
+         var arr =["<%=inp[0].yLabel%>","<%=inp[0].zLabel%>","<%=inp[0].hLabel%>"];
+
+         let data =[{
+                     data: <%- JSON.stringify(y) %>,
+                     borderColor: "#2596be",
+                     fill: false,
+                     label:"<%=inp[0].yLabel%>" + "(<%=inp[0].para2.length%>)",
+                     // pointRadius: 0,
+                 },
+                 {
+                     data: <%- JSON.stringify(z) %>,
+                     borderColor: "#be4d25",
+                     fill: false,
+                     label:"<%=inp[0].zLabel%>" + "(<%=inp[0].para3.length%>)",
+                     // pointRadius: 0,
+                 },
+                 {
+                     data: <%- JSON.stringify(h) %>,
+                     borderColor: "#49be25",
+                     fill: false,
+                     label:"<%=inp[0].hLabel%>" + "(<%=inp[0].para4.length%>)",
+                     // pointRadius: 0,
+                 }];
+
+         for(var q=0;q < 3; q++) {
+             if (arr[q] != "" && arr[q] != "none") {
+                 newData.push(data.slice(q,q+1)[0]);
+             }
+         }
+         
+         var hdata =[];
+         hdata= newData;
+
+         let ctx = document.getElementsByClassName("chart")[0];
+
+         var myChart = new Chart(ctx, {
+             type: 'line',
+             options: {
+                 scales: {
+                     xAxes: [{
+                         type: 'time',
+                         time: {
+                             unit: 'day'
+                         }
+                     }]
+                 }
+             },
+             data: {
+                 datasets: hdata
+             }
+         });
+
+         function searchs(ins) {
+             const num = newData.length;
+             var labels = ["<%=inp[0].xLabel%>","<%=inp[0].yLabel%>","<%=inp[0].zLabel%>","<%=inp[0].hLabel%>"];
+             var date = document.getElementsByClassName("intag")[0].value;
+             if (ins == 'clear') {
+                 for(var e=0; e< num; e++) {
+                     hdata[e].data.length = 0;
+                     for(var s=0; s< newData1[e].data.length; s++){
+                         hdata[e].data.push(newData1[e].data[s]);
+                     }
+                     hdata[e].label = labels[e] + "(" + newData1[e].data.length + ")";
+                 }
+                 document.getElementsByClassName("intag")[0].value = null;
+                 myChart.update();
+             } else {
+                 for(var a=0; a< num ;a++) {
+                     var newxData =[];
+                     for(var w=0;w< newData1[a].data.length; w++) {
+                         if (newData1[a].data[w].t.slice(0,10) == date) {
+                           newxData.push(newData1[a].data[w])
+                         } 
+                     }
+                     hdata[a].data = newxData;
+                     hdata[a].label = labels[a] + "(" + newxData.length + ")";
+                 }
+                 myChart.update();
+             }
+         }
+     </script>
+
+<div class="opac" onclick="remove_blur()"></div>
+
+<script src="js/dom.js"></script>
+    
+</body>
+
+<%- include("../partials/footer.ejs") %>
+</html>

@@ -12,8 +12,8 @@ const fs = require("fs");
 var bson = require("bson");
 const sendmail = require("./mail.js");
 
-const saltRounds = 12;
-const sR = 2;
+const saltRounds = ;
+const sR = ;
 
 const app = express();
 
@@ -34,7 +34,7 @@ app.use(session({
     }
 }));
 
-mongoose.connect("mongodb+srv://hemanth:hemanth1234@cluster0.zqpnh.mongodb.net/sensorCloud?retryWrites=true&w=majority", {
+mongoose.connect("", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     retryWrites: true
@@ -142,18 +142,6 @@ app.get("/forgot-password", (req, res) => {
 app.get("/stored-data", (req, res) => {
     if (req.session.userId) {
         Data.find({mail:req.session.userId}, (err,kl) => {
-            // var x = [];
-            // var y = [];
-            // var z = [];
-            // var h = [];
-            // kl.forEach( one => {
-            //     for(var i=0; i< one.timeStamp.length; i++) {
-            //         x.push({t: one.timeStamp[i],y: one.para1[i]});
-            //         y.push({t: one.timeStamp[i],y: one.para2[i]});
-            //         z.push({t: one.timeStamp[i],y: one.para3[i]});
-            //         h.push({t: one.timeStamp[i],y: one.para4[i]});
-            //     }
-            // });
             res.render("storeddata",{dat:kl});
         });
     } else {
@@ -478,10 +466,6 @@ app.post("/download-data", (req,res) => {
 
 app.post("/delete-data", (req,res) => {
     if (req.session.userId) {
-        // API.deleteOne({apikey:req.body.delid}, (err) => {
-        //     if (err) {
-        //         console.log(err);
-        //     } 
             Data.deleteOne({id:req.body.delid}, (err,respu) => {
                 if (err) {
                     console.log(err);

@@ -11,9 +11,10 @@ const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const fs = require("fs");
 var bson = require("bson");
 const sendmail = require("./mail.js");
+require('dotenv').config();
 
-const saltRounds = ;
-const sR = ;
+const saltRounds = parseInt(process.env.SLT);
+const sR = parseInt(process.env.sR);
 
 const app = express();
 
@@ -34,7 +35,7 @@ app.use(session({
     }
 }));
 
-mongoose.connect("", {
+mongoose.connect(process.env.MONGO_DB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     retryWrites: true

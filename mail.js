@@ -1,20 +1,21 @@
 var nodemailer = require('nodemailer');
+require('dotenv').config();
 
 
 const sendmail = (email,token) => {
     const msg = {
-        from: "",
-        to: "",
+        from: process.env.MAIL,
+        to: process.env.MAIL,
         subject: "Password change request accepted",
         text: "Use the link provided to change our account password " +
-        "" + token
+        process.env.MAIL_JS + token
     };
     
     nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: "",
-            pass: ""
+            user: process.env.MAIL,
+            pass: process.env.MAIL_PASS
         },
         port:465,
         host: "smtp.gmail.com"

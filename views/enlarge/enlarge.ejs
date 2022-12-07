@@ -120,6 +120,18 @@
     </div>
 </div>
 
+<div style="text-align: center; margin: 20px 0 0 0;">
+    <h5>Graph details</h5>
+    <div style="display: flex;justify-content: center; margin: 20px auto;">
+        <div style="display:flex;margin: 0 10px;">
+            <h6 style="margin: 10px 10px 0 0; line-height:normal;">Id : </h6> <p style="margin: 10px 0;"><%=inp[0]._id%></p>
+        </div>
+        <div style="display:flex;margin: 0 10px;">
+            <h6 style="margin: 10px 10px 0 0; line-height:normal;">Api key : </h6> <p style="margin: 10px 0;"><%=inp[0].id%></p>
+        </div>
+    </div>
+</div>
+
     <div class="enlarge-div">
             <div class="chart-div">
                 <canvas id="myChart" class="chart"></canvas>
@@ -138,7 +150,7 @@
                     <img src="images/istockphoto-1396048367-612x612.jpg" class="op" style="width: 40px; height:40px;" alt="">
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item det-f" href="/enlarge?id=<%=inp[0].id%>">Reload</a></li>
+                    <li><a class="dropdown-item det-f" href="/processData?graphid=<%=inp[0]._id%>">Reload</a></li>
                     <li><a class="dropdown-item det-f" onclick="detail(0)">Details</a></li>
                     <li><a class="dropdown-item" onclick="downloadData(0)">
                             <form action="/download-data" method="post" class="downloadData">
@@ -150,12 +162,21 @@
             </div>
     </div>
 
+    <div class="en-div">
+        <h4 style="margin: 30px 0;">Process data</h4>
+        <div class="model-div">
+            <h5 style="margin: 5px 20px;">AI Model :</h5>
+            <select id="select" name="amount" class="form-control">
+                <option value="select" >Select</option>
+                <option value="Neaural Prophet" >Neaural Prophet</option>
+            </select>
+        </div>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 
-    <script>
-
-                    
+    <script>    
 
         <% var x = []; %>
         <% var y = []; %>

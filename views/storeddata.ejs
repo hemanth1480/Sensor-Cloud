@@ -246,6 +246,7 @@
                                                              width=SomeSize,
                                                              height=SomeSize`);
                           return false;">Enlarge</a></li>
+                        <li><a class="dropdown-item det-f" href="/processData">Process Data</a></li>
                         <li><a class="dropdown-item det-f" href="/stored-data">Reload</a></li>
                         <li><a class="dropdown-item det-f" onclick="detail(0)">Details</a></li>
                         <!-- <li><a class="dropdown-item" onclick="rename(0)">Rename label</a></li> -->
@@ -486,7 +487,8 @@
                         <img src="images/istockphoto-1396048367-612x612.jpg" style="width: 40px; height:40px;" alt="">
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item det-f" href="/enlarge?id=<%= dat[i].id %>"
+                        <!-- /enlarge?id=<%= dat[i].id %> -->
+                        <li><a class="dropdown-item det-f" href="/processData?graphid=<%=dat[i]._id%>"
                             onclick="window.open(this.href,'targetWindow',
                                                             `toolbar=no,
                                                              location=no,
@@ -496,7 +498,8 @@
                                                              resizable=yes,
                                                              width=SomeSize,
                                                              height=SomeSize`);
-                          return false;">Enlarge</a></li>
+                          return false;">Enlarge and Process</a></li>
+                        <!-- <li><a class="dropdown-item det-f" href="/processData?graphid=<%=dat[i]._id%>">Process Data</a></li> -->
                         <li><a class="dropdown-item det-f" href="/stored-data" type="button">Reload</a></li>
                         <li><a class="dropdown-item det-f" onclick="detail(<%=i%>)">Details</a></li>
                         <!-- <li><a class="dropdown-item" onclick="rename(<%=i%>)">Rename label</a></li> -->

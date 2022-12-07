@@ -737,7 +737,23 @@
 .enlarge-div{
     width: 80%;
     height: 75%;
-    margin: 100px auto 50px;
+    margin: 45px auto 50px;
     display: flex;
     /* justify-content: center; */
+}
+
+.en-div{
+    text-align: center;
+    margin: 100px 0;
+}
+
+#select{
+    width: 200px;
+}
+
+.model-div{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin: 40px auto 0 0;
 }

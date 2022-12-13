@@ -503,10 +503,10 @@
                         <li><a class="dropdown-item det-f" href="/stored-data" type="button">Reload</a></li>
                         <li><a class="dropdown-item det-f" onclick="detail(<%=i%>)">Details</a></li>
                         <!-- <li><a class="dropdown-item" onclick="rename(<%=i%>)">Rename label</a></li> -->
-                        <li><a class="dropdown-item" onclick="downloadData(<%=i%>)">
-                                <form action="/download-data" method="post" class="downloadData">
+                        <li><a class="dropdown-item" onclick="downloadData('<%=dat[i]._id%>','<%=dat[i].title%>')">
+                                <!-- <form action="/download-data" method="post" class="downloadData">
                                     <input name="usrid" style="display: none;" value="<%=dat[i].id%>" type="text">
-                                    Download data</form>
+                                    Download data</form> -->Download data
                             </a></li>
                         <li><a class="dropdown-item" onclick="deleteData('<%=dat[i].id%>')"> Delete data</a></li>
                     </ul>

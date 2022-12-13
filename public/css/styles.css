@@ -744,7 +744,8 @@
 
 .en-div{
     text-align: center;
-    margin: 100px 0;
+    margin: 100px auto 40px auto;
+    width: 85%;
 }
 
 #select{
@@ -757,3 +758,20 @@
     text-align: center;
     margin: 40px auto 0 0;
 }
+
+.form-enlarge{
+    align-items: center;
+    text-align: center;
+}
+
+.error{
+    animation: vibrate .3s infinite;
+    animation-iteration-count: infinite;
+}
+
+@keyframes vibrate {
+    25% { transform: translateX(6px);}
+    50% { transform: translateX(-6px);}
+    75% { transform: translateX(6px);}
+}
+

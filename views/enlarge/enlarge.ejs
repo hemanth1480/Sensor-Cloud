@@ -162,21 +162,65 @@
             </div>
     </div>
 
+<form action="/processData" method="post" class="form-enlarge">
+    <!-- <input type="text" style="display:none;" value="<%=inp[0]._id%>" name="enalrge_id"> -->
     <div class="en-div">
-        <h4 style="margin: 30px 0;">Process data</h4>
+        <h3 style="margin: 30px 0;">Process data</h3>
+        <h6 style="margin: 30px 0;">Select AI model and Inputs</h6>
         <div class="model-div">
-            <h5 style="margin: 5px 20px;">AI Model :</h5>
-            <select id="select" name="amount" class="form-control">
-                <option value="select" >Select</option>
+            <h6 style="margin: 5px 20px;">AI Model :</h6>
+            <select id="select" name="amount" class="form-control s1">
+                <option value="select" >select</option>
                 <option value="Neaural Prophet" >Neaural Prophet</option>
             </select>
         </div>
+        <div class="model-div">
+            <h6 style="margin: 5px 20px;">Data Input :</h6>
+            <select id="select" name="amount" class="form-control s2">
+                <option value="select" >select</option>
+                <% dataV.forEach( variable => { %>
+                    <option value="<%= variable + 'Min' %>"><%= variable + 'Min' %></option>
+                    <option value="<%= variable + 'Avg' %>" ><%= variable + 'Avg' %></option>
+                    <option value="<%= variable + 'Max' %>" ><%= variable + 'Max' %></option>
+                <% }); %>
+            </select>
+        </div>
     </div>
+    <button type="button" onclick="verifyInputs()" class="btn AiBtn">submit</button>
+</form>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 
     <script>    
+
+    let requestData = () => {   
+        fetch("/processData?graphid=<%=inp[0]._id%>", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'}
+        }).then(res => {
+            console.log("Request complete! response:", res);
+        });
+    }
+
+    function verifyInputs() {
+        let input1 = document.getElementsByClassName("s1")[0].value;
+        let input2 = document.getElementsByClassName("s2")[0].value;
+        
+        if (input1 != "select" && input2 !="select") {
+            requestData();
+            console.log("requested");
+            // document.getElementsByClassName("form-enlarge")[0].submit();
+        } else {
+            document.getElementsByClassName("AiBtn")[0].style.backgroundColor = "rgb(190, 77, 37)";
+            document.getElementsByClassName("en-div")[0].classList.add("error");
+            function vibrate() {
+                document.getElementsByClassName("en-div")[0].classList.remove("error");
+                clearInterval(interval);
+            }
+            var interval = setInterval(vibrate,300);
+        }
+    }
 
         <% var x = []; %>
         <% var y = []; %>
@@ -200,36 +244,31 @@
                      data: <%- JSON.stringify(x) %>,
                      borderColor: "black",
                      fill: false,
-                     label:"<%=inp[0].xLabel%>" + "(<%=inp[0].para1.length%>)",
-                     // pointRadius: 0,
+                     label:"<%=inp[0].xLabel%>" + "(<%=inp[0].para1.length%>)"
                  }];
 
        const newData1 =[{
                      data: <%- JSON.stringify(x) %>,
                      borderColor: "black",
                      fill: false,
-                     label:"<%=inp[0].xLabel%>" + "(<%=inp[0].para1.length%>)",
-                     // pointRadius: 0,
+                     label:"<%=inp[0].xLabel%>" + "(<%=inp[0].para1.length%>)"
                  },{
                      data: <%- JSON.stringify(y) %>,
                      borderColor: "#2596be",
                      fill: false,
-                     label:"<%=inp[0].yLabel%>" + "(<%=inp[0].para2.length%>)",
-                     // pointRadius: 0,
+                     label:"<%=inp[0].yLabel%>" + "(<%=inp[0].para2.length%>)"
                  },
                  {
                      data: <%- JSON.stringify(z) %>,
                      borderColor: "#be4d25",
                      fill: false,
-                     label:"<%=inp[0].zLabel%>" + "(<%=inp[0].para3.length%>)",
-                     // pointRadius: 0,
+                     label:"<%=inp[0].zLabel%>" + "(<%=inp[0].para3.length%>)"
                  },
                  {
                      data: <%- JSON.stringify(h) %>,
                      borderColor: "#49be25",
                      fill: false,
-                     label:"<%=inp[0].hLabel%>" + "(<%=inp[0].para4.length%>)",
-                     // pointRadius: 0,
+                     label:"<%=inp[0].hLabel%>" + "(<%=inp[0].para4.length%>)"
                  }];
 
          var arr =["<%=inp[0].yLabel%>","<%=inp[0].zLabel%>","<%=inp[0].hLabel%>"];
@@ -238,22 +277,19 @@
                      data: <%- JSON.stringify(y) %>,
                      borderColor: "#2596be",
                      fill: false,
-                     label:"<%=inp[0].yLabel%>" + "(<%=inp[0].para2.length%>)",
-                     // pointRadius: 0,
+                     label:"<%=inp[0].yLabel%>" + "(<%=inp[0].para2.length%>)"
                  },
                  {
                      data: <%- JSON.stringify(z) %>,
                      borderColor: "#be4d25",
                      fill: false,
-                     label:"<%=inp[0].zLabel%>" + "(<%=inp[0].para3.length%>)",
-                     // pointRadius: 0,
+                     label:"<%=inp[0].zLabel%>" + "(<%=inp[0].para3.length%>)"
                  },
                  {
                      data: <%- JSON.stringify(h) %>,
                      borderColor: "#49be25",
                      fill: false,
-                     label:"<%=inp[0].hLabel%>" + "(<%=inp[0].para4.length%>)",
-                     // pointRadius: 0,
+                     label:"<%=inp[0].hLabel%>" + "(<%=inp[0].para4.length%>)"
                  }];
 
          for(var q=0;q < 3; q++) {

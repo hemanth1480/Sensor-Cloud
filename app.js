@@ -5,15 +5,31 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const crypto = require("crypto");
-const { StringDecoder } = require("string_decoder");
-const { isNull } = require("util");
+const {
+    StringDecoder
+} = require("string_decoder");
+const {
+    isNull
+} = require("util");
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const fs = require("fs");
 var bson = require("bson");
 const sendmail = require("./mail.js");
-const { get } = require("http");
+const {
+    get
+} = require("http");
 require('dotenv').config();
 const zip = require('express-zip');
+const spawn = require("child_process").spawn;
+let {
+    PythonShell
+} = require('python-shell');
+const downloadData = require("./public/js/downloadData/downloadD.js");
+const {
+    log
+} = require("console");
+const { resolve } = require("path");
+
 
 const saltRounds = parseInt(process.env.SLT);
 const sR = parseInt(process.env.sR);
@@ -80,13 +96,17 @@ const apiSchema = new mongoose.Schema({
 });
 
 const verifyToken = new mongoose.Schema({
-    mail:String,
+    mail: String,
     token: String,
-},
-{timestamps: true}
-);
+}, {
+    timestamps: true
+});
 
-verifyToken.index({createdAt: 1},{expireAfterSeconds: 600});
+verifyToken.index({
+    createdAt: 1
+}, {
+    expireAfterSeconds: 600
+});
 
 const User = new mongoose.model("User", userSchema);
 
@@ -117,24 +137,34 @@ app.get("/login", (req, res) => {
         res.redirect("/stored-data");
     } else {
         if (req.query.gateway === "newRegistration") {
-            res.render("login",{new_user:true,kk:"stored-data"});
+            res.render("login", {
+                new_user: true,
+                kk: "stored-data"
+            });
         } else {
             let lop;
             if (req.query.forward == undefined) {
                 lop = "stored-data";
             } else {
-                lop = req.query.forward +"&id=" + req.query.id;
+                lop = [req.query.forward + "&id=" + req.query.id + "&graphid=" + req.query.graphid];
             }
-            res.render("login",{new_user:false,kk:lop});
+            res.render("login", {
+                new_user: false,
+                kk: lop
+            });
         }
     }
 });
 
 app.get("/register", (req, res) => {
     if (req.session.userId) {
-        res.render("register",{reg:true});
+        res.render("register", {
+            reg: true
+        });
     } else {
-        res.render("register",{reg:false});
+        res.render("register", {
+            reg: false
+        });
     }
 });
 
@@ -144,8 +174,12 @@ app.get("/forgot-password", (req, res) => {
 
 app.get("/stored-data", (req, res) => {
     if (req.session.userId) {
-        Data.find({mail:req.session.userId}, (err,kl) => {
-            res.render("storeddata",{dat:kl});
+        Data.find({
+            mail: req.session.userId
+        }, (err, kl) => {
+            res.render("storeddata", {
+                dat: kl
+            });
         });
     } else {
         res.redirect("/login?forward=stored-data");
@@ -162,24 +196,36 @@ app.get("/data/store/api", (req, res) => {
 
     let year = date_ob.getFullYear();
 
-    let hours = ("0" +  date_ob.getHours()).slice(-2);
+    let hours = ("0" + date_ob.getHours()).slice(-2);
 
-    let minutes = ("0" +  date_ob.getMinutes()).slice(-2);
+    let minutes = ("0" + date_ob.getMinutes()).slice(-2);
 
-    let seconds = ("0" +  date_ob.getSeconds()).slice(-2);
+    let seconds = ("0" + date_ob.getSeconds()).slice(-2);
 
     var newDate = year + "-" + month + "-" + date + "T" + hours + ":" + minutes + ":" + seconds;
 
     if (Object.keys(req.query).length < 3) {
         res.send("Upload Error. Please send a min of 1 input");
-    }  else {
-        Data.find({id: req.query.id}, (err, dat) => {
+    } else {
+        Data.find({
+            id: req.query.id
+        }, (err, dat) => {
             if (err) {
                 res.redirect("/error");
             } else if (dat.length != 0) {
                 if (req.query.way == dat[0].pass) {
                     if (!(bson.calculateObjectSize(dat) > 7000000)) {
-                        Data.updateOne({id: req.query.id}, {$push: {para1: req.query[dat[0].xLabel],para2: req.query[dat[0].yLabel],para3: req.query[dat[0].zLabel],para4: req.query[dat[0].hLabel],timeStamp:newDate}}, (err, tres) => {
+                        Data.updateOne({
+                            id: req.query.id
+                        }, {
+                            $push: {
+                                para1: req.query[dat[0].xLabel],
+                                para2: req.query[dat[0].yLabel],
+                                para3: req.query[dat[0].zLabel],
+                                para4: req.query[dat[0].hLabel],
+                                timeStamp: newDate
+                            }
+                        }, (err, tres) => {
                             if (err) {
                                 res.redirect("/error");
                             } else {
@@ -189,17 +235,19 @@ app.get("/data/store/api", (req, res) => {
                     } else {
                         res.send("Storage limit reached. Upgrade your plan.");
                     }
-                } else{
+                } else {
                     res.send("Error1")
                 }
             } else {
-                API.find({apikey:req.query.id}, (err,lol) => {
+                API.find({
+                    apikey: req.query.id
+                }, (err, lol) => {
                     if (err) {
                         res.redirect("/error");
                     } else {
                         if (lol.length === 0) {
                             res.send("You had no valid API Key");
-                        } else if(lol[0].apipass == req.query.way){
+                        } else if (lol[0].apipass == req.query.way) {
                             par1 = lol[0].param1;
 
                             const newdata = new Data({
@@ -229,31 +277,38 @@ app.get("/data/store/api", (req, res) => {
     }
 });
 
-app.get("/limit-reached", (req,res) => {
+app.get("/limit-reached", (req, res) => {
     res.render("limit-details");
 });
 
-app.get("/error", (req,res) => {
+app.get("/error", (req, res) => {
     res.render("error-files/error");
 });
 
-app.get("/logout", (req,res) => {
+app.get("/logout", (req, res) => {
     req.session.destroy();
-    res.redirect("/login?forward="+req.query.forward);
+    res.redirect("/login?forward=" + req.query.forward);
 });
 
-app.get("/your-keys", (req,res) => {
+app.get("/your-keys", (req, res) => {
     if (req.session.userId) {
         var consu = [];
-        API.find({mail:req.session.userId}, (err,foundKeys) => {
-            if(err) {
+        API.find({
+            mail: req.session.userId
+        }, (err, foundKeys) => {
+            if (err) {
                 res.redirect("/login");
             } else {
-                Data.find({mail:req.session.userId}, (er,kl) => {
+                Data.find({
+                    mail: req.session.userId
+                }, (er, kl) => {
                     kl.forEach(element => {
                         consu.push(bson.calculateObjectSize(element))
                     });
-                    res.render("yourKeys", {dat:foundKeys,consumption:consu});
+                    res.render("yourKeys", {
+                        dat: foundKeys,
+                        consumption: consu
+                    });
                 });
             }
         });
@@ -262,17 +317,24 @@ app.get("/your-keys", (req,res) => {
     }
 });
 
-app.get("/profile", (req,res) => {
+app.get("/profile", (req, res) => {
     if (req.session.userId) {
-        User.find({mail:req.session.userId}, (err,foundUser) => {
+        User.find({
+            mail: req.session.userId
+        }, (err, foundUser) => {
             if (err) {
                 res.redirect("/login");
             } else {
-                API.find({mail:req.session.userId}, (er,fo) => {
+                API.find({
+                    mail: req.session.userId
+                }, (er, fo) => {
                     if (er) {
                         res.redirect("/login");
                     } else {
-                        res.render("profile",{profile:foundUser,api:fo});
+                        res.render("profile", {
+                            profile: foundUser,
+                            api: fo
+                        });
                     }
                 });
             }
@@ -282,16 +344,16 @@ app.get("/profile", (req,res) => {
     }
 });
 
-app.get("/verifyaccount", (req,res) => {
+app.get("/verifyaccount", (req, res) => {
     if (req.session.userId) {
-        crypto.randomBytes(30, function(err, pass) {
+        crypto.randomBytes(30, function (err, pass) {
             var token = pass.toString('hex');
             const verifytoken = new Token({
-                mail:req.session.userId,
+                mail: req.session.userId,
                 token: token
             });
             verifytoken.save();
-            sendmail(req.session.userId,token);
+            sendmail(req.session.userId, token);
             res.sendStatus(200);
         });
     } else {
@@ -299,13 +361,23 @@ app.get("/verifyaccount", (req,res) => {
     }
 });
 
-app.get("/accountVerification", (req,res) => {
-    Token.find({token:req.query.verifyid}, (err,ok) => {
+app.get("/accountVerification", (req, res) => {
+    Token.find({
+        token: req.query.verifyid
+    }, (err, ok) => {
         if (err) {
             res.redirect("/login?forward=profile");
-        } else if(ok.length !=0) {
-            User.updateOne({mail:ok[0].mail},{$set:{verification:"verified"}}, (err,tk) => {
-                Token.deleteOne({mail:ok[0].mail},(errr,okk) => {
+        } else if (ok.length != 0) {
+            User.updateOne({
+                mail: ok[0].mail
+            }, {
+                $set: {
+                    verification: "verified"
+                }
+            }, (err, tk) => {
+                Token.deleteOne({
+                    mail: ok[0].mail
+                }, (errr, okk) => {
                     res.redirect("/login?forward=profile");
                 });
             });
@@ -331,35 +403,52 @@ app.get("/accountVerification", (req,res) => {
 //     }
 // });
 
-app.get("/processData", (req,res) => {
+app.get("/processData", (req, res) => {
     if (req.session.userId) {
-        var id = req.query.graphid.split("?")[0];
-        Data.find({_id:id}, (err,data) => {
+        Data.find({
+            _id: req.query.graphid
+        }, (err, data) => {
+            let dataVariables = [];
+            if (!(data[0].para1.length < 2)) {
+                dataVariables.push(data[0].xLabel);
+            }
+            if (!(data[0].para2.length < 2)) {
+                dataVariables.push(data[0].yLabel);
+            }
+            if (!(data[0].para3.length < 2)) {
+                dataVariables.push(data[0].zLabel);
+            }
+            if (!(data[0].para4.length < 2)) {
+                dataVariables.push(data[0].hLabel);
+            }
             if (err) {
                 res.redirect("/");
-            } else if (data.length !=0 ) {
-                res.render("enlarge/enlarge",{inp:data});
+            } else if (data.length != 0) {
+                res.render("enlarge/enlarge", {
+                    inp: data,
+                    dataV: dataVariables
+                });
             } else {
                 res.send("Graph not found");
             }
         });
     } else {
-        res.redirect("/login?forward=processData?graphid=" + req.query.graphid);
+        res.redirect("/login?forward=processData&graphid=" + req.query.graphid);
     }
 });
 
-app.get("/back", (req,res) => {
-    Data.updateOne({id:"958b8a7f4454e1e99700cd9372646d1d"},{$push:{para1:87000}}, (err,kk) => {
-        if(err) {
-            console.log(err);
-        } else {
-            res.send("done")
-        }
-    })
-});
+// app.get("/back", (req,res) => {
+//     Data.updateOne({id:"958b8a7f4454e1e99700cd9372646d1d"},{$push:{para1:87000}}, (err,kk) => {
+//         if(err) {
+//             console.log(err);
+//         } else {
+//             res.send("done")
+//         }
+//     })
+// });
 
 app.post("/register", (req, res) => {
-    if (req.body.name.length == 0 || req.body.regname.length ==0) {
+    if (req.body.name.length == 0 || req.body.regname.length == 0) {
         res.redirect("/register");
     } else {
         User.find({
@@ -394,7 +483,7 @@ app.post("/login", (req, res) => {
         mail: req.body.logmail
     }, (err, found) => {
         if (err) {
-            res.redirect("/login?forward=" + req.query.forward);
+            res.redirect("/login?forward=" + req.query.forward + "&id=" + req.query.id + "&graphid=" + req.query.graphid);
         } else {
             if (found.length == 0) {
                 res.render("error-files/login-error");
@@ -404,13 +493,12 @@ app.post("/login", (req, res) => {
                         res.redirect("/login?forward=" + req.query.forward);
                     } else if (resu == true) {
                         req.session.userId = found[0].mail;
-                        if(req.query.forward != undefined && req.query.id != undefined) {
-                            res.redirect("/" + req.query.forward + "?id=" + req.query.id);
-                        } else if(req.query.forward != undefined) {
-                            res.redirect("/" + req.query.forward);
-                        }  else {
-                            res.send("idiot")
-                            // res.redirect("/stored-data");
+                        if (req.query.forward != undefined && req.query.id != undefined) {
+                            res.redirect("/" + req.query.forward + "?id=" + req.query.id + "&graphid=" + req.query.graphid);
+                        } else if (req.query.forward != undefined) {
+                            res.redirect("/" + req.query.forward + "?id=" + req.query.id + "&graphid=" + req.query.graphid);
+                        } else {
+                            res.send("idiot");
                         }
                     } else {
                         res.redirect("/login");
@@ -421,13 +509,29 @@ app.post("/login", (req, res) => {
     });
 });
 
-app.post("/labelchange", (req,res) => {
+app.post("/labelchange", (req, res) => {
     if (req.session.userId) {
-        Data.updateOne({id:req.body.id},{$set: {title:req.body.title,xLabel:req.body.xlabel,yLabel:req.body.ylabel}}, (err,resp) => {
+        Data.updateOne({
+            id: req.body.id
+        }, {
+            $set: {
+                title: req.body.title,
+                xLabel: req.body.xlabel,
+                yLabel: req.body.ylabel
+            }
+        }, (err, resp) => {
             if (err) {
                 res.redirect("/stored-data");
             } else {
-                API.updateOne({apikey:req.body.id},{$set: {name: req.body.title,param1:req.body.xlabel,param2:req.body.ylabel}},(er,dres) => {
+                API.updateOne({
+                    apikey: req.body.id
+                }, {
+                    $set: {
+                        name: req.body.title,
+                        param1: req.body.xlabel,
+                        param2: req.body.ylabel
+                    }
+                }, (er, dres) => {
                     if (er) {
                         res.redirect("/error");
                     } else {
@@ -437,7 +541,7 @@ app.post("/labelchange", (req,res) => {
                             res.redirect("/enlarge?id=" + req.query.id);
                         }
                     }
-                });            
+                });
             }
         });
     } else {
@@ -445,162 +549,89 @@ app.post("/labelchange", (req,res) => {
     }
 });
 
-app.post("/download-data", (req,res) => {
+app.get("/downloadData", (req, res) => {
     if (req.session.userId) {
-        Data.find({id:req.body.usrid}, (err,uno) => {
-            if (err) {
-                res.redirect("/stored-data");
-            } else if (uno.length != 0) {
-                if(!fs.existsSync(__dirname + "/download-data/" + uno[0]._id)) {
-                    fs.mkdir(__dirname + "/download-data/" + uno[0]._id, (err) => {
-                        if (err) {
-                            res.redirect("/stored-data");
-                        }
-                    });
-                }
-                var xval = uno[0].para1;
-                var yval = uno[0].para2;
-                var zval = uno[0].para3;
-                var hval = uno[0].para4;
-                var len = [];
-                for(var c=1; c <= xval.length;c++) {
-                    len.push(c);
-                }
-                
-                const csvWriter = createCsvWriter({
-                    path:__dirname + "/download-data/" + uno[0]._id + "/" + uno[0].title + ".csv",
-                    header: [
-                        {id: 'number', title: 'S.No'},
-                        {id:'Timestamp',title:'Timestamp'},
-                        {id:'Date', title: 'Date'},
-                        {id:'time',title: "time"},
-                        {id: 'xValue', title: uno[0].xLabel},
-                        {id: 'yValue', title: uno[0].yLabel},
-                        {id: 'zValue', title: uno[0].zLabel},
-                        {id: 'hValue', title: uno[0].hLabel}
-                    ]
-                });
-                const records = [];
-                var dates = [];
-                for (let l = 0; l < xval.length; l++) {
-                    dates.push(uno[0].timeStamp[l].split("T")[0]);
-                    var sub = {number:len[l],xValue:xval[l],yValue:yval[l],zValue:zval[l],hValue:hval[l],Date:uno[0].timeStamp[l].split("T")[0],time:uno[0].timeStamp[l].split("T")[1],Timestamp:uno[0].timeStamp[l]}
-                    records.push(sub);
-                }
-                var uniqDates = [ ...new Set(dates)];
-                var newx = [];
-                var newy = [];
-                var newz = [];
-                var newh = [];
-                var inputLabels = [];
-                inputLabels.push(
-                    {id: 'number', title: 'S.No'},
-                    {id:'Date', title: 'Date'},
-                    {id: 'xMin', title: uno[0].xLabel + "Min"},
-                    {id: 'xMax', title: uno[0].xLabel + "Max"},
-                    {id: 'xAvg', title: uno[0].xLabel + "Avg"}
-                );
-                if (!(uno[0].para2.length <=1) ) {
-                    inputLabels.push({id: 'yMin', title: uno[0].yLabel + "Min"},
-                    {id: 'yMax', title: uno[0].yLabel + "Max"},
-                    {id: 'yAvg', title: uno[0].yLabel + "Avg"})
-                } if(!(uno[0].para3.length <=1)) {
-                    inputLabels.push({id: 'zMin', title: uno[0].zLabel + "Min"},
-                    {id: 'zMax', title: uno[0].zLabel + "Max"},
-                    {id: 'zAvg', title: uno[0].zLabel + "Avg"})
-                } if (!(uno[0].para4.length <=1)) {
-                    inputLabels.push({id: 'hMin', title: uno[0].hLabel + "Min"},
-                    {id: 'hMax', title: uno[0].hLabel + "Max"},
-                    {id: 'hAvg', title: uno[0].hLabel + "Avg"})
-                }
-                const csvWriter1 = createCsvWriter({
-                    path:__dirname + "/download-data/" + uno[0]._id + "/" + "dateSeries-" + uno[0].title + ".csv",
-                    header: inputLabels
-                });
-                var newData = [];
-                for (let h = 0; h < uniqDates.length; h++) {
-                    for(let s=0; s < xval.length; s++) {
-                        if (uniqDates[h] == uno[0].timeStamp[s].split("T")[0]) {
-                            newx.push(uno[0].para1[s]);
-                            newy.push(uno[0].para2[s]);
-                            newz.push(uno[0].para3[s]);
-                            newh.push(uno[0].para4[s]);
-                        }
-                    }
-                    var resultx = newx.filter(element => {
-                        return element !== undefined;
-                    });
-                    var resulty = newy.filter(element => {
-                        return element !== undefined;
-                    });
-                    var resultz = newz.filter(element => {
-                        return element !== undefined;
-                    });
-                    var resulth = newh.filter(element => {
-                        return element !== undefined;
-                    });
-                    var nw = {number:h,Date:uniqDates[h],xMin:Math.min(...resultx),xMax:Math.max(...resultx),xAvg:(Math.max(...resultx)+Math.min(...resultx))/2,yMin:Math.min(...resulty),yMax:Math.max(...resulty),yAvg:(Math.max(...resulty)+Math.min(...resulty))/2,zMin:Math.min(...resultz),zMax:Math.max(...resultz),zAvg:(Math.max(...resultz)+Math.min(...resultz))/2,hMin:Math.min(...resulth),hMax:Math.max(...resulth),hAvg:(Math.max(...resulth)+Math.min(...resulth))/2}
-                    newData.push(nw);
-                    newx.length=0;
-                    newy.length=0;
-                    newz.length=0;
-                    newh.length=0;
-                    resultx.length=0;
-                    resulty.length=0;
-                    resultz.length=0;
-                    resulth.length=0;
-                }
-                csvWriter.writeRecords(records) 
-                .then(() => {
-                    csvWriter1.writeRecords(newData) 
-                    .then(() => {
-                        // var download = [__dirname + "/download-data/" + uno[0]._id + "/" + uno[0].title + ".csv",__dirname + "/download-data/" + uno[0]._id + "/" + "dateSeries-" + uno[0].title + ".csv"];
-                        // download.forEach( one => {
-                        //     res.download(one);
-                        // });
-                        res.zip([
-                            { path: 'download-data/635d649967c5564e41e5cf95/dateSeries-sens.csv', name: 'dateSeries-sens.csv' },
-                            { path: 'download-data/635d649967c5564e41e5cf95/sens.csv', name: 'sens.csv' }
-                          ]);
-                    });
-                });
-            }
-        })
+        res.download(__dirname + "/download-data/zipFiles/" + req.query.newid + "/" + req.query.title + ".zip",req.query.title + ".zip");
     } else {
         res.redirect("/login?forward=stored-data");
     }
 });
 
-app.post("/delete-data", (req,res) => {
+app.post("/download-data", (req, res) => {
     if (req.session.userId) {
-            Data.deleteOne({id:req.body.delid}, (err,respu) => {
-                if (err) {
-                    console.log(err);
-                }  else {
-                    res.redirect("/" + req.query.forward);
+        Data.find({
+            _id: req.query.id
+        }, (err, uno) => {
+            if (err) {
+                res.redirect("/stored-data");
+            } else if (uno.length != 0) {
+                if (!fs.existsSync(__dirname + "/download-data/" + uno[0]._id)) {
+                    fs.mkdir(__dirname + "/download-data/" + uno[0]._id, (err) => {
+                        if (err) {
+                            res.redirect("/stored-data");
+                        } else {
+                            fs.mkdir(__dirname + "/download-data/zipFiles/" + uno[0]._id, (err) => {
+                                if (err) {
+                                    res.redirect("/stored-data");
+                                }
+                            });
+                        }
+                    });
                 }
-            });
+                downloadData(uno, "download") 
+                res.sendStatus(200);
+                
+                function deleteDownloadedData() {
+                    fs.rmdir("download-data/" + uno[0]._id, {
+                        recursive: true
+                    }, (err) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                    });
+                }
+                setTimeout(deleteDownloadedData, 300000);
+            }
+        });
+    } else {
+        res.redirect("/login?forward=stored-data");
+    }
+});
+
+app.post("/delete-data", (req, res) => {
+    if (req.session.userId) {
+        Data.deleteOne({
+            id: req.body.delid
+        }, (err, respu) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.redirect("/" + req.query.forward);
+            }
+        });
         // });
     } else {
         res.redirect("/login?forward=" + req.query.forward);
     }
 });
 
-app.post("/api-key", (req,res) => {
+app.post("/api-key", (req, res) => {
     if (req.session.userId) {
-        API.find({mail:req.session.userId}, (err,found4) => {
+        API.find({
+            mail: req.session.userId
+        }, (err, found4) => {
             if (err) {
                 res.redirect("/error");
             } else if (found4.length < 4) {
-                crypto.randomBytes(16, function(err, key) {
-                    if(err) {
+                crypto.randomBytes(16, function (err, key) {
+                    if (err) {
                         res.redirect("/error");
-                    } else{
-                        crypto.randomBytes(18, function(err, pass) {
+                    } else {
+                        crypto.randomBytes(18, function (err, pass) {
                             var token1 = key.toString('hex');
                             var token = pass.toString('hex');
                             const newapi = new API({
-                                mail:req.session.userId,
+                                mail: req.session.userId,
                                 apikey: token1,
                                 apipass: token,
                                 name: req.body.name,
@@ -613,41 +644,73 @@ app.post("/api-key", (req,res) => {
                             res.redirect("/your-keys");
                         });
                     }
-                  });
+                });
             } else {
                 res.redirect("/limit-reached");
             }
         });
-    } else{
+    } else {
         res.redirect("/login?forward=your-keys");
     }
 });
 
-app.post("/parameterChange", (req,res) => {
+app.post("/parameterChange", (req, res) => {
     if (req.session.userId) {
         console.log(req.body);
-        Data.find({id: req.body.id}, (err,outp) => {
-            if(err) {
+        Data.find({
+            id: req.body.id
+        }, (err, outp) => {
+            if (err) {
                 res.redirect("/error");
-            } else if(outp.length !=0) {
-                Data.updateOne({id: req.body.id},{$set:{title:req.body.name,xLabel:req.body.para1,yLabel:req.body.para2,zLabel:req.body.para3,hLabel:req.body.para4}}, (err,tout) => {
+            } else if (outp.length != 0) {
+                Data.updateOne({
+                    id: req.body.id
+                }, {
+                    $set: {
+                        title: req.body.name,
+                        xLabel: req.body.para1,
+                        yLabel: req.body.para2,
+                        zLabel: req.body.para3,
+                        hLabel: req.body.para4
+                    }
+                }, (err, tout) => {
                     if (err) {
                         res.redirect("/error");
                     } else {
-                        API.updateOne({apikey:req.body.id},{$set:{name:req.body.name,param1:req.body.para1,param2:req.body.para2,param3:req.body.para3,param4:req.body.para4}}, (err,uout) => {
-                            if(err) {
+                        API.updateOne({
+                            apikey: req.body.id
+                        }, {
+                            $set: {
+                                name: req.body.name,
+                                param1: req.body.para1,
+                                param2: req.body.para2,
+                                param3: req.body.para3,
+                                param4: req.body.para4
+                            }
+                        }, (err, uout) => {
+                            if (err) {
                                 res.redirect("/error");
-                            } else{
+                            } else {
                                 res.redirect("/your-keys");
                             }
                         });
                     }
                 });
             } else {
-                API.updateOne({apikey:req.body.id},{$set:{name:req.body.name,param1:req.body.para1,param2:req.body.para2,param3:req.body.para3,param4:req.body.para4}}, (err,uout) => {
-                    if(err) {
+                API.updateOne({
+                    apikey: req.body.id
+                }, {
+                    $set: {
+                        name: req.body.name,
+                        param1: req.body.para1,
+                        param2: req.body.para2,
+                        param3: req.body.para3,
+                        param4: req.body.para4
+                    }
+                }, (err, uout) => {
+                    if (err) {
                         res.redirect("/error");
-                    } else{
+                    } else {
                         res.redirect("/your-keys");
                     }
                 });
@@ -655,6 +718,26 @@ app.post("/parameterChange", (req,res) => {
         });
     } else {
         res.redirect("/login");
+    }
+});
+
+app.post("/processData", (req, res) => {
+    if (req.session.userId) {
+
+        let options = {
+            mode: 'text',
+            pythonOptions: ['-u'],
+            scriptPath: 'public/pythonModels/neauralprophet',
+            args: [req.body.enalrge_id]
+        };
+        PythonShell.run('/neauralProphet.py', options, function (err, results) {
+            if (err) throw err;
+            else {
+                res.send(results);
+            }
+        });
+    } else {
+        res.redirect("/login?forward=processData&graphid=" + req.query.graphid);
     }
 });
 
